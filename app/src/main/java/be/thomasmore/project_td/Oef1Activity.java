@@ -31,6 +31,10 @@ public class Oef1Activity extends AppCompatActivity {
     private Woord woord1;
     private Woord woord2;
     private OnTouchListener myTouchListener;
+    private OnDragListener myDragListener;
+    private TouchableImageView afbeelding1;
+    private TouchableImageView afbeelding2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +62,18 @@ public class Oef1Activity extends AppCompatActivity {
 
     private void initialiseerVariabelen() {
         myTouchListener = new MyTouchListener();
+        myDragListener = new MyDragListener();
         parenLijst = Paren.getLijst();
         score = 0;
         geantwoord = 0;
         paarIndex = 0;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
+
+        afbeelding1 = (TouchableImageView) findViewById(R.id.afbeelding1);
+        afbeelding2 = (TouchableImageView) findViewById(R.id.afbeelding2);
+
+        afbeelding1.setOnDragListener(myDragListener);
+        afbeelding2.setOnDragListener(myDragListener);
     }
 
     private void laadAfbeeldingen() {
@@ -85,8 +96,7 @@ public class Oef1Activity extends AppCompatActivity {
         afbeelding1.setTag(woord1.getAudio());
         afbeelding2.setTag(woord2.getAudio());
 
-        afbeelding1.setOnDragListener(new MyDragListener());
-        afbeelding2.setOnDragListener(new MyDragListener());
+
     }
 
     private void laadMiddenveldAfbeeldingen() {
