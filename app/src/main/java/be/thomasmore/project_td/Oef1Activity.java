@@ -13,12 +13,9 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -33,6 +30,7 @@ public class Oef1Activity extends AppCompatActivity {
     private int aantalAntwoorden;
     private Woord woord1;
     private Woord woord2;
+    private OnTouchListener myTouchListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +57,7 @@ public class Oef1Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen() {
-        Bundle bundle = getIntent().getExtras();
-        boolean ouderDan5 = bundle.getBoolean("ouderDan5");
-        ArrayList<String> nodigeParen = bundle.getStringArrayList("nodigeParen");
-
-        Paren.maakLijst(nodigeParen, ouderDan5);
+        myTouchListener = new MyTouchListener();
         parenLijst = Paren.getLijst();
         score = 0;
         geantwoord = 0;
@@ -82,8 +76,8 @@ public class Oef1Activity extends AppCompatActivity {
         woord1 = huidigPaar.getWoorden().get(0);
         woord2 = huidigPaar.getWoorden().get(1);
 
-        ImageView afbeelding1 = (ImageView) findViewById(R.id.afbeelding1);
-        ImageView afbeelding2 = (ImageView) findViewById(R.id.afbeelding2);
+        TouchableImageView afbeelding1 = (TouchableImageView) findViewById(R.id.afbeelding1);
+        TouchableImageView afbeelding2 = (TouchableImageView) findViewById(R.id.afbeelding2);
 
         afbeelding1.setImageResource(getResources().getIdentifier(woord1.getContextAfbeelding(), "drawable", getPackageName()));
         afbeelding2.setImageResource(getResources().getIdentifier(woord2.getContextAfbeelding(), "drawable", getPackageName()));
@@ -104,7 +98,7 @@ public class Oef1Activity extends AppCompatActivity {
         Random rand = new Random();
 
         for (int i = 0; i < 8; i++) {
-            ImageView antwoord = new ImageView(this);
+            TouchableImageView antwoord = new TouchableImageView(this);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.MATCH_PARENT
@@ -118,7 +112,7 @@ public class Oef1Activity extends AppCompatActivity {
 
             params.setMargins(dpToPx(left), dpToPx(top), dpToPx(right), dpToPx(bottom));
             antwoord.setLayoutParams(params);
-            antwoord.setOnTouchListener(new MyTouchListener());
+            antwoord.setOnTouchListener(myTouchListener);
 
             if (i % 2 == 0) {
                 antwoord.setImageResource(getResources().getIdentifier(woord1.getAfbeelding(), "drawable", getPackageName()));
@@ -133,7 +127,7 @@ public class Oef1Activity extends AppCompatActivity {
 
     private void spreek(String tekst)
     {
-        Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
     }
 
     private final class MyTouchListener implements OnTouchListener {
@@ -147,10 +141,12 @@ public class Oef1Activity extends AppCompatActivity {
 
                 spreek(view.getTag().toString());
                 return true;
-            } else {
-                return false;
+            } else  if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
+                view.performClick();
             }
+            return false;
         }
+        
     }
 
 
@@ -168,10 +164,10 @@ public class Oef1Activity extends AppCompatActivity {
                 view.setVisibility(View.INVISIBLE);
 
                 //view dragged item is being dropped on
-                ImageView dropTarget = (ImageView) v;
+                TouchableImageView dropTarget = (TouchableImageView) v;
 
                 //view being dragged and dropped
-                ImageView dropped = (ImageView) view;
+                TouchableImageView dropped = (TouchableImageView) view;
 
                 // View verwijderen voor performance / anti-crash
                 ((ViewGroup) view.getParent()).removeView(view);

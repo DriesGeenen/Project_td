@@ -42,20 +42,29 @@ public class Oef5Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen() {
+
+        List<String> nodigeParen = new ArrayList<>();
+        nodigeParen.add("RW");
+        //nodigeParen.add("BP");
+        nodigeParen.add("DT");
+        Paren.maakLijst(nodigeParen, false);
+        score = 0;
+
         parenLijst = Paren.getLijst();
         geantwoord = 0;
+        // Beperkt het aantal antwoorden op deelbaar door 3
         aantalAntwoorden = (parenLijst.size()/3)*6;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
-        Intent intent = getIntent();
-        score = intent.getExtras().getInt("score", 0);
+        //Intent intent = getIntent();
+        //score = intent.getExtras().getInt("score", 0);
         scoreTextView.setText(String.valueOf(score));
 
         juistKnop = (Button) findViewById(R.id.juistKnop);
         foutKnop = (Button) findViewById(R.id.foutKnop);
 
         if (aantalAntwoorden == 0){
-            //Intent intent = new Intent(this, LeeftijdActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(this, LeeftijdActivity.class);
+            startActivity(intent);
         } else {
             disableJuistFoutClick();
             laadAntwoorden();

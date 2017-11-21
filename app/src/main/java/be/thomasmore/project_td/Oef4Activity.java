@@ -41,6 +41,8 @@ public class Oef4Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen() {
+
+
         parenLijst = Paren.getLijst();
         geantwoord = 0;
         aantalAntwoorden = parenLijst.size();
@@ -85,7 +87,7 @@ public class Oef4Activity extends AppCompatActivity {
         }
 
     }
-    
+
     private void spreek(String tekst) {
         Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
     }

@@ -58,6 +58,7 @@ public class Oef3Activity extends AppCompatActivity {
     private void initialiseerVariabelen() {
         parenLijst = Paren.getLijst();
         geantwoord = 0;
+        // Beperkt het aantal antwoorden op deelbaar door 2
         aantalAntwoorden = (parenLijst.size()/2) * 4;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();

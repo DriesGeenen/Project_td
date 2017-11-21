@@ -46,12 +46,8 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("ouderDan5", ouderDan5);
-        bundle.putStringArrayList("nodigeParen", nodigeParen);
-
+        Paren.maakLijst(nodigeParen, ouderDan5);
         Intent intent = new Intent(this, Oef1Activity.class);
-        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

@@ -9,19 +9,19 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
+    <be.thomasmore.project_td.TouchableImageView
         android:id="@+id/afbeelding1"
         android:layout_width="200dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <RelativeLayout
         android:id="@+id/middenveld"
         android:layout_width="200dp"
         android:layout_height="match_parent" />
 
-    <ImageView
+    <be.thomasmore.project_td.TouchableImageView
         android:id="@+id/afbeelding2"
         android:layout_width="200dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
