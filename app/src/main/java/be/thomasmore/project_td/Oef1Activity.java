@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -23,7 +24,6 @@ public class Oef1Activity extends AppCompatActivity {
 
     private TextView scoreTextView;
     private List<Paar> parenLijst;
-    private Paar huidigPaar;
     private int score;
     private int geantwoord;
     private int paarIndex;
@@ -34,7 +34,6 @@ public class Oef1Activity extends AppCompatActivity {
     private OnDragListener myDragListener;
     private TouchableImageView afbeelding1;
     private TouchableImageView afbeelding2;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +46,10 @@ public class Oef1Activity extends AppCompatActivity {
 
         initialiseerVariabelen();
 
-        if (parenLijst.size() == 0){
+        if (parenLijst.size() == 0) {
             Intent intent = new Intent(this, LeeftijdActivity.class);
             startActivity(intent);
-        } else{
+        } else {
             laadAfbeeldingen();
         }
     }
@@ -61,13 +60,20 @@ public class Oef1Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen() {
-        myTouchListener = new MyTouchListener();
-        myDragListener = new MyDragListener();
+        List<String> nodigeParen = new ArrayList<>();
+        for (int i = 0; i<10;i++){
+            nodigeParen.add("DT");
+        }
+        Paren.maakLijst(nodigeParen, false);
+
         parenLijst = Paren.getLijst();
         score = 0;
         geantwoord = 0;
         paarIndex = 0;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
+
+        myTouchListener = new MyTouchListener();
+        myDragListener = new MyDragListener();
 
         afbeelding1 = (TouchableImageView) findViewById(R.id.afbeelding1);
         afbeelding2 = (TouchableImageView) findViewById(R.id.afbeelding2);
@@ -83,20 +89,15 @@ public class Oef1Activity extends AppCompatActivity {
 
     private void laadContextAfbeeldingen() {
         aantalAntwoorden = parenLijst.size() * 8;
-        huidigPaar = parenLijst.get(paarIndex);
+        Paar huidigPaar = parenLijst.get(paarIndex);
         woord1 = huidigPaar.getWoorden().get(0);
         woord2 = huidigPaar.getWoorden().get(1);
-
-        TouchableImageView afbeelding1 = (TouchableImageView) findViewById(R.id.afbeelding1);
-        TouchableImageView afbeelding2 = (TouchableImageView) findViewById(R.id.afbeelding2);
 
         afbeelding1.setImageResource(getResources().getIdentifier(woord1.getContextAfbeelding(), "drawable", getPackageName()));
         afbeelding2.setImageResource(getResources().getIdentifier(woord2.getContextAfbeelding(), "drawable", getPackageName()));
 
         afbeelding1.setTag(woord1.getAudio());
         afbeelding2.setTag(woord2.getAudio());
-
-
     }
 
     private void laadMiddenveldAfbeeldingen() {
@@ -107,18 +108,21 @@ public class Oef1Activity extends AppCompatActivity {
 
         Random rand = new Random();
 
+
+        
         for (int i = 0; i < 8; i++) {
             TouchableImageView antwoord = new TouchableImageView(this);
+
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.MATCH_PARENT
             );
 
-            int imageSize = 100;
-            int left = rand.nextInt(imageSize);
-            int top = rand.nextInt(imageSize);
-            int right = imageSize - left;
-            int bottom = imageSize - top;
+            int imageMargin = 100;
+            int left = rand.nextInt(imageMargin);
+            int top = rand.nextInt(imageMargin);
+            int right = imageMargin - left;
+            int bottom = imageMargin - top;
 
             params.setMargins(dpToPx(left), dpToPx(top), dpToPx(right), dpToPx(bottom));
             antwoord.setLayoutParams(params);
@@ -135,8 +139,7 @@ public class Oef1Activity extends AppCompatActivity {
         }
     }
 
-    private void spreek(String tekst)
-    {
+    private void spreek(String tekst) {
         //Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
     }
 
@@ -148,15 +151,15 @@ public class Oef1Activity extends AppCompatActivity {
                 view.startDrag(data, shadowBuilder, view, 0);
                 // Originele afbeelding verdwijnt
                 view.setVisibility(View.INVISIBLE);
-
                 spreek(view.getTag().toString());
                 return true;
-            } else  if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
+            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 view.performClick();
+
             }
+
             return false;
         }
-        
     }
 
 
@@ -198,23 +201,6 @@ public class Oef1Activity extends AppCompatActivity {
                     laadAfbeeldingen();
                 }
             }
-
-            /*switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    break;
-                case DragEvent.ACTION_DRAG_ENTERED:
-                    break;
-                case DragEvent.ACTION_DRAG_EXITED:
-                    break;
-                case DragEvent.ACTION_DRAG_LOCATION:
-                    break;
-                case DragEvent.ACTION_DRAG_ENDED:
-                    break;
-                case DragEvent.ACTION_DROP:
-                    break;
-                default:
-                    break;
-            }*/
             return true;
         }
     }

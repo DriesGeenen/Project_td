@@ -3,19 +3,19 @@ package be.thomasmore.project_td;
 import android.content.Context;
 import android.util.AttributeSet;
 
-class TouchableImageView extends android.support.v7.widget.AppCompatImageView{
+class TouchableButton extends android.support.v7.widget.AppCompatButton {
 
-    public TouchableImageView(Context context)
+    public TouchableButton(Context context)
     {
         super(context);
     }
 
-    public TouchableImageView(Context context, AttributeSet attrs)
+    public TouchableButton(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public TouchableImageView(Context context, AttributeSet attrs, int defStyle)
+    public TouchableButton(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
     }
