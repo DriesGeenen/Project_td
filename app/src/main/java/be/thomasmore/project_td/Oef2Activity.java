@@ -9,13 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Oef2Activity extends AppCompatActivity {
 
     private List<Paar> parenLijst;
     private TextView scoreTextView;
-    private Paar huidigPaar;
     private int geantwoord;
     private int aantalAntwoorden;
     private int score;
@@ -36,17 +36,22 @@ public class Oef2Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen(){
+        List<String> nodigeParen = new ArrayList<>();
+        nodigeParen.add("DT");
+        Paren.maakLijst(nodigeParen, false);
+
         parenLijst = Paren.getLijst();
         geantwoord = 0;
         aantalAntwoorden = parenLijst.size();
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
-        score = intent.getExtras().getInt("score", 0);
+
+        score = intent.getExtras().getInt("score");
         scoreTextView.setText(String.valueOf(score));
     }
 
     private void laadAfbeeldingen(){
-        huidigPaar = parenLijst.get(geantwoord);
+        Paar huidigPaar = parenLijst.get(geantwoord);
 
         Woord woord1 = huidigPaar.getWoorden().get(0);
         Woord woord2 = huidigPaar.getWoorden().get(1);

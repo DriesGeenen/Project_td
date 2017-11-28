@@ -31,7 +31,6 @@ public class Oef1Activity extends AppCompatActivity {
     private Woord woord1;
     private Woord woord2;
     private OnTouchListener myTouchListener;
-    private OnDragListener myDragListener;
     private TouchableImageView afbeelding1;
     private TouchableImageView afbeelding2;
 
@@ -73,7 +72,7 @@ public class Oef1Activity extends AppCompatActivity {
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
 
         myTouchListener = new MyTouchListener();
-        myDragListener = new MyDragListener();
+        OnDragListener myDragListener = new MyDragListener();
 
         afbeelding1 = (TouchableImageView) findViewById(R.id.afbeelding1);
         afbeelding2 = (TouchableImageView) findViewById(R.id.afbeelding2);
