@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>{{hall.hallType}}</h3>
+      <p>{{hall.description}}</p>
+      <p>{{'HALL_MEMBER_PRICE'|translate}}: &euro;{{hall.userPrice}}</p>
+      <p>{{'HALL_BUSINESS_PRICE'|translate}}: &euro;{{hall.businessPrice}}</p>
+    </div>
+    <div class="col-sm-12">
+      <p><button class="btn" (click)="subWeek()"><</button>{{date.toLocaleDateString('en-GB')}}<button class="btn" (click)="addWeek()">></button></p>
+      <div class="table-wrapper">
+        <table class="table table-bordered">
+          <tr><th></th>
+            <th *ngFor="let i of [0,1,2,3,4,5,6]">{{"WEEK_DAY_" + i|translate}} {{getDayDate(i+1)}}</th>
+          </tr>
+          <ng-template ngFor let-hour [ngForOf]="days[0]" let-i="index">
+            <tr *ngFor="let c of [0,1,2,3]" [class]="c % 2 == 0 ? first-color : second-color"><th *ngIf="c == 0" rowspan="4" class="hour">{{i}}:00</th>
+              <td (click)="tableCellClicked(day[i][c])" *ngFor="let day of days" [class]="day[i][c].getClass()" data-toggle="modal" data-target="#reservation-modal">
+                <div class="info-wrapper"><span class="info">{{day[i][c].getReason()}}</span></div>  
+              </td>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reservation-modal" role="dialog">
+    <div class="modal-dialog modal-lg" *ngIf="beginReservation">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{"RESERVATION_CREATE_HEADER"|translate}} {{beginReservation.toLocaleDateString("en-GB")}}</h4>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()" #reservationForm="ngForm">
+            <div class="form-group">
+              <label for="begin-time">{{"RESERVATION_START_TIME" | translate}}</label>
+              <input type="time" class="form-control" (change)="setStartTime($event)" required step="900"  name="beginTime" id="begin-time"/>
+            </div>
+            <div class="form-group">
+              <label for="end-time">{{"RESERVATION_END_TIME" | translate}}</label>
+              <input type="time" (change)="setEndTime($event)" required class="form-control" step="900" name="endTime" id="end-time"/>
+            </div>
+            <div class="form-group">
+              <label for="reason">{{"RESERVATION_REASON" | translate}}</label>
+              <input type="textarea" [(ngModel)]="reservation.reason" required class="form-control" name="reason" id="reason">
+            </div>
+            <div class="form-group" *ngIf="!authService.isLoggedIn()">
+              <label for="email">{{"RESERVATION_EMAIL" | translate}}</label>
+              <input type="text" [(ngModel)]="reservation.email" required class="form-control" name="email" id="email">
+            </div>
+            <button type="submit" class="btn">{{"FORM_SUBMIT"|translate}}</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{"COMMON_CLOSE" | translate}}</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>

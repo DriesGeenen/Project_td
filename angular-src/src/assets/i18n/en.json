@@ -1,0 +1,45 @@
+{
+    "HELLO": "Hello",
+    "WELCOME_MESSAGE": "Welcome to the AngularJS multilingual site",
+    "HEADER_PROJECT_NAME": "Urban Center",
+    "HEADER_HOME": "Home",
+    "HEADER_RESERVATIONS": "Reservations",
+    "HEADER_RESERVE_HALL": "Reserve hall",
+    "HEADER_RESERVATION_PLANNING": "Hall planning",
+    "HEADER_CONTACT": "Contact",
+    "HEADER_LOGIN": "Login",
+    "HEADER_LOGOUT": "Logout",
+    "HEADER_LANGUAGE": "Dutch",
+
+    "LOGIN_TITLE":"Please sign in",
+    "LOGIN_LOGIN":"Sign in",
+    "LOGIN_USERNAME":"Email",
+    "LOGIN_PASSWORD":"Password",
+
+    "HALL_MEMBER_PRICE": "Member price",
+    "HALL_BUSINESS_PRICE": "Business price",
+
+    "WEEK_DAY_0": "Monday",
+    "WEEK_DAY_1": "Tuesday",
+    "WEEK_DAY_2": "Wednesday",
+    "WEEK_DAY_3": "Thursday",
+    "WEEK_DAY_4": "Friday",
+    "WEEK_DAY_5": "Saturday",
+    "WEEK_DAY_6": "Sunday",
+
+    "RESERVATION_CREATE_HEADER": "Create reservation at",
+    "RESERVATION_START_TIME": "Starts at",
+    "RESERVATION_END_TIME": "Ends at",
+    "RESERVATION_REASON": "Reason",
+    "RESERVATION_EMAIL": "Email",
+
+    "FORM_SUBMIT": "Submit",
+
+    "COMMON_CLOSE": "Close",
+
+    "PRICE_NONMEMBERS": "Price for none members:",
+    "PRICE_MEMBERS": "Price for members:",
+    "ROOM_TYPE": "Room: ",
+    "ROOM_RESERVATION": "Reserve this room"
+
+}

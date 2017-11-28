@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="row">
+        <div *ngFor="let reservation of reservationService.reservations" class="col-md-4">
+            <p>
+                Test {{ reservation.reason }}
+            </p>
+        </div>
+    </div>
+</div>

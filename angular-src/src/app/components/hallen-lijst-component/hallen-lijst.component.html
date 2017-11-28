@@ -1,0 +1,39 @@
+
+
+<div class="container wide">
+  <div  class="row equal" >
+    <div *ngFor="let hall of hallService.halls" class="col-md-4 ">
+      <div class="widget">
+        <div class="panel panel-default ">
+          <div class="panel-heading"><span translate="ROOM_TYPE" href="javascript:void(0)"></span>{{ hall.hallType }}</div>
+          <div class="panel-body">
+            <ul class="panel-list margin-top-1">
+              <li><i class="glyphicon "></i><span translate="PRICE_MEMBERS" href="javascript:void(0)"></span>{{hall.userPrice}} &euro;</li>
+              <li><i class="fa fa-graduation-cap"></i><span translate="PRICE_NONMEMBERS" href="javascript:void(0)"></span>{{hall.businessPrice}} &euro;</li>
+            </ul>
+            <p>{{hall.description}}</p>
+          </div>
+          <div class="panel-footer"><button type="button" class="btn btn-default" translate="ROOM_RESERVATION" href="javascript:void(0)" (click)="boekZaal(hall)">Boek deze zaal</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

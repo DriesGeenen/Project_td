@@ -1,0 +1,21 @@
+
+<div class="container wide">
+  <div  class="row equal" >
+    <div *ngFor="let reservation of reservationService.reservations" class="col-md-6 ">
+      <div class="widget">
+        <div class="panel panel-default ">
+          <div class="panel-heading">{{ reservation.startDate }} - {{ reservation.endDate }}</div>
+          <div class="panel-body">
+            <p>{{ reservation.reason }}</p>
+            <br>
+            <p>
+              <span *ngIf="reservation.approved" color="green">Reservatie goedgekeurd</span>
+              <span *ngIf="!reservation.approved" color="orange">Wachten op goedkeuring</span>
+            </p>
+          </div>
+          <div class="panel-footer"><button type="button" class="btn btn-default">Wijzig deze boeking</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
