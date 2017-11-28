@@ -21,8 +21,6 @@ public class Oef4Activity extends AppCompatActivity {
     private int aantalAntwoorden;
     private int score;
     private ImageView afbeelding;
-    private Woord juistWoord;
-    private Woord foutWoord;
     private View.OnTouchListener correctTouchListener;
     private View.OnTouchListener foutTouchListener;
 
@@ -53,7 +51,7 @@ public class Oef4Activity extends AppCompatActivity {
         aantalAntwoorden = parenLijst.size();
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
-        //score = intent.getExtras().getInt("score", 0);
+        score = intent.getIntExtra("score", 0);
         scoreTextView.setText(String.valueOf(score));
         afbeelding = (ImageView) findViewById(R.id.afbeelding);
         correctTouchListener = new CorrectTouchListener();
@@ -65,8 +63,8 @@ public class Oef4Activity extends AppCompatActivity {
 
         int coinToss = (Math.random() < 0.5) ? 0 : 1;
         int reverseCointToss = (coinToss == 0) ? 1 : 0;
-        juistWoord = woorden.get(coinToss);
-        foutWoord = woorden.get(reverseCointToss);
+        Woord juistWoord = woorden.get(coinToss);
+        Woord foutWoord = woorden.get(reverseCointToss);
 
         afbeelding.setImageResource(getResources().getIdentifier(juistWoord.getAfbeelding(), "drawable", getPackageName()));
         spreek(juistWoord.getContextAudio());
