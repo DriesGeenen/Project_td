@@ -1,0 +1,24 @@
+<div class="container wide">
+    <div  class="row equal" >
+        <h1>{{"ROOM_EDIT"|translate}}</h1>
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+            <div class="form-group">
+                <label for="hallType">{{"ROOM_HALLTYPE"|translate}}</label>
+                <input class="form-control" id="hallType" name="hallType" type="text" [(ngModel)]="hall.hallType"/>
+            </div>
+            <div class="form-group">
+                <label for="description">{{"ROOM_DESCRIPTION"|translate}}</label>
+                <input class="form-control" id="description" name="description" type="text" [(ngModel)]="hall.description"/>
+            </div>
+            <div class="form-group">
+                <label for="userPrice">{{"ROOM_USERPRICE"|translate}}</label>
+                <input class="form-control" id="userPrice" name="userPrice" type="number" [(ngModel)]="hall.userPrice"/>
+            </div>
+            <div class="form-group">
+                <label for="buisinessPrice">{{"ROOM_BUSINESSPRICE"|translate}}</label>
+                <input class="form-control" id="buisinessPrice" name="buisinessPrice" type="number" [(ngModel)]="hall.businessPrice"/>
+            </div>
+            <button type="Submit" class="btn">{{"FORM_SUBMIT"|translate}}</button>
+        </form>
+    </div>
+</div>

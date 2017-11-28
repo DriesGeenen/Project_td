@@ -1,0 +1,52 @@
+.first-color{
+	background-color: lightblue;
+}
+
+.second-color{
+	background-color: gray;
+}
+
+.hour{
+	background-color: #ceb64a;
+	color:white;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.info-wrapper{
+	display: block;
+	position: relative;
+}
+
+.reserved-item .info{
+	visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+
+    position: absolute;
+    z-index: 1;
+}
+
+.reserved-item:hover .info{
+	visibility: visible;
+}
+
+.pending{
+	background-color: orange;
+}
+
+.approved{
+	background-color: red;
+}
+
+table td{
+	width: calc(100%/8);
+}
+
+.table-wrapper{
+	height: calc(100vh - 100px);
+	overflow-y: auto;
+}

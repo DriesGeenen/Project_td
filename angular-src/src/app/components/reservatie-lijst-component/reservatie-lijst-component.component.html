@@ -1,0 +1,54 @@
+
+<div class="container wide">
+  <div  class="row equal" >
+    <div *ngFor="let reservation of reservationService.reservations" class="col-md-6 ">
+      <div class="widget">
+        <div class="panel panel-default ">
+          <div class="panel-heading">{{ reservation.startDate.toLocaleString("en-GB") }} - {{ reservation.endDate.toLocaleString("en-GB") }}</div>
+          <div class="panel-body">
+            <p>{{reservation.halls}}</p>
+            <p>{{ reservation.reason }}</p>
+            <p>
+              <span *ngIf="reservation.approved" color="green">Reservatie goedgekeurd</span>
+              <span *ngIf="!reservation.approved" color="orange">Wachten op goedkeuring</span>
+            </p>
+          </div>
+          <div class="panel-footer"><button type="button" class="btn btn-default" (click)="setReservation(reservation)" [disabled]="reservation.approved" data-toggle="modal" data-target="#edit-reservation-modal">Wijzig deze boeking</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="edit-reservation-modal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">{{"RESERVATION_CREATE_HEADER"|translate}} {{reservation.startDate.toLocaleDateString("en-GB")}}</h4>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="onSubmit()" #reservationForm="ngForm">
+              <div class="form-group">
+                <label for="begin-time">{{"RESERVATION_START_TIME" | translate}}</label>
+                <input type="time" class="form-control" (change)="setStartTime($event)" required step="900"  name="beginTime" id="begin-time"/>
+              </div>
+              <div class="form-group">
+                <label for="end-time">{{"RESERVATION_END_TIME" | translate}}</label>
+                <input type="time" (change)="setEndTime($event)" required class="form-control" step="900" name="endTime" id="end-time"/>
+              </div>
+              <div class="form-group">
+                <label for="reason">{{"RESERVATION_REASON" | translate}}</label>
+                <input type="textarea" [(ngModel)]="reservation.reason" required class="form-control" name="reason" id="reason">
+              </div>
+              <button type="submit"  class="btn">{{"FORM_SUBMIT"|translate}}</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{"COMMON_CLOSE" | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+

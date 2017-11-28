@@ -1,0 +1,9 @@
+.container.wide {
+  width: 80%;
+}
+
+.equal {
+  display: flex;
+  flex-wrap: wrap;
+}
+

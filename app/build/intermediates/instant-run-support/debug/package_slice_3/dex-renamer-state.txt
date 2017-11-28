@@ -1,0 +1,4 @@
+#Tue Nov 21 13:34:13 CET 2017
+base.0=A\:\\School\\Thomas More\\3 IT Factory\\Mobile development\\Project_td\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\3
+path.0=classes.dex
+renamed.0=classes.dex
