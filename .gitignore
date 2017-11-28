@@ -9,3 +9,5 @@
 ./android/externalNativeBuild
 /backend/node_modules
 /.idea
+backend/.idea/workspace.xml
+backend/.idea/vcs.xml

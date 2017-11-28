@@ -7,12 +7,10 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 const app = express();
 var router = express.Router();
-const Room = require('./models/room'); //created model loading here
+const Result = require('./models/result'); //created model loading here
 const User = require('./models/user');
-const Reservation = require('./models/reservation');
 const userRoutes = require('./routes/userRoutes');
-const roomRoutes = require('./routes/roomRoutes');
-const reservationRoutes = require('./routes/reservationRoutes');
+const roomRoutes = require('./routes/resultRoutes');
 const jsonwebtoken = require("jsonwebtoken");
 require('./config/passport')(passport);
 
@@ -55,7 +53,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 userRoutes(app);
 roomRoutes(app);
-reservationRoutes(app);
 
 //index route
 router.get('/', function (req, res) {

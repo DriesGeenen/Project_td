@@ -8,7 +8,7 @@ module.exports = function (app) {
         .get(AuthHelper.adminRequired, UserController.getAllUsers);
 
     app.route('/users/register')
-        .post(UserController.registerUser);
+        .post(AuthHelper.adminRequired, UserController.registerUser);
 
     app.route('/users/authenticate')
         .post(UserController.authenticateUser);
