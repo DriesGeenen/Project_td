@@ -14,10 +14,12 @@ export default class User extends DbBase{
 			this.name = data.name;
 			this.lastName = data.lastName;
 			this.email = data.email;
+			this.role = data.role;
 		}
 	}
 
 	name:string;
 	lastName:string;
 	email:string;
+	role:string;
 }

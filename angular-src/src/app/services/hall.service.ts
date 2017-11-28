@@ -25,7 +25,6 @@ export class HallService {
   async getHallen() {
     this.halls = [];
     let result:any = await this.http.get(HttpConfig.host + "/hall", {headers:HttpConfig.headers}).toPromise();
-    console.log(result);
     for(let i in result) {
       this.halls.push(new Hall(result[i]));
     }
@@ -33,10 +32,23 @@ export class HallService {
   }
 
   async getHall(hallId:string, reservationOffset = new Date()){
-    console.log(HttpConfig.headers);
     let result:any = await this.http.get(HttpConfig.host + "/hall/" + hallId + "?offset=" + reservationOffset.toJSON(), {headers:HttpConfig.headers}).toPromise();
     let hall = new Hall(result);
     return hall;
+  }
+
+  async updateHall(hall:Hall){
+    let result:any = await this.http.patch(HttpConfig.host + "/hall/" + hall.getId(), hall, {headers:HttpConfig.headers}).toPromise();
+    return hall;
+  }
+
+  async createHall(hall:Hall){
+    let result:any = await this.http.post(HttpConfig.host + "/hall/", hall, {headers:HttpConfig.headers}).toPromise();
+    return hall;
+  }
+
+  async deleteHall(hall:Hall){
+    let result:any = await this.http.delete(HttpConfig.host + "/hall/" + hall.getId(), {headers:HttpConfig.headers}).toPromise();
   }
 
 }

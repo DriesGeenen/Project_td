@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import autoBind from 'auto-bind';
 import HttpConfig from '../config/http';
 import { AuthService } from "./auth.service";
+import { UserService } from "./user.service";
 
 
 @Injectable()
@@ -11,7 +12,7 @@ export class ReservationService{
     private reservation:Reservation;
     private reservations:Array<Reservation> = [];
 
-    constructor(private http:HttpClient, private authService:AuthService){
+    constructor(private http:HttpClient, private authService:AuthService, private userService:UserService){
         autoBind(this);
         this.authService.onLogout.subscribe(function(){
             this.reservations = [];
@@ -21,27 +22,34 @@ export class ReservationService{
     async getReservations(){
         this.reservations = [];
         let result:any = await this.http.get(HttpConfig.host + "/reservation", {headers:HttpConfig.headers}).toPromise();
-        console.log(result);
         for(let i in result){
             this.reservations.push(new Reservation(result[i]));
         }
         return this.reservations;
     }
 
-    async getReservationsByUser(userId:string){
+    async getToApproveReservations(){
+        this.reservations = [];
+        let result:any = await this.http.get(HttpConfig.host + "/reservation/approved", {headers:HttpConfig.headers}).toPromise();
+        for(let i in result){
+            this.reservations.push(new Reservation(result[i]));
+        }
+        return this.reservations;
+    }
+
+    async getReservationsByUser(){
       this.reservations = [];
-      let result:any = await this.http.get(HttpConfig.host + "/reservation/user/", {headers:HttpConfig.headers}).toPromise();
-      console.log(result);
+      let result:any = await this.http.get(HttpConfig.host + "/reservation/user", {headers:HttpConfig.headers}).toPromise();
       for(let i in result){
-        this.reservations.push(new Reservation(result[i]));
+        let reservation = new Reservation(result[i]);
+        this.reservations.push(reservation);
       }
       return this.reservations;
   }
 
     async createReservation(reservation:Reservation){
         let result = await this.http.post(HttpConfig.host + "/reservation", reservation, {headers:HttpConfig.headers}).toPromise();
-        console.log(result);
-      }
+    }
 
     async getReservation(reservationId:string){
         let result:any = await this.http.post(HttpConfig.host + "/reservation/" + reservationId, {headers:HttpConfig.headers}).toPromise();
@@ -53,5 +61,19 @@ export class ReservationService{
         let result:any = await this.http.patch(HttpConfig.host + '/reservation/' + reservationId, { headers:HttpConfig.headers}).toPromise();
         let reservation = new Reservation(result);
         return reservation;
+    }
+
+    async updateReservation(reservation:Reservation){
+        let result:any = await this.http.put(HttpConfig.host + '/reservation/' + reservation.getId(), reservation ,{ headers:HttpConfig.headers}).toPromise();
+        return reservation;
+    }
+
+    async adminUpdateReservation(reservation:Reservation){
+        let result:any = await this.http.patch(HttpConfig.host + '/reservation/' + reservation.getId(), reservation ,{ headers:HttpConfig.headers}).toPromise();
+        return reservation;
+    }
+
+    async deleteReservation(reservation:Reservation){
+        let result:any = await this.http.delete(HttpConfig.host + '/reservation/' + reservation.getId() ,{ headers:HttpConfig.headers}).toPromise();
     }
 }

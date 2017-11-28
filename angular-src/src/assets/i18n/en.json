@@ -5,6 +5,8 @@
     "HEADER_HOME": "Home",
     "HEADER_RESERVATIONS": "Reservations",
     "HEADER_RESERVE_HALL": "Reserve hall",
+    "HEADER_HALLS" : "Hall management",
+    "HEADER_ACCEPT_RESERVATIONS" : "Pending reservations",
     "HEADER_RESERVATION_PLANNING": "Hall planning",
     "HEADER_CONTACT": "Contact",
     "HEADER_LOGIN": "Login",
@@ -32,14 +34,25 @@
     "RESERVATION_END_TIME": "Ends at",
     "RESERVATION_REASON": "Reason",
     "RESERVATION_EMAIL": "Email",
+    "RESERVATION_APPROVE": "Aprove",
 
     "FORM_SUBMIT": "Submit",
 
     "COMMON_CLOSE": "Close",
+    "COMMON_REMOVE": "Delete",
 
-    "PRICE_NONMEMBERS": "Price for none members:",
+    "PRICE_NONMEMBERS": "Price for non-members:",
     "PRICE_MEMBERS": "Price for members:",
     "ROOM_TYPE": "Room: ",
-    "ROOM_RESERVATION": "Reserve this room"
+    "ROOM_RESERVATION": "Reserve this room",
+    "ROOM_NEW": "New hall",
+    "ROOM_DESCRIPTION": "Description",
+    "ROOM_USERPRICE": "Price for members",
+    "ROOM_BUSINESSPRICE": "Price for non-members",
+    "ROOM_HALLTYPE": "Type hall",
+    "ROOM_EDIT": "Edit hall",
+
+    "EDIT": "Edit",
+    "DELETE": "Delete"
 
 }

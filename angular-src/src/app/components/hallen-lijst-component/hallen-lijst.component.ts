@@ -4,6 +4,7 @@ import {HallService} from "../../services/hall.service";
 import { Router } from '@angular/router';
 import Hall from '../../models/hall';
 import {TranslateService} from '@ngx-translate/core';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-hallen-lijst',
@@ -14,7 +15,7 @@ export class HallenLijstComponent implements OnInit {
   selectedLang: string = "";
 
 
-  constructor(private hallService:HallService, private router:Router, private translateService: TranslateService) {
+  constructor(private authService : AuthService, private hallService:HallService, private router:Router, private translateService: TranslateService) {
     autoBind(this);
     this.translateService.onLangChange.subscribe(function(){
       this.selectedLang = this.translateService.currentLang;
@@ -35,5 +36,18 @@ export class HallenLijstComponent implements OnInit {
   boekZaal(hall:Hall){
     console.log("Boek zaal");
     this.router.navigate(['/room-planning', hall.getId()]);
+  }
+  editZaal(hall:Hall){
+    console.log("Edit Zaal");
+    this.router.navigate(['/edit-hall', hall.getId()])
+  }
+
+  async deleteZaal(hall:Hall){
+    try{
+      await this.hallService.deleteHall(hall);
+      await this.hallService.getHallen();
+    }catch(err){
+
+    }
   }
 }

@@ -22,7 +22,10 @@ export default class Reservation extends DbBase{
 	}
 
 	getDay():number{
-		return this.startDate.getDay();
+		let day = this.startDate.getDay() - 1;
+		if (day < 0)
+			day = 6;
+		return day;
 	}
 
 	getStartHour():number{

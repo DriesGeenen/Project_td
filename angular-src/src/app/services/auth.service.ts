@@ -40,9 +40,7 @@ export class AuthService {
 
   async login(email:string, password:string)
   {
-    console.log({email, password});
     let result:any = await this.http.post(HttpConfig.host + "/auth", {email, password}, {headers:HttpConfig.headers}).toPromise();
-    console.log(result);
     this.user = new User(result);
     this.setAuthToken(result._id);
     HttpConfig.refreshHeaders();
@@ -58,13 +56,9 @@ export class AuthService {
 
   async fetchUser(){
     try{
-      console.log("fetching user")
       let result:any = await this.http.get(HttpConfig.host + "/auth", {headers:HttpConfig.headers}).toPromise();
-      console.log("fetched user");
-      console.log(result);
       this.user = new User(result);
     }catch(err){
-      console.log(err);
     }
   }
 }

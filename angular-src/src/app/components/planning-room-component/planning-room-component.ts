@@ -92,28 +92,29 @@ export class PlanningRoomComponentComponent implements OnInit, OnDestroy {
     }
   }
 
-  getHall(){
-    this.sub = this.route.params.subscribe(async function(params){
-      try{
-        this.hall = await this.hallService.getHall(params["hallId"], this.date);
-        this.resetCal();
-        for (let i in this.hall.calendar){
-          this.markOnCalendar(this.hall.calendar[i]);
-        }
-      }catch(err){
-        console.log(err);
+  async getHall(hallId:string = this.hall.getId()){
+    try{
+      this.hall = await this.hallService.getHall(hallId, this.date);
+      console.log(this.hall);
+      this.resetCal();
+      for (let i in this.hall.calendar){
+        this.markOnCalendar(this.hall.calendar[i]);
       }
-    }.bind(this));
+    }catch(err){
+      console.log(err);
+    }
   }
+
   
   ngOnInit() {
-    this.getHall();
+    this.sub = this.route.params.subscribe(function(params){this.getHall(params["hallId"]);}.bind(this))
   }
 
   markOnCalendar(reservation:Reservation){
-    let day = this.days[reservation.getDay() -1];
+    let day = this.days[reservation.getDay()];
     let beginHour = reservation.getStartHour();
     let endHour = reservation.getEndHour();
+    console.log(reservation.startDate.toJSON());
     for(let h = beginHour; h <= endHour; h++){
       let hour = day[h];
       if (h == beginHour){
@@ -157,14 +158,17 @@ export class PlanningRoomComponentComponent implements OnInit, OnDestroy {
 
   async onSubmit(){
     try{
+      console.log(this.startTime);
       let startTime = this.startTime.split(':').map(function(a){
         return parseInt(a);
       });
+      console.log(startTime);
       this.reservation.startDate.setUTCHours(startTime[0], startTime[1], 0);
       this.reservation.endDate = new Date(this.reservation.startDate.getTime());
       let endTime = this.endTime.split(':').map(function(a){
         return parseInt(a);
       });
+      console.log(this.reservation.endDate);
       this.reservation.endDate.setUTCHours(endTime[0], endTime[1], 0);
       console.log(this.reservation);
       this.reservation.hallIds = [this.hall.getId()];
@@ -183,7 +187,9 @@ export class PlanningRoomComponentComponent implements OnInit, OnDestroy {
   }
 
   setStartTime(event){
+    console.log(event.target.value)
     this.startTime = event.target.value;
+    console.log(this.startTime);
   }
 
   setEndTime(event){

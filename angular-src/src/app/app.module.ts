@@ -17,6 +17,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AcceptReservationComponent } from './components/accept-reservation-component/accept-reservation.component';
 import { ReservationService } from './services/reservation.service';
 import { ReservatieLijstComponentComponent } from './components/reservatie-lijst-component/reservatie-lijst-component.component';
+import { UserService } from './services/user.service';
+import { AddHallComponent } from './components/add-hall-component/add-hall.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -32,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HallenLijstComponent,
     AcceptReservationComponent,
     ReservatieLijstComponentComponent,
+    AddHallComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [AuthService, HallService, ReservationService],
+  providers: [AuthService, HallService, ReservationService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

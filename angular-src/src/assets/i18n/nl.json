@@ -5,14 +5,16 @@
     "HEADER_HOME": "Thuis",
     "HEADER_RESERVATIONS": "Reservaties",
     "HEADER_RESERVE_HALL": "Reserveer zaal",
+    "HEADER_ACCEPT_RESERVATIONS" : "Wachtende reservaties",
     "HEADER_RESERVATION_PLANNING": "Zaal planning",
+    "HEADER_HALLS" : "Zalen beheren",
     "HEADER_CONTACT": "Contact",
     "HEADER_LOGIN": "Inloggen",
     "HEADER_LOGOUT": "Uitloggen",
     "HEADER_LANGUAGE": "English",
 
     "LOGIN_TITLE":"Log in a.u.b.",
-    "LOGIN_LOGIN":"log in",
+    "LOGIN_LOGIN":"Log in",
     "LOGIN_USERNAME":"Email",
     "LOGIN_PASSWORD":"Wachtwoord",
 
@@ -32,15 +34,26 @@
     "RESERVATION_END_TIME": "Eindigt om",
     "RESERVATION_REASON": "Reden",
     "RESERVATION_EMAIL": "Email",
+    "RESERVATION_APPROVE": "Accepteren",
 
     "FORM_SUBMIT": "Verzenden",
 
     "COMMON_CLOSE": "Sluiten",
+    "COMMON_REMOVE": "Verwijderen",
 
     "PRICE_NONMEMBERS": "Prijs niet leden:",
     "PRICE_MEMBERS": "Prijs voor leden:",
     "ROOM_TYPE": "Zaal: ",
-    "ROOM_RESERVATION": "Boek deze zaal"
+    "ROOM_RESERVATION": "Boek deze zaal",
+    "ROOM_NEW": "Nieuwe zaal",
+    "ROOM_DESCRIPTION": "Beschrijving",
+    "ROOM_USERPRICE": "Prijs voor leden",
+    "ROOM_BUSINESSPRICE": "Prijs voor externen",
+    "ROOM_HALLTYPE": "Type zaal",
+    "ROOM_EDIT": "Bewerk zaal",
+
+    "EDIT": "Bewerk",
+    "DELETE": "Verwijder"
 
 
 }
