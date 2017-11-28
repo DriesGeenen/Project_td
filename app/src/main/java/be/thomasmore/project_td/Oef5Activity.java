@@ -48,23 +48,21 @@ public class Oef5Activity extends AppCompatActivity {
         //nodigeParen.add("BP");
         nodigeParen.add("DT");
         Paren.maakLijst(nodigeParen, false);
-        score = 0;
 
         parenLijst = Paren.getLijst();
         geantwoord = 0;
         // Beperkt het aantal antwoorden op deelbaar door 3
         aantalAntwoorden = (parenLijst.size()/3)*6;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
-        //Intent intent = getIntent();
-        //score = intent.getExtras().getInt("score", 0);
+        Intent intent = getIntent();
+        score = intent.getIntExtra("score", 0);
         scoreTextView.setText(String.valueOf(score));
 
         juistKnop = (Button) findViewById(R.id.juistKnop);
         foutKnop = (Button) findViewById(R.id.foutKnop);
 
         if (aantalAntwoorden == 0){
-            Intent intent = new Intent(this, LeeftijdActivity.class);
-            startActivity(intent);
+            volgendeActivity();
         } else {
             disableJuistFoutClick();
             laadAntwoorden();
@@ -145,12 +143,16 @@ public class Oef5Activity extends AppCompatActivity {
     private void gaVerder(){
         geantwoord++;
         if (geantwoord == aantalAntwoorden){
-            Intent intent = new Intent(this, LeeftijdActivity.class);
-            startActivity(intent);
+            volgendeActivity();
         }else if(geantwoord%6==0){
             laadAntwoorden();
         }
         disableJuistFoutClick();
         enableVraagtekenClick();
+    }
+
+    private void volgendeActivity(){
+        Intent intent = new Intent(this, LeeftijdActivity.class);
+        startActivity(intent);
     }
 }

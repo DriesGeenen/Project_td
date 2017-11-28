@@ -46,7 +46,7 @@ public class Oef2Activity extends AppCompatActivity {
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
 
-        score = intent.getExtras().getInt("score");
+        score = intent.getIntExtra("score", 0);
         scoreTextView.setText(String.valueOf(score));
     }
 

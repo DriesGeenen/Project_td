@@ -33,7 +33,10 @@ public class Oef3Activity extends AppCompatActivity {
 
     private List<ImageView> mainImageViews;
     private List<ImageView> kleineImageViews;
-    private List<TextView> kaartTextViews;
+    private List<TouchableTextView> kaartTextViews;
+
+    private OnDragListener myDragListener;
+    private OnTouchListener myTouchListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,11 @@ public class Oef3Activity extends AppCompatActivity {
         aantalAntwoorden = (parenLijst.size()/2) * 4;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
-        score = intent.getExtras().getInt("score", 0);
+        score = intent.getIntExtra("score", 0);
         scoreTextView.setText(String.valueOf(score));
+
+        myDragListener = new MyDragListener();
+        myTouchListener = new MyTouchListener();
     }
 
 
@@ -87,8 +93,8 @@ public class Oef3Activity extends AppCompatActivity {
                             View v3 = ((RelativeLayout) v2).getChildAt(k);
                             if (v3 instanceof ImageView) {
                                 kleineImageViews.add((ImageView) v3);
-                            } else if (v3 instanceof TextView){
-                                kaartTextViews.add((TextView)v3);
+                            } else if (v3 instanceof TouchableTextView){
+                                kaartTextViews.add((TouchableTextView)v3);
                             }
                         }
                     }
@@ -120,16 +126,16 @@ public class Oef3Activity extends AppCompatActivity {
 
                 mainImageView.setTag(woordenLijst.get(i).getAfbeelding());
 
-                mainImageView.setOnDragListener(new MyDragListener());
+                mainImageView.setOnDragListener(myDragListener);
             }
 
             Collections.shuffle(indexLijst);
 
             for (int i = 0; i < kaartTextViews.size(); i++) {
-                TextView kaartTextView = kaartTextViews.get(indexLijst.get(i));
+                TouchableTextView kaartTextView = kaartTextViews.get(indexLijst.get(i));
 
                 kaartTextView.setTag(woordenLijst.get(i).getAfbeelding());
-                kaartTextView.setOnTouchListener(new MyTouchListener());
+                kaartTextView.setOnTouchListener(myTouchListener);
             }
         } else{
             volgendeActivity();
@@ -158,10 +164,12 @@ public class Oef3Activity extends AppCompatActivity {
                 view.setVisibility(View.INVISIBLE);
 
                 spreek(view.getTag().toString() + ".mp3");
-                return true;
-            } else {
-                return false;
+
+            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                view.performClick();
             }
+
+            return false;
         }
     }
 
