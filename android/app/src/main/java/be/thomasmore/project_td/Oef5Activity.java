@@ -43,11 +43,11 @@ public class Oef5Activity extends AppCompatActivity {
 
     private void initialiseerVariabelen() {
 
-        List<String> nodigeParen = new ArrayList<>();
+        /*List<String> nodigeParen = new ArrayList<>();
         nodigeParen.add("RW");
-        //nodigeParen.add("BP");
+        nodigeParen.add("BP");
         nodigeParen.add("DT");
-        Paren.maakLijst(nodigeParen, false);
+        Paren.maakLijst(nodigeParen, false);*/
 
         parenLijst = Paren.getLijst();
         geantwoord = 0;

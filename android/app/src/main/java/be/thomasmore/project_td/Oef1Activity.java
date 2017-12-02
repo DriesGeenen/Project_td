@@ -31,8 +31,7 @@ public class Oef1Activity extends AppCompatActivity {
     private Woord woord1;
     private Woord woord2;
     private OnTouchListener myTouchListener;
-    private TouchableImageView afbeelding1;
-    private TouchableImageView afbeelding2;
+    private List<TouchableImageView> afbeeldingen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +58,11 @@ public class Oef1Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen() {
-        List<String> nodigeParen = new ArrayList<>();
+        /*List<String> nodigeParen = new ArrayList<>();
         for (int i = 0; i<10;i++){
             nodigeParen.add("DT");
         }
-        Paren.maakLijst(nodigeParen, false);
+        Paren.maakLijst(nodigeParen, false);*/
 
         parenLijst = Paren.getLijst();
         score = 0;
@@ -74,11 +73,13 @@ public class Oef1Activity extends AppCompatActivity {
         myTouchListener = new MyTouchListener();
         OnDragListener myDragListener = new MyDragListener();
 
-        afbeelding1 = (TouchableImageView) findViewById(R.id.afbeelding1);
-        afbeelding2 = (TouchableImageView) findViewById(R.id.afbeelding2);
+        afbeeldingen = new ArrayList<>();
+        afbeeldingen.add((TouchableImageView) findViewById(R.id.afbeelding1));
+        afbeeldingen.add((TouchableImageView) findViewById(R.id.afbeelding2));
 
-        afbeelding1.setOnDragListener(myDragListener);
-        afbeelding2.setOnDragListener(myDragListener);
+        for (TouchableImageView a : afbeeldingen){
+            a.setOnDragListener(myDragListener);
+        }
     }
 
     private void laadAfbeeldingen() {
@@ -87,16 +88,20 @@ public class Oef1Activity extends AppCompatActivity {
     }
 
     private void laadContextAfbeeldingen() {
+        int coinToss = (Math.random() < 0.5) ? 0 : 1;
+        int reverseCoinToss = (coinToss == 0) ? 1 : 0;
+
         aantalAntwoorden = parenLijst.size() * 8;
         Paar huidigPaar = parenLijst.get(paarIndex);
-        woord1 = huidigPaar.getWoorden().get(0);
-        woord2 = huidigPaar.getWoorden().get(1);
 
-        afbeelding1.setImageResource(getResources().getIdentifier(woord1.getContextAfbeelding(), "drawable", getPackageName()));
-        afbeelding2.setImageResource(getResources().getIdentifier(woord2.getContextAfbeelding(), "drawable", getPackageName()));
+        woord1 = huidigPaar.getWoorden().get(coinToss);
+        woord2 = huidigPaar.getWoorden().get(reverseCoinToss);
 
-        afbeelding1.setTag(woord1.getAudio());
-        afbeelding2.setTag(woord2.getAudio());
+        afbeeldingen.get(0).setImageResource(getResources().getIdentifier(woord1.getContextAfbeelding(), "drawable", getPackageName()));
+        afbeeldingen.get(1).setImageResource(getResources().getIdentifier(woord2.getContextAfbeelding(), "drawable", getPackageName()));
+
+        afbeeldingen.get(0).setTag(woord1.getAudio());
+        afbeeldingen.get(1).setTag(woord2.getAudio());
     }
 
     private void laadMiddenveldAfbeeldingen() {
@@ -106,8 +111,6 @@ public class Oef1Activity extends AppCompatActivity {
         achtergrond.setOnDragListener(new BackgroundDragListener());
 
         Random rand = new Random();
-
-
         
         for (int i = 0; i < 8; i++) {
             TouchableImageView antwoord = new TouchableImageView(this);
@@ -154,7 +157,6 @@ public class Oef1Activity extends AppCompatActivity {
                 return true;
             } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 view.performClick();
-
             }
 
             return false;

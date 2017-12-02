@@ -28,7 +28,7 @@
                 android:layout_height="75dp"
                 android:layout_marginBottom="75dp"/>
 
-            <TextView
+            <be.thomasmore.project_td.TouchableTextView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="90dp"
@@ -38,7 +38,7 @@
                 android:gravity="center"
                 android:background="@drawable/border"/>
 
-            <TextView
+            <be.thomasmore.project_td.TouchableTextView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="90dp"
@@ -79,7 +79,7 @@
                 android:layout_height="75dp"
                 android:layout_marginTop="75dp"/>
 
-            <TextView
+            <be.thomasmore.project_td.TouchableTextView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="90dp"
@@ -89,7 +89,7 @@
                 android:gravity="center"
                 android:background="@drawable/border"/>
 
-            <TextView
+            <be.thomasmore.project_td.TouchableTextView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="90dp"

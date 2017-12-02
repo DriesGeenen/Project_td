@@ -59,6 +59,12 @@ public class Oef3Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen() {
+        /*List<String> nodigeParen = new ArrayList<>();
+        nodigeParen.add("DT");
+        nodigeParen.add("DT");
+        nodigeParen.add("DT");
+        Paren.maakLijst(nodigeParen, false);*/
+
         parenLijst = Paren.getLijst();
         geantwoord = 0;
         // Beperkt het aantal antwoorden op deelbaar door 2

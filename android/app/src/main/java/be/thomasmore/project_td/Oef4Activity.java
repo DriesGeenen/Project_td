@@ -62,9 +62,9 @@ public class Oef4Activity extends AppCompatActivity {
         List<Woord> woorden = parenLijst.get(geantwoord).getWoorden();
 
         int coinToss = (Math.random() < 0.5) ? 0 : 1;
-        int reverseCointToss = (coinToss == 0) ? 1 : 0;
+        int reverseCoinToss = (coinToss == 0) ? 1 : 0;
         Woord juistWoord = woorden.get(coinToss);
-        Woord foutWoord = woorden.get(reverseCointToss);
+        Woord foutWoord = woorden.get(reverseCoinToss);
 
         afbeelding.setImageResource(getResources().getIdentifier(juistWoord.getAfbeelding(), "drawable", getPackageName()));
         spreek(juistWoord.getContextAudio());

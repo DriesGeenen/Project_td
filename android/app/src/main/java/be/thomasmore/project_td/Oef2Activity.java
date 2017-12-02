@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Oef2Activity extends AppCompatActivity {
@@ -36,9 +35,9 @@ public class Oef2Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen(){
-        List<String> nodigeParen = new ArrayList<>();
+        /*List<String> nodigeParen = new ArrayList<>();
         nodigeParen.add("DT");
-        Paren.maakLijst(nodigeParen, false);
+        Paren.maakLijst(nodigeParen, false);*/
 
         parenLijst = Paren.getLijst();
         geantwoord = 0;
