@@ -6,6 +6,8 @@ import {PlanningRoomComponentComponent} from "./components/planning-room-compone
 import { AcceptReservationComponent } from './components/accept-reservation-component/accept-reservation.component';
 import { ReservatieLijstComponentComponent} from "./components/reservatie-lijst-component/reservatie-lijst-component.component";
 import { AddHallComponent } from './components/add-hall-component/add-hall.component';
+import {UsersComponent} from "./components/users-component/users.component";
+import {ResultsComponent} from "./components/results-component/results.component";
 
 const APP_ROUTES: Routes = [
   {path: '', redirectTo: '/hall-list', pathMatch:'full'},
@@ -14,7 +16,9 @@ const APP_ROUTES: Routes = [
   {path: 'room-planning/:hallId', component: PlanningRoomComponentComponent },
   {path: 'reservations', component: ReservatieLijstComponentComponent },
   {path: 'edit-hall/:hallId', component: AddHallComponent},
-  {path: 'pending-reservations', component: AcceptReservationComponent}
+  {path: 'pending-reservations', component: AcceptReservationComponent},
+  {path: 'users', component: UsersComponent},
+  {path: 'results', component: ResultsComponent}
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

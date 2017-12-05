@@ -1,11 +1,6 @@
 .headercontainer{
   margin-top: 75px;
 }
-.imagelgu{
-  position: relative;
-  top: 5px;
-  right: 5px;
-}
 
 ul.nav a:hover { color: #ffffff !important; }
 ul.nav a:hover { background-color: #ceb64a !important; }

@@ -12,14 +12,14 @@ export default class User extends DbBase{
 		autoBind(this);
 		if (data){
 			this.name = data.name;
-			this.lastName = data.lastName;
 			this.email = data.email;
+			this.password = data.password;
 			this.role = data.role;
 		}
 	}
 
 	name:string;
-	lastName:string;
 	email:string;
+	password:string;
 	role:string;
 }
