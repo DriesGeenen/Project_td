@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,7 +34,7 @@ public class Oef1Activity extends AppCompatActivity {
     private Woord woord1;
     private Woord woord2;
     private OnTouchListener myTouchListener;
-    private List<TouchableImageView> afbeeldingen;
+    private List<ImageView> afbeeldingen;
     private RelativeLayout middenveld;
 
     private Result resultaat;
@@ -60,12 +60,6 @@ public class Oef1Activity extends AppCompatActivity {
 
 
     private void initialiseerVariabelen() {
-        /*List<String> nodigeParen = new ArrayList<>();
-        for (int i = 0; i<10;i++){
-            nodigeParen.add("DT");
-        }
-        Paren.maakLijst(nodigeParen, false);*/
-
         parenLijst = Paren.getLijst();
         score = 0;
         geantwoord = 0;
@@ -76,10 +70,10 @@ public class Oef1Activity extends AppCompatActivity {
         OnDragListener myDragListener = new MyDragListener();
 
         afbeeldingen = new ArrayList<>();
-        afbeeldingen.add((TouchableImageView) findViewById(R.id.afbeelding1));
-        afbeeldingen.add((TouchableImageView) findViewById(R.id.afbeelding2));
+        afbeeldingen.add((ImageView) findViewById(R.id.afbeelding1));
+        afbeeldingen.add((ImageView) findViewById(R.id.afbeelding2));
 
-        for (TouchableImageView a : afbeeldingen){
+        for (ImageView a : afbeeldingen){
             a.setOnDragListener(myDragListener);
         }
     }
@@ -162,13 +156,9 @@ public class Oef1Activity extends AppCompatActivity {
 
     private void postResult(){
         if (User.hasToken()){
-            Log.i("Token", User.getToken());
             Gson gson = new Gson();
             HttpPOSTer httpPost = new HttpPOSTer();
             httpPost.setJsonObject(gson.toJson(resultaat));
-
-            Log.i("Tokengson", gson.toJson(resultaat));
-
             httpPost.setOnResultReadyListener(new HttpPOSTer.OnResultReadyListener() {
                 @Override
                 public void resultReady(String result) {
@@ -176,6 +166,14 @@ public class Oef1Activity extends AppCompatActivity {
                 }
             });
             httpPost.execute(Config.backendServer + "/results");
+        }
+    }
+
+    private void setEnabledAfbeeldingen(boolean value){
+        int count = middenveld.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View v = middenveld.getChildAt(i);
+            v.setEnabled(value);
         }
     }
 
@@ -193,7 +191,7 @@ public class Oef1Activity extends AppCompatActivity {
                 // Originele afbeelding verdwijnt
                 view.setVisibility(View.INVISIBLE);
                 spreek(view.getTag().toString());
-                middenveld.setEnabled(false);
+                setEnabledAfbeeldingen(false);
                 return true;
             } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 view.performClick();
@@ -205,22 +203,17 @@ public class Oef1Activity extends AppCompatActivity {
 
 
     class MyDragListener implements OnDragListener {
-
         @Override
         public boolean onDrag(View v, DragEvent event) {
-
             if (event.getAction() == DragEvent.ACTION_DROP) {
                 //handle the dragged view being dropped over a target view
                 View view = (View) event.getLocalState();
                 //stop displaying the view where it was before it was dragged
                 view.setVisibility(View.INVISIBLE);
-
                 //view dragged item is being dropped on
                 TouchableImageView dropTarget = (TouchableImageView) v;
-
                 //view being dragged and dropped
                 TouchableImageView dropped = (TouchableImageView) view;
-
                 // View verwijderen voor performance / anti-crash
                 ((ViewGroup) view.getParent()).removeView(view);
 
@@ -228,12 +221,12 @@ public class Oef1Activity extends AppCompatActivity {
 
                 if (dropped.getTag().toString().equals(dropTarget.getTag().toString())) {
                     // Correct gedropt
-                    resultaat.increaseAmountCorrect();
+                    resultaat.verhoogAmountCorrect();
                     score++;
                     scoreTextView.setText(String.valueOf(score));
                 } else {
                     // Fout gedropt
-                    resultaat.increaseAmountWrong();
+                    resultaat.verhoogAmountWrong();
                 }
 
                 if (geantwoord == aantalAntwoorden) {
@@ -250,6 +243,7 @@ public class Oef1Activity extends AppCompatActivity {
                     // Laad nieuwe afbeeldingen
                     laadAfbeeldingen();
                 }
+                setEnabledAfbeeldingen(true);
             }
             return true;
         }
@@ -262,7 +256,7 @@ public class Oef1Activity extends AppCompatActivity {
                 // Afbeelding wordt terug zichtbaar
                 View view = (View) event.getLocalState();
                 view.setVisibility(View.VISIBLE);
-                middenveld.setEnabled(true);
+                setEnabledAfbeeldingen(true);
             }
             return true;
         }

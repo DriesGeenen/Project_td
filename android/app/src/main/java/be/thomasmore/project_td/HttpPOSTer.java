@@ -21,7 +21,7 @@ public class HttpPOSTer extends AsyncTask<String, Void, String> {
     }
 
     public interface OnResultReadyListener {
-        public void resultReady(String result);
+        void resultReady(String result);
     }
 
     private OnResultReadyListener onResultReadyListener;

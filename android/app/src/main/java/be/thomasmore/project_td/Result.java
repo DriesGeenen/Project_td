@@ -2,10 +2,10 @@ package be.thomasmore.project_td;
 
 public class Result {
 
-    int exerciseNr;
-    String word;
-    int amountCorrect;
-    int amountWrong;
+    private int exerciseNr;
+    private String word;
+    private int amountCorrect;
+    private int amountWrong;
 
     Result(int exerciseNr){
         this.exerciseNr = exerciseNr;
@@ -45,11 +45,11 @@ public class Result {
         this.amountWrong = amountWrong;
     }
 
-    public void increaseAmountCorrect(){
+    public void verhoogAmountCorrect(){
         amountCorrect++;
     }
 
-    public void increaseAmountWrong(){
+    public void verhoogAmountWrong(){
         amountWrong++;
     }
 }

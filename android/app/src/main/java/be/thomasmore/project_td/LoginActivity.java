@@ -1,6 +1,7 @@
 package be.thomasmore.project_td;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,8 @@ import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private SharedPreferences settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,9 +23,16 @@ public class LoginActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+
+        settings = getSharedPreferences("user",0);
+        String token = settings.getString("token", null);
+        if (token != null){
+            User.setToken(token);
+            volgendeActivity();
+        }
     }
 
-    public void loginButtonClick(View view){
+    public void loginButtonClick(View view) {
         TextView gebruikersnaamTextView = (TextView) findViewById(R.id.gebruikersnaam);
         TextView wachtwoordTextView = (TextView) findViewById(R.id.wachtwoord);
 
@@ -36,17 +46,22 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("RESULT: ", result);
                 Gson gson = new Gson();
                 AuthResult authResult = gson.fromJson(result, AuthResult.class);
-                if (authResult.isSuccess()){
+                if (authResult.isSuccess()) {
+                    settings.edit().putString("token", authResult.getToken()).apply();
                     User.setToken(authResult.getToken());
-                    Intent intent = new Intent(LoginActivity.this, LeeftijdActivity.class);
-                    startActivity(intent);
-                } else{
+                    volgendeActivity();
+                } else {
                     toon("Ongeldige login");
                 }
             }
         });
 
         httpPost.execute(Config.backendServer + "/users/authenticate");
+    }
+
+    private void volgendeActivity(){
+        Intent intent = new Intent(LoginActivity.this, LeeftijdActivity.class);
+        startActivity(intent);
     }
 
     private void toon(String tekst) {

@@ -25,4 +25,9 @@ public class LeeftijdActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        // doe niks
+    }
 }
