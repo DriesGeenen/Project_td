@@ -9,27 +9,30 @@ export class UserService {
 
   users:Array<User> = [];
 
-  constructor(private http:HttpClient) { 
+  constructor(private http:HttpClient) {
     autoBind(this);
   }
 
-  async getUser(userId:string){
-    for (let i in this.users){
-      if (this.users[i].getId() == userId){
-        return this.users[i];
-      }
+  async getUsers() {
+    this.users = [];
+    let result:any = await this.http.get(HttpConfig.host + "/users", {headers:HttpConfig.headers}).toPromise();
+    for(let i in result) {
+      this.users.push(new User(result[i]));
     }
-    
-    let result = this.http.get(HttpConfig.host + "/user/" + userId, {headers: HttpConfig.headers});
-    for (let i in this.users){
-      if (this.users[i].getId() == userId){
-        return this.users[i];
-      }
-    }
+    return this.users;
+  }
 
-    let user = new User(result);
-    this.users.push(user);
+  async updateUser(user:User){
+    let result:any = await this.http.patch(HttpConfig.host + "/user/" + user.getId(), user, {headers:HttpConfig.headers}).toPromise();
     return user;
   }
-  
+
+  async createUser(user:User){
+    let result:any = await this.http.post(HttpConfig.host + "/user/", user, {headers:HttpConfig.headers}).toPromise();
+    return user;
+  }
+
+  async deleteUser(user:User){
+    let result:any = await this.http.delete(HttpConfig.host + "/user/" + user.getId(), {headers:HttpConfig.headers}).toPromise();
+  }
 }

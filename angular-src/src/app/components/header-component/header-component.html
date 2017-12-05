@@ -8,40 +8,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <img class="imagelgu" style="float:left" src="./../../../assets/images/lgu-icon.png" width="30">
-                    <a [routerLink]="['/']" style="float:right" class="navbar-brand">  LGU Academy</a>
+                <div class="navbar" class="collapse navbar-collapse">
+                    <a [routerLink]="['/']" style="float:right" class="navbar-brand">Home</a>
                 </div>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li routerLinkActive="active">
-                        <a [routerLink]="['/hall-list']" translate="HEADER_RESERVE_HALL"></a>
-                    </li>
-                    <li routerLinkActive="active" *ngIf="authService.isLoggedIn()">
-                        <a [routerLink]="['/reservations']" translate="HEADER_RESERVATIONS"></a>
-                    </li>
-                    <li routerLinkActive="active" *ngIf="authService.isLoggedIn() && authService.getUser()?.role == 'admin' ">
-                        <a [routerLink]="['/pending-reservations']" translate="HEADER_ACCEPT_RESERVATIONS"></a>
-                    </li>
+                  <li routerLinkActive="active" *ngIf="authService.isLoggedIn() && authService.getUser()?.role == 'user' ">
+                    <a [routerLink]="['/results']">Resultaten</a>
+                  </li>
+
+                  <li routerLinkActive="active" *ngIf="authService.isLoggedIn() && authService.getUser()?.role == 'admin' ">
+                    <a [routerLink]="['/users']">Gebruikers</a>
+                  </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li *ngIf="selectedLang != 'nl'" (click)="changeLanguage('nl')">
-                        <a href="javascript:void(0)">
-                            <span class="glyphicon glyphicon-globe"></span> Nederlands
-                        </a>
-                    </li>
-                    <li *ngIf="selectedLang != 'en'" (click)="changeLanguage('en')">
-                        <a href="javascript:void(0)">
-                            <span class="glyphicon glyphicon-globe"></span> English
-                        </a>
-                    </li>
-
                     <li *ngIf="!isLoggedIn">
-                        <a [routerLink]="['/signin']" translate="HEADER_LOGIN"></a>
+                        <a [routerLink]="['/signin']">Login</a>
                     </li>
                     <li *ngIf="isLoggedIn">
-                        <a (click)="logout()" translate="HEADER_LOGOUT" href="javascript:void(0)"></a>
+                        <a (click)="logout()" href="javascript:void(0)">Logout</a>
                     </li>
                 </ul>
             </div>

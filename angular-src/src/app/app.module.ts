@@ -19,6 +19,8 @@ import { ReservationService } from './services/reservation.service';
 import { ReservatieLijstComponentComponent } from './components/reservatie-lijst-component/reservatie-lijst-component.component';
 import { UserService } from './services/user.service';
 import { AddHallComponent } from './components/add-hall-component/add-hall.component';
+import { ResultsComponent } from './components/results-component/results.component';
+import { UsersComponent } from './components/users-component/users.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -34,7 +36,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     HallenLijstComponent,
     AcceptReservationComponent,
     ReservatieLijstComponentComponent,
-    AddHallComponent
+    AddHallComponent,
+    ResultsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
