@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,9 @@ public class Oef1Activity extends AppCompatActivity {
     private Woord woord2;
     private OnTouchListener myTouchListener;
     private List<TouchableImageView> afbeeldingen;
+    private RelativeLayout middenveld;
+
+    private Result resultaat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +58,6 @@ public class Oef1Activity extends AppCompatActivity {
         }
     }
 
-    private int dpToPx(int dp) {
-        float scale = getResources().getDisplayMetrics().density;
-        return (int) (dp * scale + 0.5f);
-    }
 
     private void initialiseerVariabelen() {
         /*List<String> nodigeParen = new ArrayList<>();
@@ -85,6 +87,7 @@ public class Oef1Activity extends AppCompatActivity {
     private void laadAfbeeldingen() {
         laadContextAfbeeldingen();
         laadMiddenveldAfbeeldingen();
+        laadResultaat();
     }
 
     private void laadContextAfbeeldingen() {
@@ -105,7 +108,7 @@ public class Oef1Activity extends AppCompatActivity {
     }
 
     private void laadMiddenveldAfbeeldingen() {
-        RelativeLayout middenveld = (RelativeLayout) findViewById(R.id.middenveld);
+        middenveld = (RelativeLayout) findViewById(R.id.middenveld);
         ConstraintLayout achtergrond = (ConstraintLayout) findViewById(R.id.backgroundLayout);
 
         achtergrond.setOnDragListener(new BackgroundDragListener());
@@ -141,8 +144,44 @@ public class Oef1Activity extends AppCompatActivity {
         }
     }
 
+
+    private void laadResultaat(){
+        resultaat = new Result(1);
+        resultaat.setWord(woord1.getTekst() + "/" + woord2.getTekst());
+    }
+
     private void spreek(String tekst) {
         //Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
+    }
+
+    private void volgendeActivity(){
+        Intent intent = new Intent(Oef1Activity.this, Oef2Activity.class);
+        intent.putExtra("score", score);
+        startActivity(intent);
+    }
+
+    private void postResult(){
+        if (User.hasToken()){
+            Log.i("Token", User.getToken());
+            Gson gson = new Gson();
+            HttpPOSTer httpPost = new HttpPOSTer();
+            httpPost.setJsonObject(gson.toJson(resultaat));
+
+            Log.i("Tokengson", gson.toJson(resultaat));
+
+            httpPost.setOnResultReadyListener(new HttpPOSTer.OnResultReadyListener() {
+                @Override
+                public void resultReady(String result) {
+                    // Is goed zo
+                }
+            });
+            httpPost.execute(Config.backendServer + "/results");
+        }
+    }
+
+    private int dpToPx(int dp) {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
     }
 
     private final class MyTouchListener implements OnTouchListener {
@@ -154,6 +193,7 @@ public class Oef1Activity extends AppCompatActivity {
                 // Originele afbeelding verdwijnt
                 view.setVisibility(View.INVISIBLE);
                 spreek(view.getTag().toString());
+                middenveld.setEnabled(false);
                 return true;
             } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 view.performClick();
@@ -170,10 +210,8 @@ public class Oef1Activity extends AppCompatActivity {
         public boolean onDrag(View v, DragEvent event) {
 
             if (event.getAction() == DragEvent.ACTION_DROP) {
-
                 //handle the dragged view being dropped over a target view
                 View view = (View) event.getLocalState();
-
                 //stop displaying the view where it was before it was dragged
                 view.setVisibility(View.INVISIBLE);
 
@@ -189,16 +227,27 @@ public class Oef1Activity extends AppCompatActivity {
                 geantwoord++;
 
                 if (dropped.getTag().toString().equals(dropTarget.getTag().toString())) {
+                    // Correct gedropt
+                    resultaat.increaseAmountCorrect();
                     score++;
                     scoreTextView.setText(String.valueOf(score));
+                } else {
+                    // Fout gedropt
+                    resultaat.increaseAmountWrong();
                 }
 
                 if (geantwoord == aantalAntwoorden) {
-                    Intent intent = new Intent(Oef1Activity.this, Oef2Activity.class);
-                    intent.putExtra("score", score);
-                    startActivity(intent);
+                    // Oefening voorbij
+                    // Resultaat opslaan
+                    postResult();
+                    // Naar de volgende oefening
+                    volgendeActivity();
                 } else if (geantwoord % 8 == 0) {
+                    // Volgend paar
                     paarIndex++;
+                    // Resultaat opslaan
+                    postResult();
+                    // Laad nieuwe afbeeldingen
                     laadAfbeeldingen();
                 }
             }
@@ -213,6 +262,7 @@ public class Oef1Activity extends AppCompatActivity {
                 // Afbeelding wordt terug zichtbaar
                 View view = (View) event.getLocalState();
                 view.setVisibility(View.VISIBLE);
+                middenveld.setEnabled(true);
             }
             return true;
         }

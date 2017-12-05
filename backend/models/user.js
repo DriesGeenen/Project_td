@@ -4,10 +4,6 @@ const userSchema = mongoose.Schema({
     name: {
         type: String
     },
-    email: {
-        type: String,
-        required: true
-    },
     username: {
         type: String,
         unique: true,
@@ -17,12 +13,8 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    phoneNumber: {
-        type: Number,
-        required: true
-    },
-    isAdmin: {
-        type: Boolean,
+    role: {
+        type: String,
         default: false,
         required: true
     }

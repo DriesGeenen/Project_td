@@ -31,7 +31,11 @@ exports.getResultById = function (req, res) {
 
 exports.addResult = function (req, res) {
     // remember which user posted the result
-    req.body.userId = req.user._id;
+    req.body.user = req.user.data._id;
+    // set date to today
+    req.body.date = new Date();
+
+    console.log(req.body);
     var promise = ResultRepository.addResult(req);
     promise.then(function () {
         res.json({success: true, msg: 'Result created'});

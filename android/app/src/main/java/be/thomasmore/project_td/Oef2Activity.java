@@ -82,9 +82,7 @@ public class Oef2Activity extends AppCompatActivity {
         }
         geantwoord++;
         if (geantwoord == aantalAntwoorden){
-            Intent intent = new Intent(this, Oef3Activity.class);
-            intent.putExtra("score", score);
-            startActivity(intent);
+            volgendeActivity();
         } else{
             laadAfbeeldingen();
         }
@@ -94,5 +92,11 @@ public class Oef2Activity extends AppCompatActivity {
     private void spreek(String tekst)
     {
         Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
+    }
+
+    private void volgendeActivity(){
+        Intent intent = new Intent(Oef2Activity.this, Oef3Activity.class);
+        intent.putExtra("score", score);
+        startActivity(intent);
     }
 }

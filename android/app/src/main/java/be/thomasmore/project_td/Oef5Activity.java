@@ -152,7 +152,7 @@ public class Oef5Activity extends AppCompatActivity {
     }
 
     private void volgendeActivity(){
-        Intent intent = new Intent(this, LeeftijdActivity.class);
+        Intent intent = new Intent(Oef5Activity.this, LeeftijdActivity.class);
         startActivity(intent);
     }
 }

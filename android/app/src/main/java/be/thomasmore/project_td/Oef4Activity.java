@@ -92,6 +92,12 @@ public class Oef4Activity extends AppCompatActivity {
         Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
     }
 
+    private void volgendeActivity(){
+        Intent intent = new Intent(Oef4Activity.this, Oef5Activity.class);
+        intent.putExtra("score", score);
+        startActivity(intent);
+    }
+
     class CorrectTouchListener implements View.OnTouchListener {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
@@ -121,9 +127,7 @@ public class Oef4Activity extends AppCompatActivity {
     public void buttonClick(View v) {
         geantwoord++;
         if (geantwoord == aantalAntwoorden) {
-            Intent intent = new Intent(this, Oef5Activity.class);
-            intent.putExtra("score", score);
-            startActivity(intent);
+            volgendeActivity();
         } else {
             laadAfbeeldingen();
         }

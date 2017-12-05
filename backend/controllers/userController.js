@@ -58,14 +58,7 @@ exports.authenticateUser = function (req, res) {
             res.json({
                 success: true,
                 token: 'JWT ' + token,
-                user: {
-                    id: user._id,
-                    name: user.name,
-                    username: user.username,
-                    email: user.email,
-                    phoneNumber: user.phoneNumber,
-                    isAdmin: user.isAdmin
-                }
+                role: user.role
             });
         }
         else {
