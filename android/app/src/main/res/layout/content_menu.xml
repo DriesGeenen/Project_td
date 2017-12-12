@@ -39,8 +39,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_height="wrap_content">
 
                 <be.thomasmore.project_td.MyCheckbox
                     android:layout_width="100dp"
@@ -56,7 +55,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="33dp"
                     android:button="@null"
                     android:tag="LW"
                     android:text="L ➾ W"
@@ -67,7 +66,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="33dp"
                     android:button="@null"
                     android:tag="RJ"
                     android:textAlignment="center"
@@ -78,7 +77,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="33dp"
                     android:button="@null"
                     android:tag="RW"
                     android:textAlignment="center"
@@ -97,8 +96,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_height="wrap_content">
 
                 <be.thomasmore.project_td.MyCheckbox
                     android:layout_width="133dp"
@@ -119,7 +117,7 @@
                     android:textAlignment="center"
                     android:text="V ➾ F"
                     android:textSize="24sp"
-                    android:layout_marginLeft="30dp"/>
+                    android:layout_marginLeft="50dp"/>
 
                 <be.thomasmore.project_td.MyCheckbox
                     android:layout_width="133dp"
@@ -130,7 +128,7 @@
                     android:textAlignment="center"
                     android:text="D ➾ T"
                     android:textSize="24sp"
-                    android:layout_marginLeft="30dp"/>
+                    android:layout_marginLeft="50dp"/>
 
             </LinearLayout>
 
