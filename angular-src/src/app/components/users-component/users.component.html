@@ -1,3 +1,24 @@
-<p>
-  users works!
-</p>
+<div class="container wide" *ngIf="authService.isLoggedIn() && authService.getUser()?.role == 'admin'">
+  <a class="btn btn-success" [routerLink]="['/edit-user','']">Nieuwe gebruiker</a>
+  <br/>
+  <br/>
+  <div  class="row equal" >
+    <div *ngFor="let user of userService.users" class="col-md-6 ">
+      <div class="widget">
+        <div class="panel panel-default ">
+          <div class="panel-heading">{{ user.name }}</div>
+          <div class="panel-body">
+            {{ user.email }}
+          </div>
+          <div class="panel-footer">
+            <button type="button" class="btn btn-default" href="javascript:void(0)" (click)="getResults(user.getId())">Bekijk resultaten</button>
+            <div style="float: right">
+              <button type="button" class="btn btn-primary" (click)="editUser(user.getId())">Bewerk</button>
+              <button type="button" class="btn btn-danger" style="margin-left: 5px" (click)="deleteUser(user.getId())">Verwijder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
