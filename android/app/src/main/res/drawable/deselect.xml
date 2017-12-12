@@ -6,7 +6,7 @@
 
     <stroke
         android:width="2dp"
-        android:color="#000000" >
+        android:color="@color/colorMyCheckBackground" >
     </stroke>
     <corners android:radius="5dp" />
 

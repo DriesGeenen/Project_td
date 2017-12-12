@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorMyCheckBorder">#FF00CC00</color>
+    <color name="colorMyCheckBackground">#7700ff00</color>
+    <color name="colorMyCheckText">#CC227777</color>
 </resources>
