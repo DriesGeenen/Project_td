@@ -24,8 +24,7 @@
             android:layout_marginLeft="150dp"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:textSize="24sp"
-            android:onClick="buttonClick"/>
+            android:textSize="24sp"/>
         <be.thomasmore.project_td.TouchableButton
             android:id="@+id/knop2"
             android:layout_width="150dp"
@@ -33,8 +32,7 @@
             android:layout_marginLeft="150dp"
             android:layout_marginTop="160dp"
             android:gravity="center"
-            android:textSize="24sp"
-            android:onClick="buttonClick"/>
+            android:textSize="24sp"/>
     </RelativeLayout>
 
 </LinearLayout>

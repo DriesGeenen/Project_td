@@ -2,6 +2,7 @@ package be.thomasmore.project_td;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +17,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,12 @@ public class Oef1Activity extends AppCompatActivity {
     private Woord woord1;
     private Woord woord2;
     private OnTouchListener myTouchListener;
+    public MyCompletionListener myCompletionListener;
     private List<ImageView> afbeeldingen;
     private RelativeLayout middenveld;
+
+    private boolean dragComplete;
+    private boolean playAudioComplete;
 
     private Result resultaat;
 
@@ -55,11 +58,19 @@ public class Oef1Activity extends AppCompatActivity {
             startActivity(intent);
         } else {
             laadAfbeeldingen();
+            setEnabledAfbeeldingen(false);
+            MyMediaPlayer.speelIntroductie(this, 1, myCompletionListener);
         }
     }
 
 
     private void initialiseerVariabelen() {
+        /*List<String> nodigeParen = new ArrayList<>();
+        for (int i=0;i<11;i++){
+            nodigeParen.add("BP");
+        }
+        Paren.maakLijst(nodigeParen, false);*/
+
         parenLijst = Paren.getLijst();
         score = 0;
         geantwoord = 0;
@@ -68,10 +79,13 @@ public class Oef1Activity extends AppCompatActivity {
 
         myTouchListener = new MyTouchListener();
         OnDragListener myDragListener = new MyDragListener();
+        myCompletionListener = new MyCompletionListener();
 
         afbeeldingen = new ArrayList<>();
         afbeeldingen.add((ImageView) findViewById(R.id.afbeelding1));
         afbeeldingen.add((ImageView) findViewById(R.id.afbeelding2));
+
+        dragComplete = true;
 
         for (ImageView a : afbeeldingen){
             a.setOnDragListener(myDragListener);
@@ -85,20 +99,20 @@ public class Oef1Activity extends AppCompatActivity {
     }
 
     private void laadContextAfbeeldingen() {
-        int coinToss = (Math.random() < 0.5) ? 0 : 1;
-        int reverseCoinToss = (coinToss == 0) ? 1 : 0;
+        Coin coin = new Coin();
 
         aantalAntwoorden = parenLijst.size() * 8;
         Paar huidigPaar = parenLijst.get(paarIndex);
 
-        woord1 = huidigPaar.getWoorden().get(coinToss);
-        woord2 = huidigPaar.getWoorden().get(reverseCoinToss);
+        // TODO: test
+        woord1 = huidigPaar.getWoorden().get(0);
+        woord2 = huidigPaar.getWoorden().get(1);
 
-        afbeeldingen.get(0).setImageResource(getResources().getIdentifier(woord1.getContextAfbeelding(), "drawable", getPackageName()));
-        afbeeldingen.get(1).setImageResource(getResources().getIdentifier(woord2.getContextAfbeelding(), "drawable", getPackageName()));
+        afbeeldingen.get(coin.getTop()).setImageResource(getResources().getIdentifier(woord1.getContextResource(), "drawable", getPackageName()));
+        afbeeldingen.get(coin.getBottom()).setImageResource(getResources().getIdentifier(woord2.getContextResource(), "drawable", getPackageName()));
 
-        afbeeldingen.get(0).setTag(woord1.getAudio());
-        afbeeldingen.get(1).setTag(woord2.getAudio());
+        afbeeldingen.get(coin.getTop()).setTag(woord1.getResource());
+        afbeeldingen.get(coin.getBottom()).setTag(woord2.getResource());
     }
 
     private void laadMiddenveldAfbeeldingen() {
@@ -110,7 +124,7 @@ public class Oef1Activity extends AppCompatActivity {
         Random rand = new Random();
         
         for (int i = 0; i < 8; i++) {
-            TouchableImageView antwoord = new TouchableImageView(this);
+            TouchableImageView antwoord = new TouchableImageView(Oef1Activity.this);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -128,24 +142,19 @@ public class Oef1Activity extends AppCompatActivity {
             antwoord.setOnTouchListener(myTouchListener);
 
             if (i % 2 == 0) {
-                antwoord.setImageResource(getResources().getIdentifier(woord1.getAfbeelding(), "drawable", getPackageName()));
-                antwoord.setTag(woord1.getAudio());
+                antwoord.setImageResource(getResources().getIdentifier(woord1.getResource(), "drawable", getPackageName()));
+                antwoord.setTag(woord1.getResource());
             } else {
-                antwoord.setImageResource(getResources().getIdentifier(woord2.getAfbeelding(), "drawable", getPackageName()));
-                antwoord.setTag(woord2.getAudio());
+                antwoord.setImageResource(getResources().getIdentifier(woord2.getResource(), "drawable", getPackageName()));
+                antwoord.setTag(woord2.getResource());
             }
             middenveld.addView(antwoord);
         }
     }
 
-
     private void laadResultaat(){
         resultaat = new Result(1);
         resultaat.setWord(woord1.getTekst() + "/" + woord2.getTekst());
-    }
-
-    private void spreek(String tekst) {
-        //Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
     }
 
     private void volgendeActivity(){
@@ -154,32 +163,27 @@ public class Oef1Activity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void postResult(){
-        if (User.hasToken()){
-            Gson gson = new Gson();
-            HttpPOSTer httpPost = new HttpPOSTer();
-            httpPost.setJsonObject(gson.toJson(resultaat));
-            httpPost.setOnResultReadyListener(new HttpPOSTer.OnResultReadyListener() {
-                @Override
-                public void resultReady(String result) {
-                    // Is goed zo
-                }
-            });
-            httpPost.execute(Config.backendServer + "/results");
-        }
-    }
-
     private void setEnabledAfbeeldingen(boolean value){
         int count = middenveld.getChildCount();
         for (int i = 0; i < count; i++) {
             View v = middenveld.getChildAt(i);
             v.setEnabled(value);
+            v.setAlpha((value)? 1f : .5f);
         }
     }
 
     private int dpToPx(int dp) {
         float scale = getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    private final class MyCompletionListener implements MediaPlayer.OnCompletionListener{
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer){
+            if (dragComplete)
+                setEnabledAfbeeldingen(true);
+            playAudioComplete = true;
+        }
     }
 
     private final class MyTouchListener implements OnTouchListener {
@@ -190,8 +194,10 @@ public class Oef1Activity extends AppCompatActivity {
                 view.startDrag(data, shadowBuilder, view, 0);
                 // Originele afbeelding verdwijnt
                 view.setVisibility(View.INVISIBLE);
-                spreek(view.getTag().toString());
                 setEnabledAfbeeldingen(false);
+                dragComplete = false;
+                playAudioComplete = false;
+                MyMediaPlayer.spreek(Oef1Activity.this, view.getTag().toString(), myCompletionListener);
                 return true;
             } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 view.performClick();
@@ -232,18 +238,20 @@ public class Oef1Activity extends AppCompatActivity {
                 if (geantwoord == aantalAntwoorden) {
                     // Oefening voorbij
                     // Resultaat opslaan
-                    postResult();
+                    HttpPOSTer.postResult(resultaat);
                     // Naar de volgende oefening
                     volgendeActivity();
                 } else if (geantwoord % 8 == 0) {
                     // Volgend paar
                     paarIndex++;
                     // Resultaat opslaan
-                    postResult();
+                    HttpPOSTer.postResult(resultaat);
                     // Laad nieuwe afbeeldingen
                     laadAfbeeldingen();
                 }
-                setEnabledAfbeeldingen(true);
+                if (playAudioComplete)
+                    setEnabledAfbeeldingen(true);
+                dragComplete = true;
             }
             return true;
         }
@@ -256,7 +264,9 @@ public class Oef1Activity extends AppCompatActivity {
                 // Afbeelding wordt terug zichtbaar
                 View view = (View) event.getLocalState();
                 view.setVisibility(View.VISIBLE);
-                setEnabledAfbeeldingen(true);
+                if (playAudioComplete)
+                    setEnabledAfbeeldingen(true);
+                dragComplete = true;
             }
             return true;
         }
