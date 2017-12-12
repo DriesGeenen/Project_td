@@ -2,6 +2,7 @@ package be.thomasmore.project_td;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -21,8 +21,14 @@ public class Oef4Activity extends AppCompatActivity {
     private int aantalAntwoorden;
     private int score;
     private ImageView afbeelding;
-    private View.OnTouchListener correctTouchListener;
+    private View.OnTouchListener juistTouchListener;
     private View.OnTouchListener foutTouchListener;
+    private Result resultaat;
+    private TouchableButton knop1;
+    private TouchableButton knop2;
+    private String uitspraak;
+    private MyCompletionListener_EnableButtons myCompletionListener_enableButtons;
+    private MyCompletionListener_SayFirstWord myCompletionListener_sayFirstWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +42,17 @@ public class Oef4Activity extends AppCompatActivity {
         initialiseerVariabelen();
 
         laadAfbeeldingen();
+
+        setEnabledKnoppen(false);
+        MyMediaPlayer.speelIntroductie(this, 4, myCompletionListener_sayFirstWord);
     }
 
     private void initialiseerVariabelen() {
-        /*score = 0;
-        List<String> nodigeParen = new ArrayList<>();
-        nodigeParen.add("DT");
-        nodigeParen.add("DT");
-        nodigeParen.add("DT");
-        Paren.maakLijst(nodigeParen, false);*/
+        /*List<String> nodigeParen = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            nodigeParen.add("DT");
+        }
+        Paren.maakLijst(nodigeParen, true);*/
 
         parenLijst = Paren.getLijst();
         geantwoord = 0;
@@ -54,23 +62,27 @@ public class Oef4Activity extends AppCompatActivity {
         score = intent.getIntExtra("score", 0);
         scoreTextView.setText(String.valueOf(score));
         afbeelding = (ImageView) findViewById(R.id.afbeelding);
-        correctTouchListener = new CorrectTouchListener();
+        juistTouchListener = new JuistTouchListener();
         foutTouchListener = new FoutTouchListener();
+        knop1 = (TouchableButton) findViewById(R.id.knop1);
+        knop2 = (TouchableButton) findViewById(R.id.knop2);
+        
+        myCompletionListener_enableButtons = new MyCompletionListener_EnableButtons();
+        myCompletionListener_sayFirstWord = new MyCompletionListener_SayFirstWord();
     }
 
     private void laadAfbeeldingen() {
         List<Woord> woorden = parenLijst.get(geantwoord).getWoorden();
 
-        int coinToss = (Math.random() < 0.5) ? 0 : 1;
-        int reverseCoinToss = (coinToss == 0) ? 1 : 0;
-        Woord juistWoord = woorden.get(coinToss);
-        Woord foutWoord = woorden.get(reverseCoinToss);
+        Coin coin = new Coin();
+        Woord juistWoord = woorden.get(coin.getTopDrieVierde());
+        Woord foutWoord = woorden.get(coin.getBottomEenVierde());
 
-        afbeelding.setImageResource(getResources().getIdentifier(juistWoord.getAfbeelding(), "drawable", getPackageName()));
-        spreek(juistWoord.getContextAudio());
+        afbeelding.setImageResource(getResources().getIdentifier(juistWoord.getResource(), "drawable", getPackageName()));
 
-        TouchableButton knop1 = (TouchableButton) findViewById(R.id.knop1);
-        TouchableButton knop2 = (TouchableButton) findViewById(R.id.knop2);
+        // todo replace with getContextResource()
+        uitspraak = juistWoord.getResource();
+
         knop1.setBackgroundResource(android.R.drawable.btn_default);
         knop2.setBackgroundResource(android.R.drawable.btn_default);
 
@@ -78,27 +90,50 @@ public class Oef4Activity extends AppCompatActivity {
             knop1.setText(foutWoord.getTekst());
             knop2.setText(juistWoord.getTekst());
             knop1.setOnTouchListener(foutTouchListener);
-            knop2.setOnTouchListener(correctTouchListener);
+            knop2.setOnTouchListener(juistTouchListener);
         } else {
             knop1.setText(juistWoord.getTekst());
             knop2.setText(foutWoord.getTekst());
-            knop1.setOnTouchListener(correctTouchListener);
+            knop1.setOnTouchListener(juistTouchListener);
             knop2.setOnTouchListener(foutTouchListener);
         }
 
+        laadResultaat(woorden);
     }
 
-    private void spreek(String tekst) {
-        Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
+    private void laadResultaat(List<Woord> woorden) {
+        resultaat = new Result(4);
+        resultaat.setWord(woorden.get(0).getTekst() + "/" + woorden.get(1).getTekst());
     }
 
-    private void volgendeActivity(){
+    private void volgendeActivity() {
         Intent intent = new Intent(Oef4Activity.this, Oef5Activity.class);
         intent.putExtra("score", score);
         startActivity(intent);
     }
 
-    class CorrectTouchListener implements View.OnTouchListener {
+    private void setEnabledKnoppen(boolean value) {
+        knop1.setEnabled(value);
+        knop2.setEnabled(value);
+        knop1.setAlpha((value) ? 1f : .5f);
+        knop2.setAlpha((value) ? 1f : .5f);
+    }
+
+    private final class MyCompletionListener_EnableButtons implements MediaPlayer.OnCompletionListener{
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer){
+            setEnabledKnoppen(true);
+        }
+    }
+
+    private final class MyCompletionListener_SayFirstWord implements MediaPlayer.OnCompletionListener{
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer){
+            MyMediaPlayer.spreek(Oef4Activity.this, uitspraak, myCompletionListener_enableButtons);
+        }
+    }
+
+    class JuistTouchListener implements View.OnTouchListener {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
@@ -106,6 +141,8 @@ public class Oef4Activity extends AppCompatActivity {
             } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
                 score += 8;
                 scoreTextView.setText(String.valueOf(score));
+                resultaat.verhoogAmountCorrect();
+                gaVerder();
                 view.performClick();
             }
             return true;
@@ -118,18 +155,23 @@ public class Oef4Activity extends AppCompatActivity {
             if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
                 view.setBackgroundColor(Color.RED);
             } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+                resultaat.verhoogAmountWrong();
+                gaVerder();
                 view.performClick();
             }
             return true;
         }
     }
 
-    public void buttonClick(View v) {
+    public void gaVerder() {
+        HttpPOSTer.postResult(resultaat);
         geantwoord++;
         if (geantwoord == aantalAntwoorden) {
             volgendeActivity();
         } else {
             laadAfbeeldingen();
+            setEnabledKnoppen(false);
+            MyMediaPlayer.spreek(this, uitspraak, myCompletionListener_enableButtons);
         }
     }
 }

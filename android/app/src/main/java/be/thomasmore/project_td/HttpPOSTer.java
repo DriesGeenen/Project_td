@@ -3,6 +3,8 @@ package be.thomasmore.project_td;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -81,6 +83,21 @@ public class HttpPOSTer extends AsyncTask<String, Void, String> {
         }
 
         return text;
+    }
+
+    static void postResult(Result resultaat) {
+        if (User.hasToken()) {
+            Gson gson = new Gson();
+            HttpPOSTer httpPost = new HttpPOSTer();
+            httpPost.setJsonObject(gson.toJson(resultaat));
+            httpPost.setOnResultReadyListener(new HttpPOSTer.OnResultReadyListener() {
+                @Override
+                public void resultReady(String result) {
+                    // Is goed zo
+                }
+            });
+            httpPost.execute(Config.backendServer + "/results");
+        }
     }
 
 }

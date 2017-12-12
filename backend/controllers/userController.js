@@ -37,11 +37,11 @@ exports.registerUser = function (req, res) {
 };
 
 exports.authenticateUser = function (req, res) {
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
     var user;
 
-    var promise = UserRepository.getUserByUsername(username);
+    var promise = UserRepository.getUserByEmail(email);
     promise.then(function (usr) {
         if (!usr) {
             res.status(404).json({success: false, msg: 'User not found'});

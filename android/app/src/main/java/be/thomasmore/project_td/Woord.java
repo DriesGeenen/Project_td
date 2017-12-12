@@ -11,19 +11,12 @@ public class Woord {
         return tekst;
     }
 
-    public String getAfbeelding() {
-        return tekst.toLowerCase();
+    public String getResource() {
+        return tekst.toLowerCase() + "_";
     }
 
-    public String getAudio() {
-        return tekst.toLowerCase() + ".mp3";
-    }
-
-    public String getContextAfbeelding() {
+    public String getContextResource() {
         return tekst.toLowerCase() + "_context";
     }
 
-    public String getContextAudio() {
-        return tekst.toLowerCase() + "_context.mp3";
-    }
 }

@@ -1,11 +1,13 @@
 package be.thomasmore.project_td;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,8 +26,11 @@ public class Oef5Activity extends AppCompatActivity {
 
     List<Woord> woordenLijst;
     private List<ImageView> vraagtekenImageViews;
-    private Button juistKnop;
-    private Button foutKnop;
+    private TouchableButton juistKnop;
+    private TouchableButton foutKnop;
+    private Result resultaat;
+
+    private MediaPlayer.OnCompletionListener myCompletionListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,16 @@ public class Oef5Activity extends AppCompatActivity {
         initialiseerVariabelen();
 
         haalImageViews();
+
+        if (aantalAntwoorden == 0) {
+            volgendeActivity();
+        } else {
+            setEnabledJuistFout(false);
+            laadAntwoorden();
+            disableVraagtekens(null);
+            MyMediaPlayer.speelIntroductie(this, 5, myCompletionListener);
+        }
+
     }
 
     private void initialiseerVariabelen() {
@@ -52,24 +67,25 @@ public class Oef5Activity extends AppCompatActivity {
         parenLijst = Paren.getLijst();
         geantwoord = 0;
         // Beperkt het aantal antwoorden op deelbaar door 3
-        aantalAntwoorden = (parenLijst.size()/3)*6;
+        aantalAntwoorden = (parenLijst.size() / 3) * 6;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
         score = intent.getIntExtra("score", 0);
         scoreTextView.setText(String.valueOf(score));
 
-        juistKnop = (Button) findViewById(R.id.juistKnop);
-        foutKnop = (Button) findViewById(R.id.foutKnop);
+        View.OnTouchListener juistTouchListener = new JuistTouchListener();
+        View.OnTouchListener foutTouchListener = new FoutTouchListener();
 
-        if (aantalAntwoorden == 0){
-            volgendeActivity();
-        } else {
-            disableJuistFoutClick();
-            laadAntwoorden();
-        }
+        juistKnop = (TouchableButton) findViewById(R.id.juistKnop);
+        foutKnop = (TouchableButton) findViewById(R.id.foutKnop);
+
+        juistKnop.setOnTouchListener(juistTouchListener);
+        foutKnop.setOnTouchListener(foutTouchListener);
+
+        myCompletionListener = new MyCompletionListener();
     }
 
-    private void haalImageViews(){
+    private void haalImageViews() {
         vraagtekenImageViews = new ArrayList<>();
 
         LinearLayout rootLinearLayout = (LinearLayout) findViewById(R.id.rootLinearLayout);
@@ -88,7 +104,7 @@ public class Oef5Activity extends AppCompatActivity {
         }
     }
 
-    private void laadAntwoorden(){
+    private void laadAntwoorden() {
         woordenLijst = new ArrayList<>();
 
         int startIndex = geantwoord / 2;
@@ -97,62 +113,101 @@ public class Oef5Activity extends AppCompatActivity {
                 woordenLijst.add(parenLijst.get(i).getWoorden().get(j));
             }
         }
+        laadResultaat(woordenLijst);
         Collections.shuffle(woordenLijst);
     }
 
-    private void enableVraagtekenClick(){
-        for(ImageView iv : vraagtekenImageViews){
-            iv.setClickable(true);
+    private void enableVraagtekens() {
+        for (ImageView imageView : vraagtekenImageViews) {
+            imageView.setEnabled(true);
+            imageView.setAlpha(1f);
         }
     }
 
-    private void disableVraagtekenClick(){
-        for(ImageView iv : vraagtekenImageViews){
-            iv.setClickable(false);
+    private void disableVraagtekens(View not) {
+        for (ImageView imageView : vraagtekenImageViews) {
+            if (imageView != not) {
+                imageView.setEnabled(false);
+                imageView.setAlpha(.5f);
+            }
         }
     }
 
-    private void enableJuistFoutClick(){
-        juistKnop.setClickable(true);
-        foutKnop.setClickable(true);
+    private void setEnabledJuistFout(boolean value) {
+        if (!value) {
+            juistKnop.setBackgroundResource(android.R.drawable.btn_default);
+            foutKnop.setBackgroundResource(android.R.drawable.btn_default);
+        }
+        juistKnop.setEnabled(value);
+        foutKnop.setEnabled(value);
+        juistKnop.setAlpha((value) ? 1 : .5f);
+        foutKnop.setAlpha((value) ? 1 : .5f);
     }
 
-    private void disableJuistFoutClick(){
-        juistKnop.setClickable(false);
-        foutKnop.setClickable(false);
+    public void vraagtekenClick(View v) {
+        disableVraagtekens(v);
+        ((ImageView) v).setImageResource(getResources().getIdentifier(woordenLijst.get(geantwoord).getResource(), "drawable", getPackageName()));
+        setEnabledJuistFout(true);
     }
 
-    public void vraagtekenClick(View v){
-        disableVraagtekenClick();
-
-        ((ImageView)v).setImageResource(getResources().getIdentifier(woordenLijst.get(geantwoord).getAfbeelding(), "drawable", getPackageName()));
-
-        enableJuistFoutClick();
+    class JuistTouchListener implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+                view.setBackgroundColor(Color.GREEN);
+            } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+                score += 4;
+                scoreTextView.setText(String.valueOf(score));
+                resultaat.verhoogAmountCorrect();
+                gaVerder();
+                view.performClick();
+            }
+            return true;
+        }
     }
 
-    public void juistClick(View v){
-        score += 4;
-        scoreTextView.setText(String.valueOf(score));
-        gaVerder();
+    class FoutTouchListener implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+                view.setBackgroundColor(Color.RED);
+            } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+                resultaat.verhoogAmountWrong();
+                gaVerder();
+                view.performClick();
+            }
+            return true;
+        }
     }
 
-    public void foutClick(View v){
-        gaVerder();
-    }
-
-    private void gaVerder(){
+    private void gaVerder() {
+        HttpPOSTer.postResult(resultaat);
         geantwoord++;
-        if (geantwoord == aantalAntwoorden){
+        if (geantwoord == aantalAntwoorden) {
             volgendeActivity();
-        }else if(geantwoord%6==0){
+        } else if (geantwoord % 6 == 0) {
             laadAntwoorden();
         }
-        disableJuistFoutClick();
-        enableVraagtekenClick();
+        setEnabledJuistFout(false);
+        enableVraagtekens();
     }
 
-    private void volgendeActivity(){
+    private void volgendeActivity() {
         Intent intent = new Intent(Oef5Activity.this, LeeftijdActivity.class);
         startActivity(intent);
+    }
+
+    private void laadResultaat(List<Woord> woordenLijst) {
+        resultaat = new Result(5);
+        resultaat.setWord(woordenLijst.get(0).getTekst() + "/" + woordenLijst.get(1).getTekst()
+                + " & " + woordenLijst.get(2).getTekst() + "/" + woordenLijst.get(3).getTekst()
+                + " & " + woordenLijst.get(4).getTekst() + "/" + woordenLijst.get(5).getTekst());
+    }
+
+    private final class MyCompletionListener implements MediaPlayer.OnCompletionListener {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            enableVraagtekens();
+        }
     }
 }

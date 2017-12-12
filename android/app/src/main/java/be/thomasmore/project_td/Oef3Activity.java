@@ -2,6 +2,7 @@ package be.thomasmore.project_td;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,13 +11,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +36,11 @@ public class Oef3Activity extends AppCompatActivity {
 
     private OnDragListener myDragListener;
     private OnTouchListener myTouchListener;
+    private Result resultaat;
+
+    private MyCompletionListener myCompletionListener;
+    private boolean dragComplete;
+    private boolean playAudioComplete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,22 +57,21 @@ public class Oef3Activity extends AppCompatActivity {
 
         laadAfbeeldingen();
 
-        ConstraintLayout achtergrond = (ConstraintLayout) findViewById(R.id.backgroundLayout);
-
-        achtergrond.setOnDragListener(new BackgroundDragListener());
+        setEnabledKaarten(false);
+        MyMediaPlayer.speelIntroductie(this, 3, myCompletionListener);
     }
 
     private void initialiseerVariabelen() {
         /*List<String> nodigeParen = new ArrayList<>();
-        nodigeParen.add("DT");
-        nodigeParen.add("DT");
-        nodigeParen.add("DT");
-        Paren.maakLijst(nodigeParen, false);*/
+        for (int i=0;i<11;i++){
+            nodigeParen.add("DT");
+        }
+        Paren.maakLijst(nodigeParen, true);*/
 
         parenLijst = Paren.getLijst();
         geantwoord = 0;
         // Beperkt het aantal antwoorden op deelbaar door 2
-        aantalAntwoorden = (parenLijst.size()/2) * 4;
+        aantalAntwoorden = (parenLijst.size() / 2) * 4;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
         score = intent.getIntExtra("score", 0);
@@ -76,6 +79,11 @@ public class Oef3Activity extends AppCompatActivity {
 
         myDragListener = new MyDragListener();
         myTouchListener = new MyTouchListener();
+        ConstraintLayout achtergrond = (ConstraintLayout) findViewById(R.id.backgroundLayout);
+        achtergrond.setOnDragListener(new BackgroundDragListener());
+
+        myCompletionListener = new MyCompletionListener();
+        dragComplete = true;
     }
 
 
@@ -99,8 +107,8 @@ public class Oef3Activity extends AppCompatActivity {
                             View v3 = ((RelativeLayout) v2).getChildAt(k);
                             if (v3 instanceof ImageView) {
                                 kleineImageViews.add((ImageView) v3);
-                            } else if (v3 instanceof TouchableTextView){
-                                kaartTextViews.add((TouchableTextView)v3);
+                            } else if (v3 instanceof TouchableTextView) {
+                                kaartTextViews.add((TouchableTextView) v3);
                             }
                         }
                     }
@@ -110,8 +118,9 @@ public class Oef3Activity extends AppCompatActivity {
     }
 
     private void laadAfbeeldingen() {
-        if(aantalAntwoorden != 0) {
+        if (aantalAntwoorden != 0) {
             Integer[] indexArray = {0, 1, 2, 3};
+            Integer[] kleurArray = {0x9900CC00, 0x990000CC, 0x9900CCCC, 0x99CC00CC};
             List<Integer> indexLijst = Arrays.asList(indexArray);
             Collections.shuffle(indexLijst);
             List<Woord> woordenLijst = new ArrayList<>();
@@ -126,12 +135,11 @@ public class Oef3Activity extends AppCompatActivity {
             for (int i = 0; i < mainImageViews.size(); i++) {
                 ImageView mainImageView = mainImageViews.get(indexLijst.get(i));
 
-                mainImageView.setImageResource(getResources().
-                        getIdentifier(woordenLijst.get(i)
-                                .getAfbeelding(), "drawable", getPackageName()));
+                mainImageView.setImageResource(getResources()
+                        .getIdentifier(woordenLijst.get(i)
+                                .getResource(), "drawable", getPackageName()));
 
-                mainImageView.setTag(woordenLijst.get(i).getAfbeelding());
-
+                mainImageView.setTag(woordenLijst.get(i).getResource());
                 mainImageView.setOnDragListener(myDragListener);
             }
 
@@ -139,25 +147,49 @@ public class Oef3Activity extends AppCompatActivity {
 
             for (int i = 0; i < kaartTextViews.size(); i++) {
                 TouchableTextView kaartTextView = kaartTextViews.get(indexLijst.get(i));
-
-                kaartTextView.setTag(woordenLijst.get(i).getAfbeelding());
+                kaartTextView.setTag(woordenLijst.get(i).getResource());
                 kaartTextView.setOnTouchListener(myTouchListener);
+                kaartTextView.setVisibility(View.VISIBLE);
+                kaartTextView.setBackgroundColor(kleurArray[indexLijst.get(i)]);
             }
-        } else{
+
+            for(ImageView kleineImageView: kleineImageViews){
+                kleineImageView.setImageDrawable(null);
+            }
+
+            laadResultaat(woordenLijst);
+        } else {
             volgendeActivity();
         }
 
     }
 
-    private void spreek(String tekst)
-    {
-        Toast.makeText(getBaseContext(), tekst, Toast.LENGTH_SHORT).show();
+    private void laadResultaat(List<Woord> woordenLijst) {
+        resultaat = new Result(3);
+        resultaat.setWord(woordenLijst.get(0).getTekst() + "/" + woordenLijst.get(1).getTekst()
+                + " & " + woordenLijst.get(2).getTekst() + "/" + woordenLijst.get(3).getTekst());
     }
 
-    private void volgendeActivity(){
+    private void volgendeActivity() {
         Intent intent = new Intent(Oef3Activity.this, Oef4Activity.class);
         intent.putExtra("score", score);
         startActivity(intent);
+    }
+
+    private void setEnabledKaarten(boolean value){
+        for(TouchableTextView kaart : kaartTextViews){
+            kaart.setEnabled(value);
+            kaart.setAlpha((value)? 1f : .5f);
+        }
+    }
+
+    private final class MyCompletionListener implements MediaPlayer.OnCompletionListener{
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer){
+            if (dragComplete)
+                setEnabledKaarten(true);
+            playAudioComplete = true;
+        }
     }
 
     private final class MyTouchListener implements OnTouchListener {
@@ -169,7 +201,10 @@ public class Oef3Activity extends AppCompatActivity {
                 // Originele afbeelding verdwijnt
                 view.setVisibility(View.INVISIBLE);
 
-                spreek(view.getTag().toString() + ".mp3");
+                setEnabledKaarten(false);
+                dragComplete = false;
+                playAudioComplete = false;
+                MyMediaPlayer.spreek(Oef3Activity.this, view.getTag().toString(), myCompletionListener);
 
             } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 view.performClick();
@@ -180,46 +215,46 @@ public class Oef3Activity extends AppCompatActivity {
     }
 
     class MyDragListener implements OnDragListener {
-
         @Override
         public boolean onDrag(View v, DragEvent event) {
-
             if (event.getAction() == DragEvent.ACTION_DROP) {
+
+                if (playAudioComplete)
+                    setEnabledKaarten(true);
+                dragComplete = true;
 
                 //handle the dragged view being dropped over a target view
                 View view = (View) event.getLocalState();
-
                 //stop displaying the view where it was before it was dragged
                 view.setVisibility(View.INVISIBLE);
-
                 //view dragged item is being dropped on
                 ImageView dropTarget = (ImageView) v;
-
                 //view being dragged and dropped
                 TextView dropped = (TextView) view;
-
-                // View verwijderen voor performance / anti-crash
-                ((ViewGroup) view.getParent()).removeView(view);
 
                 geantwoord++;
 
                 // Wanneer correct
                 if (dropped.getTag().toString().equals(dropTarget.getTag().toString())) {
-                    score+=4;
+                    score += 4;
                     scoreTextView.setText(String.valueOf(score));
-
-                    kleineImageViews.get(mainImageViews.indexOf(dropTarget))
-                            .setImageResource(getResources()
-                                    .getIdentifier(dropTarget.getTag().toString(), "drawable", getPackageName()));
+                    resultaat.verhoogAmountCorrect();
+                } else{
+                    resultaat.verhoogAmountWrong();
                 }
 
+                kleineImageViews.get(mainImageViews.indexOf(dropTarget))
+                            .setImageResource(getResources()
+                                    .getIdentifier(dropped.getTag().toString(), "drawable", getPackageName()));
+
                 if (geantwoord == aantalAntwoorden) {
+                    HttpPOSTer.postResult(resultaat);
                     volgendeActivity();
-                } else if(geantwoord % 4 == 0){
+                } else if (geantwoord % 4 == 0) {
+                    HttpPOSTer.postResult(resultaat);
                     laadAfbeeldingen();
                 }
             }
-
             return true;
         }
     }
@@ -228,9 +263,15 @@ public class Oef3Activity extends AppCompatActivity {
         @Override
         public boolean onDrag(View v, DragEvent event) {
             if (event.getAction() == DragEvent.ACTION_DROP) {
+
+                if (playAudioComplete)
+                    setEnabledKaarten(true);
+                dragComplete = true;
+
                 // Afbeelding wordt terug zichtbaar
                 View view = (View) event.getLocalState();
                 view.setVisibility(View.VISIBLE);
+
             }
             return true;
         }

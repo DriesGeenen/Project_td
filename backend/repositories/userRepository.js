@@ -11,8 +11,8 @@ exports.getUserById = function (id) {
     return User.findById(id);
 };
 
-exports.getUserByUsername = function (username) {
-    return User.findOne({username:username});
+exports.getUserByEmail = function (email) {
+    return User.findOne({username:email});
 };
 
 exports.addUser = function (req) {
