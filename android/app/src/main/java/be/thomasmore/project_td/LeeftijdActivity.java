@@ -15,6 +15,9 @@ public class LeeftijdActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_leeftijd);
+        MyButtonTouchListener myButtonTouchListener = new MyButtonTouchListener();
+        (findViewById(R.id.button34)).setOnTouchListener(myButtonTouchListener);
+        (findViewById(R.id.button56)).setOnTouchListener(myButtonTouchListener);
     }
 
     public void leeftijdButtonClick(View view){

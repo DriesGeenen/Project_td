@@ -25,22 +25,28 @@
         android:weightSum="2">
 
         <Button
+            android:id="@+id/button34"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="leeftijdButtonClick"
             android:tag="0"
             android:text="3-4 jaar"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layout_margin="5dp"
+            android:background="@drawable/buttonshape"/>
 
         <Button
+            android:id="@+id/button56"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="leeftijdButtonClick"
             android:tag="1"
             android:text="5-6 jaar"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:layout_margin="5dp"
+            android:background="@drawable/buttonshape"/>
 
     </LinearLayout>
 

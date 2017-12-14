@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-
+        (findViewById(R.id.loginButton)).setOnTouchListener(new MyButtonTouchListener());
         settings = getSharedPreferences("user",0);
         String token = settings.getString("token", null);
         if (token != null){
