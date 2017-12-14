@@ -28,10 +28,10 @@ public class MenuActivity extends AppCompatActivity {
         ouderDan5 = getIntent().getBooleanExtra("ouderDan5", true);
         rootLinearLayout = (LinearLayout) findViewById(R.id.rootLinearLayout);
         nodigeParen = new ArrayList<>();
+        (findViewById(R.id.startButton)).setOnTouchListener(new MyButtonSharpTouchListener());
     }
 
     public void startButtonClick(View view){
-
         int count = rootLinearLayout.getChildCount();
         for (int i = 0; i < count; i++) {
             View v = rootLinearLayout.getChildAt(i);

@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:onClick="loginButtonClick"
-        android:text="Aanmelden" />
+        android:text="Aanmelden"
+        android:background="@drawable/buttonshape" />
 
 </LinearLayout>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rootLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,13 +11,14 @@
         android:text="Wat wil je oefenen?"
         android:textAlignment="center"
         android:textSize="27sp"
-        android:textColor="#000000"/>
+        android:textColor="@color/colorPrimary"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="240dp">
 
         <LinearLayout
+            android:id="@+id/rootLinearLayout"
             android:layout_width="500dp"
             android:layout_height="240dp"
             android:layout_centerHorizontal="true"
@@ -31,7 +31,7 @@
                 android:text="Gliding"
                 android:textAlignment="center"
                 android:textSize="24sp"
-                android:textColor="#000000"/>
+                android:textColor="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                 android:text="Verstemlozing"
                 android:textAlignment="center"
                 android:textSize="24sp"
-                android:textColor="#000000"/>
+                android:textColor="@color/colorPrimary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,12 +140,14 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:gravity="fill"
         android:onClick="startButtonClick"
         android:text="Begin"
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:background="@drawable/buttonshapesharp"/>
 
 </LinearLayout>

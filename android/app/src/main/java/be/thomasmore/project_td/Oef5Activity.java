@@ -1,7 +1,6 @@
 package be.thomasmore.project_td;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -58,11 +57,11 @@ public class Oef5Activity extends AppCompatActivity {
 
     private void initialiseerVariabelen() {
 
-        /*List<String> nodigeParen = new ArrayList<>();
+        List<String> nodigeParen = new ArrayList<>();
         nodigeParen.add("RW");
         nodigeParen.add("BP");
         nodigeParen.add("DT");
-        Paren.maakLijst(nodigeParen, false);*/
+        Paren.maakLijst(nodigeParen, false);
 
         parenLijst = Paren.getLijst();
         geantwoord = 0;
@@ -135,8 +134,8 @@ public class Oef5Activity extends AppCompatActivity {
 
     private void setEnabledJuistFout(boolean value) {
         if (!value) {
-            juistKnop.setBackgroundResource(android.R.drawable.btn_default);
-            foutKnop.setBackgroundResource(android.R.drawable.btn_default);
+            juistKnop.setBackgroundResource(R.drawable.buttonshape);
+            foutKnop.setBackgroundResource(R.drawable.buttonshape);
         }
         juistKnop.setEnabled(value);
         foutKnop.setEnabled(value);
@@ -154,7 +153,7 @@ public class Oef5Activity extends AppCompatActivity {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-                view.setBackgroundColor(Color.GREEN);
+                view.setBackgroundResource(R.drawable.buttonshapegreen);
             } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
                 score += 4;
                 scoreTextView.setText(String.valueOf(score));
@@ -170,7 +169,7 @@ public class Oef5Activity extends AppCompatActivity {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
-                view.setBackgroundColor(Color.RED);
+                view.setBackgroundResource(R.drawable.buttonshapered);
             } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
                 resultaat.verhoogAmountWrong();
                 gaVerder();
