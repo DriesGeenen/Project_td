@@ -58,7 +58,7 @@ exports.authenticateUser = function (req, res) {
             res.json({
                 success: true,
                 token: 'JWT ' + token,
-                role: user.role
+                user: user
             });
         }
         else {

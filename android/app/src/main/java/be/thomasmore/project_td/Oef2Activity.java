@@ -104,10 +104,10 @@ public class Oef2Activity extends AppCompatActivity {
             score+=8;
             scoreTextView.setText(String.valueOf(score));
             resultaat.verhoogAmountCorrect();
-            view.setBackgroundColor(0xFF00FF00);
+            view.setBackgroundResource(R.drawable.backgroundshapegreen);
         } else{
             resultaat.verhoogAmountWrong();
-            view.setBackgroundColor(0xFFFF0000);
+            view.setBackgroundResource(R.drawable.backgroundshapered);
         }
         HttpPOSTer.postResult(resultaat);
         geantwoord++;

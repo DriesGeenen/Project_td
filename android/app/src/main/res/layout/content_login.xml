@@ -14,15 +14,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Meld je aan :)"
-        android:textSize="24sp" />
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"/>
 
     <EditText
         android:id="@+id/gebruikersnaam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Gebruikersnaam">
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:hint="E-mail"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/edittextshape">
 
         <requestFocus />
     </EditText>
@@ -31,18 +38,25 @@
         android:id="@+id/wachtwoord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:hint="Wachtwoord"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/edittextshape"/>
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:onClick="loginButtonClick"
         android:text="Aanmelden"
+        android:textSize="30sp"
         android:background="@drawable/buttonshape" />
 
 </LinearLayout>

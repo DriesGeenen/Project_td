@@ -11,4 +11,6 @@
     <color name="colorButtonBorder">#449999</color>
     <color name="colorButtonClickGreen">#00FF00</color>
     <color name="colorButtonClickRed">#FF0000</color>
+    <color name="colorEditText">#8888DDDD</color>
+
 </resources>
