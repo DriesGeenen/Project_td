@@ -16,6 +16,7 @@ export class LoginPageComponent implements OnInit {
   constructor(private authService:AuthService, private router:Router) {
     autoBind(this);
     console.log(router);
+
   }
 
   ngOnInit() {
@@ -27,10 +28,7 @@ export class LoginPageComponent implements OnInit {
       password: this.password
     }
     try {
-      console.log("hey");
-      console.log(user);
-      await this.authService.login(user);
-      console.log("ho");
+      console.log(await this.authService.login(user));
       this.email = "";
       this.router.navigate(["/users"]);
     }catch(err){
