@@ -40,10 +40,11 @@ export class AuthService {
 
   async login(user_login)
   {
-    let result:any = await this.http.post(HttpConfig.host + "/users/authenticate", user_login, {headers:HttpConfig.headers}).toPromise();
-    this.user = new User(result);
-    this.setAuthToken(result._id);
+    let result:any = await this.http.post(HttpConfig.host + "/users/authenticate", user_login, {headers:HttpConfig.login_headers}).toPromise();
+    this.user = new User(result.user);
+    this.setAuthToken(result.token);
     HttpConfig.refreshHeaders();
+    console.log("headers refreshed");
     this.onLogin.emit(this.user);
     return this.user;
   }
