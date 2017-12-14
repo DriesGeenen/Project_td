@@ -11,7 +11,7 @@ export class AuthService {
   onLogout:EventEmitter<any> = new EventEmitter();
   private user:User;
 
-  constructor(private http:HttpClient) { 
+  constructor(private http:HttpClient) {
     autoBind(this);
     if (this.isLoggedIn()){
       console.log("fetching user");
@@ -22,11 +22,11 @@ export class AuthService {
   getUser(){
     return this.user;
   }
-  
+
   getAuthToken(): string {
     return localStorage.getItem("authToken");
   }
-  
+
   private setAuthToken(token:string){
     localStorage.setItem("authToken", token);
     if (!token)
@@ -36,11 +36,11 @@ export class AuthService {
   isLoggedIn():boolean{
     return this.getAuthToken() != null;
   }
-  
 
-  async login(email:string, password:string)
+
+  async login(user_login)
   {
-    let result:any = await this.http.post(HttpConfig.host + "/auth", {email, password}, {headers:HttpConfig.headers}).toPromise();
+    let result:any = await this.http.post(HttpConfig.host + "/users/authenticate", user_login, {headers:HttpConfig.headers}).toPromise();
     this.user = new User(result);
     this.setAuthToken(result._id);
     HttpConfig.refreshHeaders();
@@ -56,7 +56,7 @@ export class AuthService {
 
   async fetchUser(){
     try{
-      let result:any = await this.http.get(HttpConfig.host + "/auth", {headers:HttpConfig.headers}).toPromise();
+      let result:any = await this.http.get(HttpConfig.host + "/users/profile", {headers:HttpConfig.headers}).toPromise();
       this.user = new User(result);
     }catch(err){
     }

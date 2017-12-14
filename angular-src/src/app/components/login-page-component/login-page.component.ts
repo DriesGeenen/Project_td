@@ -22,11 +22,19 @@ export class LoginPageComponent implements OnInit {
   }
 
   async login(){
+    const user = {
+      email: this.email,
+      password: this.password
+    }
     try {
-      console.log(await this.authService.login(this.email, this.password));
+      console.log("hey");
+      console.log(user);
+      await this.authService.login(user);
+      console.log("ho");
       this.email = "";
-      this.router.navigate(["/"]);
+      this.router.navigate(["/users"]);
     }catch(err){
+      if(err != null)
       console.log(err);
     }
     this.password = "";
