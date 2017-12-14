@@ -65,7 +65,7 @@ public class HttpPOSTer extends AsyncTask<String, Void, String> {
             int HttpResult = urlConnection.getResponseCode();
             if (HttpResult == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "utf-8"));
-                String line = null;
+                String line;
                 while ((line = br.readLine()) != null) {
                     sb.append(line + "\n");
                 }

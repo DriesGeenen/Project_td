@@ -59,7 +59,8 @@ public class Oef2Activity extends AppCompatActivity {
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
 
-        score = intent.getIntExtra("score", 0);
+        //score = intent.getIntExtra("score", 0);
+        score = 0;
         scoreTextView.setText(String.valueOf(score));
 
         afbeeldingen = new ArrayList<>();
@@ -134,7 +135,7 @@ public class Oef2Activity extends AppCompatActivity {
 
     private void volgendeActivity(){
         Intent intent = new Intent(Oef2Activity.this, Oef3Activity.class);
-        intent.putExtra("score", score);
+        //intent.putExtra("score", score);
         startActivity(intent);
     }
 

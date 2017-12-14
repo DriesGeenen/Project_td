@@ -21,7 +21,9 @@ public class Oef5Activity extends AppCompatActivity {
     private TextView scoreTextView;
     private int geantwoord;
     private int aantalAntwoorden;
-    private int score;
+    private int score1;
+    private int score2;
+    private boolean aanDeBeurt;
 
     List<Woord> woordenLijst;
     private List<ImageView> vraagtekenImageViews;
@@ -69,7 +71,8 @@ public class Oef5Activity extends AppCompatActivity {
         aantalAntwoorden = (parenLijst.size() / 3) * 6;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
-        score = intent.getIntExtra("score", 0);
+        //score = intent.getIntExtra("score", 0);
+        score = 0;
         scoreTextView.setText(String.valueOf(score));
 
         View.OnTouchListener juistTouchListener = new JuistTouchListener();

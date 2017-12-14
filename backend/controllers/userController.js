@@ -15,6 +15,25 @@ exports.getAllUsers = function (req, res) {
     });
 };
 
+exports.getUserById = function (req, res) {
+    var promise = UserRepository.getUserById(req);
+    promise.then(function (result) {
+        res.json(result);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get result', error: err});
+    });
+};
+
+exports.deleteUser = function (req, res) {
+    var promise = UserRepository.deleteUser(req);
+    promise.then(function () {
+        res.json({success: true, msg: 'User removed'});
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to remove result', error: err});
+    });
+};
+
+
 // Extra functions
 
 exports.registerUser = function (req, res) {

@@ -17,7 +17,6 @@
     <color name="colorEditTextBorder">#88BBDD</color>
 
     <color name="colorMyCheckBorder">#FF00CC00</color>
-    <color name="colorMyCheckBackground">#7700ff00</color>
-
+    <color name="colorMyCheckBackground">#7700FF00</color>
 
 </resources>

@@ -147,7 +147,7 @@
         android:onClick="startButtonClick"
         android:text="Begin"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:background="@drawable/buttonshapesharp"
         android:textColor="@color/colorPrimary"/>
 

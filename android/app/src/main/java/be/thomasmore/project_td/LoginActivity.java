@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences settings;
@@ -26,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         String token = settings.getString("token", null);
         if (token != null) {
             User.setToken(token);
-            //volgendeActivity();
+            volgendeActivity();
         }
     }
 
@@ -41,16 +43,16 @@ public class LoginActivity extends AppCompatActivity {
         httpPost.setOnResultReadyListener(new HttpPOSTer.OnResultReadyListener() {
             @Override
             public void resultReady(String result) {
-                Log.i("RESULT: ", result);
-                /*Gson gson = new Gson();
-                AuthResult authResult = gson.fromJson(result, AuthResult.class);
-                if (authResult.isSuccess()) {
+                if (result != null && !result.isEmpty()) {
+                    Log.i("RESULT: ", result);
+                    Gson gson = new Gson();
+                    AuthResult authResult = gson.fromJson(result, AuthResult.class);
                     settings.edit().putString("token", authResult.getToken()).apply();
                     User.setToken(authResult.getToken());
                     volgendeActivity();
                 } else {
                     toon("Ongeldige login");
-                }*/
+                }
             }
         });
 

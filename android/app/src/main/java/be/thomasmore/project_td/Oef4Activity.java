@@ -58,7 +58,8 @@ public class Oef4Activity extends AppCompatActivity {
         aantalAntwoorden = parenLijst.size();
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
-        score = intent.getIntExtra("score", 0);
+        //score = intent.getIntExtra("score", 0);
+        score = 0;
         scoreTextView.setText(String.valueOf(score));
         afbeelding = (ImageView) findViewById(R.id.afbeelding);
         juistTouchListener = new JuistTouchListener();
@@ -103,7 +104,7 @@ public class Oef4Activity extends AppCompatActivity {
 
     private void volgendeActivity() {
         Intent intent = new Intent(Oef4Activity.this, Oef5Activity.class);
-        intent.putExtra("score", score);
+        //intent.putExtra("score", score);
         startActivity(intent);
     }
 

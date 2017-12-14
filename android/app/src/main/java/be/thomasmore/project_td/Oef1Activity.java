@@ -159,7 +159,7 @@ public class Oef1Activity extends AppCompatActivity {
 
     private void volgendeActivity(){
         Intent intent = new Intent(Oef1Activity.this, Oef2Activity.class);
-        intent.putExtra("score", score);
+        //intent.putExtra("score", score);
         startActivity(intent);
     }
 
@@ -253,7 +253,7 @@ public class Oef1Activity extends AppCompatActivity {
                     setEnabledAfbeeldingen(true);
                 dragComplete = true;
             }
-            return true;
+            return false;
         }
     }
 
@@ -268,7 +268,7 @@ public class Oef1Activity extends AppCompatActivity {
                     setEnabledAfbeeldingen(true);
                 dragComplete = true;
             }
-            return true;
+            return false;
         }
     }
 }

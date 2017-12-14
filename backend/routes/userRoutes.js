@@ -7,6 +7,10 @@ module.exports = function (app) {
     app.route('/users')
         .get(AuthHelper.adminRequired, UserController.getAllUsers);
 
+    app.route('/users/:id')
+        .get(AuthHelper.adminRequired, UserController.getUserById)
+        .delete(AuthHelper.adminRequired, UserController.deleteUser);
+
     app.route('/users/register')
         .post(/*AuthHelper.adminRequired, */UserController.registerUser);
 

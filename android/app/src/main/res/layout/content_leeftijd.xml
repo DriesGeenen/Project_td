@@ -15,7 +15,8 @@
         android:layout_margin="10dp"
         android:text="Hoe oud ben je?"
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="27sp"
+        android:textColor="@color/colorPrimary"/>
 
 
     <LinearLayout

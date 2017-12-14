@@ -74,7 +74,8 @@ public class Oef3Activity extends AppCompatActivity {
         aantalAntwoorden = (parenLijst.size() / 2) * 4;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         Intent intent = getIntent();
-        score = intent.getIntExtra("score", 0);
+        //score = intent.getIntExtra("score", 0);
+        score = 0;
         scoreTextView.setText(String.valueOf(score));
 
         myDragListener = new MyDragListener();
@@ -172,7 +173,7 @@ public class Oef3Activity extends AppCompatActivity {
 
     private void volgendeActivity() {
         Intent intent = new Intent(Oef3Activity.this, Oef4Activity.class);
-        intent.putExtra("score", score);
+        //intent.putExtra("score", score);
         startActivity(intent);
     }
 
@@ -255,7 +256,7 @@ public class Oef3Activity extends AppCompatActivity {
                     laadAfbeeldingen();
                 }
             }
-            return true;
+            return false;
         }
     }
 
@@ -273,7 +274,7 @@ public class Oef3Activity extends AppCompatActivity {
                 view.setVisibility(View.VISIBLE);
 
             }
-            return true;
+            return false;
         }
     }
 }
