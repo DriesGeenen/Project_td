@@ -70,7 +70,8 @@
             android:gravity="center"
             android:textSize="24sp"
             android:text="Juist"
-            android:background="@drawable/buttonshape"/>
+            android:background="@drawable/buttonshape"
+            android:textColor="@color/colorPrimary"/>
         <be.thomasmore.project_td.TouchableButton
             android:id="@+id/foutKnop"
             android:layout_width="150dp"
@@ -79,7 +80,8 @@
             android:gravity="center"
             android:textSize="24sp"
             android:text="Fout"
-            android:background="@drawable/buttonshape"/>
+            android:background="@drawable/buttonshape"
+            android:textColor="@color/colorPrimary"/>
     </RelativeLayout>
 
 </LinearLayout>

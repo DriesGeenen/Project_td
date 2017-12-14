@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--color name="colorPrimary">#3F51B5</color-->
-    <color name="colorPrimary">#227777</color>
-    <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorButtonClickGreen">#00FF00</color>
+    <color name="colorButtonClickRed">#FF1111</color>
+
+    <color name="colorPrimary">#225577</color>
+    <color name="colorPrimaryDark">#003355</color>
+    <color name="colorPrimaryLight">#447799</color>
+    <color name="colorMyCheckText">#CC225577</color>
+    <color name="colorButton">#6699BB</color>
+    <color name="colorButtonBorder">#447799</color>
+    <color name="colorButtonLight">#88BBDD</color>
+    <color name="colorButtonBorderLight">#5588AA</color>
+    <color name="colorEditText">#AADDFF</color>
+    <color name="colorEditTextBorder">#88BBDD</color>
+
     <color name="colorMyCheckBorder">#FF00CC00</color>
     <color name="colorMyCheckBackground">#7700ff00</color>
-    <color name="colorMyCheckText">#CC227777</color>
-    <color name="colorButton">#66BBBB</color>
-    <color name="colorButtonBorder">#449999</color>
-    <color name="colorButtonClickGreen">#00FF00</color>
-    <color name="colorButtonClickRed">#FF0000</color>
-    <color name="colorEditText">#8888DDDD</color>
+
 
 </resources>

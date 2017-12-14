@@ -10,8 +10,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences settings;
@@ -24,19 +22,19 @@ public class LoginActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         (findViewById(R.id.loginButton)).setOnTouchListener(new MyButtonTouchListener());
-        settings = getSharedPreferences("user",0);
+        settings = getSharedPreferences("user", 0);
         String token = settings.getString("token", null);
-        if (token != null){
+        if (token != null) {
             User.setToken(token);
             //volgendeActivity();
         }
     }
 
     public void loginButtonClick(View view) {
-        TextView gebruikersnaamTextView = (TextView) findViewById(R.id.gebruikersnaam);
+        TextView emailTextView = (TextView) findViewById(R.id.email);
         TextView wachtwoordTextView = (TextView) findViewById(R.id.wachtwoord);
 
-        String loginJSON = "{\"username\":\"" + gebruikersnaamTextView.getText() + "\",\"password\":\"" + wachtwoordTextView.getText() + "\"}";
+        String loginJSON = "{\"email\":\"" + ((emailTextView.getText() == null) ? "" : emailTextView.getText()) + "\",\"password\":\"" + ((wachtwoordTextView.getText() == null) ? "" : wachtwoordTextView.getText()) + "\"}";
         HttpPOSTer httpPost = new HttpPOSTer();
         httpPost.setJsonObject(loginJSON);
 
@@ -44,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void resultReady(String result) {
                 Log.i("RESULT: ", result);
-                Gson gson = new Gson();
+                /*Gson gson = new Gson();
                 AuthResult authResult = gson.fromJson(result, AuthResult.class);
                 if (authResult.isSuccess()) {
                     settings.edit().putString("token", authResult.getToken()).apply();
@@ -52,14 +50,18 @@ public class LoginActivity extends AppCompatActivity {
                     volgendeActivity();
                 } else {
                     toon("Ongeldige login");
-                }
+                }*/
             }
         });
 
         httpPost.execute(Config.backendServer + "/users/authenticate");
     }
 
-    private void volgendeActivity(){
+    public void geenLoginButtonClick(View view) {
+        volgendeActivity();
+    }
+
+    private void volgendeActivity() {
         Intent intent = new Intent(LoginActivity.this, LeeftijdActivity.class);
         startActivity(intent);
     }

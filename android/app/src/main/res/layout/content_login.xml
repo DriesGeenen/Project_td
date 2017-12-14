@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="500dp"
-    android:layout_height="240dp"
+    android:layout_height="300dp"
     android:orientation="vertical"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
@@ -18,7 +18,7 @@
         android:textColor="@color/colorPrimary"/>
 
     <EditText
-        android:id="@+id/gebruikersnaam"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -28,8 +28,11 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:hint="E-mail"
+        android:inputType="textEmailAddress"
         android:textColor="@color/colorPrimary"
-        android:background="@drawable/edittextshape">
+        android:background="@drawable/edittextshape"
+        android:textCursorDrawable="@null"
+        android:maxLines="1">
 
         <requestFocus />
     </EditText>
@@ -47,7 +50,9 @@
         android:hint="Wachtwoord"
         android:inputType="textPassword"
         android:textColor="@color/colorPrimary"
-        android:background="@drawable/edittextshape"/>
+        android:background="@drawable/edittextshape"
+        android:textCursorDrawable="@null"
+        android:maxLines="1"/>
 
     <Button
         android:id="@+id/loginButton"
@@ -57,6 +62,18 @@
         android:onClick="loginButtonClick"
         android:text="Aanmelden"
         android:textSize="30sp"
-        android:background="@drawable/buttonshape" />
+        android:background="@drawable/buttonshape"
+        android:textColor="@color/colorPrimary"/>
+
+    <Button
+        android:id="@+id/geenLoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:onClick="geenLoginButtonClick"
+        android:text="Ga verder zonder aanmelden"
+        android:textSize="24sp"
+        android:background="@drawable/buttonshapelight"
+        android:textColor="@color/colorPrimaryLight"/>
 
 </LinearLayout>

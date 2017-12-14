@@ -4,7 +4,7 @@
     android:thickness="0dp"
     android:shape="rectangle">
     <stroke android:width="3dp"
-        android:color="@color/colorButton"/>
+        android:color="@color/colorEditTextBorder"/>
     <corners android:radius="20dp" />
     <solid android:color="@color/colorEditText"/>
 </shape>

@@ -25,7 +25,8 @@
             android:layout_marginTop="40dp"
             android:gravity="center"
             android:textSize="24sp"
-            android:background="@drawable/buttonshape"/>
+            android:background="@drawable/buttonshape"
+            android:textColor="@color/colorPrimary"/>
         <be.thomasmore.project_td.TouchableButton
             android:id="@+id/knop2"
             android:layout_width="150dp"
@@ -34,7 +35,8 @@
             android:layout_marginTop="160dp"
             android:gravity="center"
             android:textSize="24sp"
-            android:background="@drawable/buttonshape"/>
+            android:background="@drawable/buttonshape"
+            android:textColor="@color/colorPrimary"/>
     </RelativeLayout>
 
 </LinearLayout>

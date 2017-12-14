@@ -148,6 +148,7 @@
         android:text="Begin"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:background="@drawable/buttonshapesharp"/>
+        android:background="@drawable/buttonshapesharp"
+        android:textColor="@color/colorPrimary"/>
 
 </LinearLayout>

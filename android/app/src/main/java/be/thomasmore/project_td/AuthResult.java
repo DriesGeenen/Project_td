@@ -4,11 +4,6 @@ public class AuthResult {
     private boolean success;
     private String token;
 
-    public AuthResult(boolean success, String token) {
-        this.success = success;
-        this.token = token;
-    }
-
     public boolean isSuccess() {
         return success;
     }
@@ -24,4 +19,5 @@ public class AuthResult {
     public void setToken(String token) {
         this.token = token;
     }
+
 }
