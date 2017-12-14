@@ -12,7 +12,7 @@ exports.getUserById = function (id) {
 };
 
 exports.getUserByEmail = function (email) {
-    return User.findOne({username:email});
+    return User.findOne({email:email});
 };
 
 exports.addUser = function (req) {
