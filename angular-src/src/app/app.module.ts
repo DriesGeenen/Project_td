@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { ResultService } from './services/result.service';
+import { NewUserComponent } from './components/new-user-component/new-user.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ResultService } from './services/result.service';
     HeaderComponentComponent,
     LoginPageComponent,
     ResultsComponent,
-    UsersComponent
+    UsersComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule,

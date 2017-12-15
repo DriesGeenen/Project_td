@@ -28,8 +28,9 @@ export class UserService {
     return user;
   }
 
-  async createUser(user:User){
-    let result:any = await this.http.post(HttpConfig.host + "/user/", user, {headers:HttpConfig.headers}).toPromise();
+  async createUser(user){
+    let result:any = await this.http.post(HttpConfig.host + "/users/register", user, {headers:HttpConfig.headers}).toPromise();
+    console.log("created user");
     return user;
   }
 
