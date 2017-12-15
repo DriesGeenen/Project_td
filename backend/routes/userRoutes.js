@@ -21,5 +21,5 @@ module.exports = function (app) {
 
     app.route('/users/authenticate')
         .post(UserController.authenticateUser);
-    
+
 };

@@ -95,7 +95,7 @@ exports.getProfile = function (req, res) {
     var user = new User();
     user._id = req.user.data._id;
     user.email = req.user.data.email;
-    user.username = req.user.data.username;
+    user.name = req.user.data.name;
     user.role = req.user.data.role;
 
     console.log('filtered: ' + JSON.stringify(user));
