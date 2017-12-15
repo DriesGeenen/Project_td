@@ -2,6 +2,7 @@ package be.thomasmore.project_td;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -73,7 +74,7 @@ public class Oef3Activity extends AppCompatActivity {
         // Beperkt het aantal antwoorden op deelbaar door 2
         aantalAntwoorden = (parenLijst.size() / 2) * 4;
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
         //score = intent.getIntExtra("score", 0);
         score = 0;
         scoreTextView.setText(String.valueOf(score));
@@ -156,6 +157,7 @@ public class Oef3Activity extends AppCompatActivity {
 
             for(ImageView kleineImageView: kleineImageViews){
                 kleineImageView.setImageDrawable(null);
+                kleineImageView.setBackgroundColor(Color.TRANSPARENT);
             }
 
             laadResultaat(woordenLijst);
@@ -235,13 +237,22 @@ public class Oef3Activity extends AppCompatActivity {
 
                 geantwoord++;
 
+                // Achtergrond weg halen
+                for(ImageView imageView : kleineImageViews){
+                    imageView.setBackgroundColor(Color.TRANSPARENT);
+                }
+
                 // Wanneer correct
                 if (dropped.getTag().toString().equals(dropTarget.getTag().toString())) {
                     score += 4;
                     scoreTextView.setText(String.valueOf(score));
                     resultaat.verhoogAmountCorrect();
+
+                    kleineImageViews.get(mainImageViews.indexOf(dropTarget)).setBackgroundResource(R.drawable.backgroundshapegreensemitransparent);
                 } else{
                     resultaat.verhoogAmountWrong();
+
+                    kleineImageViews.get(mainImageViews.indexOf(dropTarget)).setBackgroundResource(R.drawable.backgroundshaperedsemitransparent);
                 }
 
                 kleineImageViews.get(mainImageViews.indexOf(dropTarget))
@@ -256,7 +267,7 @@ public class Oef3Activity extends AppCompatActivity {
                     laadAfbeeldingen();
                 }
             }
-            return false;
+            return true;
         }
     }
 
@@ -274,7 +285,7 @@ public class Oef3Activity extends AppCompatActivity {
                 view.setVisibility(View.VISIBLE);
 
             }
-            return false;
+            return true;
         }
     }
 }

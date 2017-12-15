@@ -4,8 +4,10 @@
 
     <color name="colorButtonClickGreen">#00FF00</color>
     <color name="colorButtonClickRed">#FF1111</color>
+    <color name="colorButtonClickGreenSemiTransparent">#8800FF00</color>
+    <color name="colorButtonClickRedSemiTransparent">#88FF1111</color>
 
-    <color name="colorPrimary">#225577</color>
+    <!--color name="colorPrimary">#225577</color>
     <color name="colorPrimaryDark">#003355</color>
     <color name="colorPrimaryLight">#447799</color>
     <color name="colorMyCheckText">#CC225577</color>
@@ -14,9 +16,20 @@
     <color name="colorButtonLight">#88BBDD</color>
     <color name="colorButtonBorderLight">#5588AA</color>
     <color name="colorEditText">#AADDFF</color>
-    <color name="colorEditTextBorder">#88BBDD</color>
+    <color name="colorEditTextBorder">#88BBDD</color-->
+
+    <color name="colorPrimary">#447799</color>
+    <color name="colorPrimaryDark">#225577</color>
+    <color name="colorPrimaryLight">#5588AA</color>
+    <color name="colorButton">#AA88BBDD</color>
+    <color name="colorButtonBorder">#AA5588AA</color>
+    <color name="colorButtonLight">#AA99CCEE</color>
+    <color name="colorButtonBorderLight">#AA6699BB</color>
+    <color name="colorEditText">#AAAADDFF</color>
+    <color name="colorEditTextBorder">#AA88BBDD</color>
 
     <color name="colorMyCheckBorder">#FF00CC00</color>
     <color name="colorMyCheckBackground">#7700FF00</color>
+    <color name="colorMyCheckText">#CC225577</color>
 
 </resources>

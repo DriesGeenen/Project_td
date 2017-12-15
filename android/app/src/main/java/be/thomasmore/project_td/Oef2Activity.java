@@ -47,17 +47,17 @@ public class Oef2Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen(){
-        List<String> nodigeParen = new ArrayList<>();
+        /*List<String> nodigeParen = new ArrayList<>();
         for (int i=0;i<11;i++){
             nodigeParen.add("LW");
         }
-        Paren.maakLijst(nodigeParen, true);
+        Paren.maakLijst(nodigeParen, true);*/
 
         parenLijst = Paren.getLijst();
         geantwoord = 0;
         aantalAntwoorden = parenLijst.size();
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
         //score = intent.getIntExtra("score", 0);
         score = 0;

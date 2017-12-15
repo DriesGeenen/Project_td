@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="be.thomasmore.project_td.MenuActivity">
+    tools:context="be.thomasmore.project_td.MenuActivity"
+    android:background="@drawable/background">
 
     <include layout="@layout/content_menu" />
 

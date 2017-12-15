@@ -13,6 +13,7 @@ exports.getAllUsers = function (req, res) {
     }, function (err) {
         res.status(500).json({success: false, msg: 'Failed to get users', error: err});
     });
+    console.log('getAll: ' + JSON.stringify(req.user.data));
 };
 
 exports.getUserById = function (req, res) {
@@ -89,5 +90,15 @@ exports.authenticateUser = function (req, res) {
 };
 
 exports.getProfile = function (req, res) {
-    res.json({user: req.user})
+    console.log('profile: ' + JSON.stringify(req.user.data));
+
+    var user = new User();
+    user._id = req.user.data._id;
+    user.email = req.user.data.email;
+    user.username = req.user.data.username;
+    user.role = req.user.data.role;
+
+    console.log('filtered: ' + JSON.stringify(user));
+
+    res.json({user: user})
 };

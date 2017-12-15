@@ -18,7 +18,8 @@ import java.util.List;
 public class Oef5Activity extends AppCompatActivity {
 
     private List<Paar> parenLijst;
-    private TextView scoreTextView;
+    private TextView score1TextView;
+    private TextView score2TextView;
     private int geantwoord;
     private int aantalAntwoorden;
     private int score1;
@@ -59,21 +60,24 @@ public class Oef5Activity extends AppCompatActivity {
 
     private void initialiseerVariabelen() {
 
-        List<String> nodigeParen = new ArrayList<>();
+        /*List<String> nodigeParen = new ArrayList<>();
         nodigeParen.add("RW");
         nodigeParen.add("BP");
         nodigeParen.add("DT");
-        Paren.maakLijst(nodigeParen, false);
+        Paren.maakLijst(nodigeParen, false);*/
 
         parenLijst = Paren.getLijst();
         geantwoord = 0;
         // Beperkt het aantal antwoorden op deelbaar door 3
         aantalAntwoorden = (parenLijst.size() / 3) * 6;
-        scoreTextView = (TextView) findViewById(R.id.scoreTextView);
-        Intent intent = getIntent();
+        score1TextView = (TextView) findViewById(R.id.score1TextView);
+        score2TextView = (TextView) findViewById(R.id.score2TextView);
+        //Intent intent = getIntent();
         //score = intent.getIntExtra("score", 0);
-        score = 0;
-        scoreTextView.setText(String.valueOf(score));
+        score1 = 0;
+        score2 = 0;
+        score1TextView.setText(String.valueOf(score1));
+        score2TextView.setText(String.valueOf(score2));
 
         View.OnTouchListener juistTouchListener = new JuistTouchListener();
         View.OnTouchListener foutTouchListener = new FoutTouchListener();
@@ -85,6 +89,7 @@ public class Oef5Activity extends AppCompatActivity {
         foutKnop.setOnTouchListener(foutTouchListener);
 
         myCompletionListener = new MyCompletionListener();
+        aanDeBeurt = true;
     }
 
     private void haalImageViews() {
@@ -158,8 +163,14 @@ public class Oef5Activity extends AppCompatActivity {
             if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
                 view.setBackgroundResource(R.drawable.buttonshapegreen);
             } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-                score += 4;
-                scoreTextView.setText(String.valueOf(score));
+                if (aanDeBeurt) {
+                    score1 += 4;
+                    score1TextView.setText(String.valueOf(score1));
+                } else {
+                    score2 += 4;
+                    score2TextView.setText(String.valueOf(score2));
+                }
+                aanDeBeurt = !aanDeBeurt;
                 resultaat.verhoogAmountCorrect();
                 gaVerder();
                 view.performClick();

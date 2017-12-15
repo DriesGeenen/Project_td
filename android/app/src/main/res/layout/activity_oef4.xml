@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="be.thomasmore.project_td.Oef4Activity">
+    tools:context="be.thomasmore.project_td.Oef4Activity"
+    android:background="@drawable/background">
 
     <include layout="@layout/content_oef_header" />
     <include layout="@layout/content_oef4" />

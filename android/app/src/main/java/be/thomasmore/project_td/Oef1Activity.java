@@ -2,6 +2,7 @@ package be.thomasmore.project_td;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -113,6 +114,8 @@ public class Oef1Activity extends AppCompatActivity {
 
         afbeeldingen.get(coin.getTop()).setTag(woord1.getResource());
         afbeeldingen.get(coin.getBottom()).setTag(woord2.getResource());
+
+        setTransparentAchtergrondAfbeeldingen();
     }
 
     private void laadMiddenveldAfbeeldingen() {
@@ -169,6 +172,16 @@ public class Oef1Activity extends AppCompatActivity {
             View v = middenveld.getChildAt(i);
             v.setEnabled(value);
             v.setAlpha((value)? 1f : .5f);
+        }
+
+        if(value){
+            setTransparentAchtergrondAfbeeldingen();
+        }
+    }
+
+    private void setTransparentAchtergrondAfbeeldingen(){
+        for(ImageView imageView : afbeeldingen){
+            imageView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
@@ -230,9 +243,11 @@ public class Oef1Activity extends AppCompatActivity {
                     resultaat.verhoogAmountCorrect();
                     score++;
                     scoreTextView.setText(String.valueOf(score));
+                    dropTarget.setBackgroundResource(R.drawable.backgroundshapegreensemitransparent);
                 } else {
                     // Fout gedropt
                     resultaat.verhoogAmountWrong();
+                    dropTarget.setBackgroundResource(R.drawable.backgroundshaperedsemitransparent);
                 }
 
                 if (geantwoord == aantalAntwoorden) {
@@ -253,7 +268,7 @@ public class Oef1Activity extends AppCompatActivity {
                     setEnabledAfbeeldingen(true);
                 dragComplete = true;
             }
-            return false;
+            return true;
         }
     }
 
@@ -268,7 +283,7 @@ public class Oef1Activity extends AppCompatActivity {
                     setEnabledAfbeeldingen(true);
                 dragComplete = true;
             }
-            return false;
+            return true;
         }
     }
 }
