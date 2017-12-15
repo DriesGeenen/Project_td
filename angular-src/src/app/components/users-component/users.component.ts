@@ -12,6 +12,8 @@ import {AuthService} from "../../services/auth.service";
 })
 export class UsersComponent implements OnInit {
 
+
+
   constructor(private authService : AuthService, private userService : UserService, private router : Router) {
     autoBind(this);
   }
@@ -26,4 +28,13 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  deleteUser(userId){
+    console.log("delete user " + userId);
+    try{
+      this.userService.deleteUser(userId);
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
 }

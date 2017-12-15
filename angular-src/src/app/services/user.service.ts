@@ -15,6 +15,7 @@ export class UserService {
 
   async getUsers() {
     this.users = [];
+    console.log("getting users");
     let result:any = await this.http.get(HttpConfig.host + "/users", {headers:HttpConfig.headers}).toPromise();
     for(let i in result) {
       this.users.push(new User(result[i]));
@@ -32,7 +33,7 @@ export class UserService {
     return user;
   }
 
-  async deleteUser(user:User){
-    let result:any = await this.http.delete(HttpConfig.host + "/user/" + user.getId(), {headers:HttpConfig.headers}).toPromise();
+  async deleteUser(userId){
+    let result:any = await this.http.delete(HttpConfig.host + "/users/" + userId, {headers:HttpConfig.headers}).toPromise();
   }
 }

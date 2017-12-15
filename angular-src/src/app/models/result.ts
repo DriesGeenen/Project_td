@@ -2,10 +2,6 @@ import autoBind from 'auto-bind';
 import DbBase from './db-base';
 
 export default class Result extends DbBase{
-  private _id:string;
-  getId(){
-    return this._id;
-  }
 
   constructor(data:any = null){
     super(data);

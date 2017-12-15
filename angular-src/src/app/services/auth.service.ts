@@ -56,10 +56,7 @@ export class AuthService {
   }
 
   async fetchUser(){
-    try{
       let result:any = await this.http.get(HttpConfig.host + "/users/profile", {headers:HttpConfig.headers}).toPromise();
-      this.user = new User(result);
-    }catch(err){
-    }
+      this.user = new User(result.user);
   }
 }

@@ -2,10 +2,6 @@ import autoBind from "auto-bind";
 import DbBase from "./db-base";
 
 export default class User extends DbBase{
-	private _id:string;
-	getId(){
-		return this._id;
-	}
 
 	constructor(data:any = null){
 		super(data);
@@ -17,7 +13,6 @@ export default class User extends DbBase{
 			this.role = data.role;
 		}
 	}
-
 	name:string;
 	email:string;
 	password:string;

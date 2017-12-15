@@ -11,10 +11,9 @@
             {{ user.email }}
           </div>
           <div class="panel-footer">
-            <button type="button" class="btn btn-default" href="javascript:void(0)" (click)="getResults(user.getId())">Bekijk resultaten</button>
+            <button type="button" class="btn btn-primary" href="javascript:void(0)" (click)="getResults(user.id)">Bekijk resultaten</button>
             <div style="float: right">
-              <button type="button" class="btn btn-primary" (click)="editUser(user.getId())">Bewerk</button>
-              <button type="button" class="btn btn-danger" style="margin-left: 5px" (click)="deleteUser(user.getId())">Verwijder</button>
+              <button type="button" class="btn btn-danger" style="margin-left: 5px" (click)="deleteUser(user.id)">Verwijder</button>
             </div>
           </div>
         </div>
