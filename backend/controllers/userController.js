@@ -90,15 +90,13 @@ exports.authenticateUser = function (req, res) {
 };
 
 exports.getProfile = function (req, res) {
-    console.log('profile: ' + JSON.stringify(req.user.data));
-
+    /*console.log('profile: ' + JSON.stringify(req.user.data));
     var user = new User();
     user._id = req.user.data._id;
     user.email = req.user.data.email;
     user.name = req.user.data.name;
     user.role = req.user.data.role;
+    console.log('filtered: ' + JSON.stringify(user));*/
 
-    console.log('filtered: ' + JSON.stringify(user));
-
-    res.json({user: user})
+    res.json({user: req.user.data})
 };
