@@ -65,7 +65,6 @@ public class Oef5Activity extends AppCompatActivity {
     }
 
     private void initialiseerVariabelen() {
-
         /*List<String> nodigeParen = new ArrayList<>();
         nodigeParen.add("RW");
         nodigeParen.add("BP");

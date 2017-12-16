@@ -27,11 +27,11 @@
     <color name="colorButtonBorderLight">#CC6699BB</color>
     <color name="colorEditText">#CCAADDFF</color>
     <color name="colorEditTextBorder">#CC88BBDD</color>
-    <color name="colorPopUp">#BBEEFF</color>
-    <color name="colorPopUpBorder">#99CCEE</color>
+    <color name="colorPopUp">#99CCEE</color>
+    <color name="colorPopUpBorder">#6699BB</color>
 
     <color name="colorMyCheckBorder">#FF00CC00</color>
-    <color name="colorMyCheckBackground">#7700FF00</color>
+    <color name="colorMyCheckBackground">#CC00FF00</color>
     <color name="colorMyCheckText">#CC225577</color>
 
 </resources>

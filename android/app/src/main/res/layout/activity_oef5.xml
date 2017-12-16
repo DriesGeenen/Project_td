@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="be.thomasmore.project_td.Oef5Activity"
-    android:background="@drawable/background">
+    android:background="@drawable/background3">
 
     <include layout="@layout/content_oef_header" />
     <include layout="@layout/content_oef5" />

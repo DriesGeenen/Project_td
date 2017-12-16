@@ -54,10 +54,6 @@
             android:name=".Oef5Activity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".LadenActivity"
-            android:label="@string/title_activity_laden"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="be.thomasmore.project_td.MenuActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/background2">
 
     <include layout="@layout/content_menu_header" />
     <include layout="@layout/content_menu" />

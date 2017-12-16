@@ -36,7 +36,9 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         initialiseerVariabelen();
+
         haalOpCheckBoxen();
+
     }
 
     private void initialiseerVariabelen() {
@@ -51,6 +53,7 @@ public class MenuActivity extends AppCompatActivity {
         sluitTextView = (TextView) findViewById(R.id.popupcanceltextview);
         jaKnop.setOnTouchListener(new MyButtonTouchListener());
         neeKnop.setOnTouchListener(new MyButtonLightTouchListener());
+        findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
     }
 
     private void haalOpCheckBoxen() {
@@ -83,27 +86,58 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
-        //Paren.maakLijst(nodigeParen, ouderDan5);
-        Intent intent = new Intent(this, LadenActivity.class);
-        intent.putStringArrayListExtra("nodigeParen", nodigeParen);
-        intent.putExtra("ouderDan5", ouderDan5);
+        Thread thread1 = new Thread() {
+            @Override
+            public void run() {
+                Paren.maakLijst(nodigeParen, ouderDan5);
+            }
+        };
+
+        Thread thread2 = new Thread() {
+            @Override
+            public void run() {
+                startOefeningen();
+            }
+        };
+
+        thread1.start();
+        try {
+            thread1.join();
+        } catch (InterruptedException e) {
+            for (MyCheckbox checkBox : parenCheckBoxLijst) {
+                checkBox.setEnabled(true);
+            }
+            view.setEnabled(true);
+            e.printStackTrace();
+        }
+        thread2.start();
+        try {
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startOefeningen() {
+        Intent intent = new Intent(MenuActivity.this, Oef1Activity.class);
         startActivity(intent);
     }
 
     public void checkBoxClick(View v) {
-        String woord1 = (((RelativeLayout)v.getParent()).getChildAt(1).getTag() != null)?
-                ((RelativeLayout)v.getParent()).getChildAt(1).getTag().toString() : "";
-        String woord2 = (((RelativeLayout)v.getParent()).getChildAt(2).getTag() != null)?
-                ((RelativeLayout)v.getParent()).getChildAt(2).getTag().toString() : "";
+        String woord1 = (((RelativeLayout) v.getParent()).getChildAt(1).getTag() != null) ?
+                ((RelativeLayout) v.getParent()).getChildAt(1).getTag().toString() : "";
+        String woord2 = (((RelativeLayout) v.getParent()).getChildAt(2).getTag() != null) ?
+                ((RelativeLayout) v.getParent()).getChildAt(2).getTag().toString() : "";
         String output = "Ik maak van \"" + woord1 + "\" \"" + woord2 + "\".";
         popupTextView.setText(output);
-        huidigeCheckbox = (MyCheckbox)v;
+        huidigeCheckbox = (MyCheckbox) v;
         jaKnop.setOnClickListener(new BevestigClickListener());
         neeKnop.setOnClickListener(new AnnuleerBevestigClickListener());
         sluitTextView.setOnClickListener(new SluitBevestigClickListener());
         jaKnop.setText("Oefenen");
         neeKnop.setText("Annuleren");
         popup.setVisibility(View.VISIBLE);
+        findViewById(R.id.startButton).setEnabled(false);
     }
 
 
@@ -115,6 +149,7 @@ public class MenuActivity extends AppCompatActivity {
         jaKnop.setText("Ja");
         neeKnop.setText("Nee");
         popup.setVisibility(View.VISIBLE);
+        findViewById(R.id.startButton).setEnabled(false);
     }
 
     class BevestigClickListener implements View.OnClickListener {
@@ -122,6 +157,7 @@ public class MenuActivity extends AppCompatActivity {
         public void onClick(View view) {
             huidigeCheckbox.setChecked(true);
             popup.setVisibility(View.INVISIBLE);
+            findViewById(R.id.startButton).setEnabled(true);
         }
     }
 
@@ -130,6 +166,7 @@ public class MenuActivity extends AppCompatActivity {
         public void onClick(View view) {
             huidigeCheckbox.setChecked(false);
             popup.setVisibility(View.INVISIBLE);
+            findViewById(R.id.startButton).setEnabled(true);
         }
     }
 
@@ -138,6 +175,7 @@ public class MenuActivity extends AppCompatActivity {
         public void onClick(View view) {
             huidigeCheckbox.setChecked(!huidigeCheckbox.isChecked());
             popup.setVisibility(View.INVISIBLE);
+            findViewById(R.id.startButton).setEnabled(true);
         }
     }
 
@@ -145,8 +183,9 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             MyMediaPlayer.toggleSpeelIntro();
-            findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
+            findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro()) ? View.VISIBLE : View.INVISIBLE);
             popup.setVisibility(View.INVISIBLE);
+            findViewById(R.id.startButton).setEnabled(true);
         }
     }
 
@@ -154,6 +193,7 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             popup.setVisibility(View.INVISIBLE);
+            findViewById(R.id.startButton).setEnabled(true);
         }
     }
 
