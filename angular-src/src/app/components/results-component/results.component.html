@@ -2,7 +2,8 @@
   <div *ngIf="authService.getUser()?.role == 'admin' || authService.getUser()?.role == 'logopedist'">
   <div class="jumbotron">
     <h1>{{ userService.user.name }}</h1>
-    <p><b>Email: </b>{{ userService.user.email }}</p>
+    <div class="col-md-6"><b>Email: </b>{{ userService.user.email }}</div>
+    <div class="col-md-6"><b>Rol: </b>{{ userService.user.role }}</div>
   </div>
 
   <div  class="col-md-9">

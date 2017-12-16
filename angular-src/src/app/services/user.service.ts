@@ -24,16 +24,20 @@ export class UserService {
     return this.users;
   }
 
+  async getUsersByLogopedist(logopedistId){
+    this.users = [];
+    console.log("getting users by logopedist");
+    let result:any = await this.http.get(HttpConfig.host + "/logopedist/" + logopedistId + "/users", {headers:HttpConfig.headers}).toPromise();
+    for(let i in result) {
+      this.users.push(new User(result[i]));
+    }
+    return this.users;
+  }
+
   async getUserById(userId){
     console.log("getting user");
     let result:any = await this.http.get(HttpConfig.host + "/users/" + userId, {headers:HttpConfig.headers}).toPromise();
-    console.log(result);
     this.user = result;
-  }
-
-  async updateUser(user:User){
-    let result:any = await this.http.patch(HttpConfig.host + "/user/" + user.getId(), user, {headers:HttpConfig.headers}).toPromise();
-    return user;
   }
 
   async createUser(user){
