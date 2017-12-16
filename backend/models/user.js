@@ -19,6 +19,9 @@ const userSchema = mongoose.Schema({
         type: String,
         default: 'user',
         required: true
+    },
+    logopedist: {
+        type: mongoose.Schema.Types.ObjectId
     }
 
 });

@@ -1,7 +1,5 @@
 'use strict';
 
-const passport = require('passport');
-
 module.exports = function (app) {
     var UserController = require('../controllers/userController');
     var AuthHelper = require('../helpers/authHelper');
@@ -22,4 +20,6 @@ module.exports = function (app) {
     app.route('/users/authenticate')
         .post(UserController.authenticateUser);
 
+    app.route('/logopedist/:logopedist/users')
+        .get(UserController.getUsersByLogo);
 };

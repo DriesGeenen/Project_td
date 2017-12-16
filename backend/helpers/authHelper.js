@@ -6,6 +6,14 @@ exports.loginRequired = function(req, res, next) {
     }
 };
 
+exports.logoRequired = function(req, res, next) {
+    if (req.user && req.user.data.role === "logo") {
+        next();
+    } else {
+        return res.status(401).json({ message: 'Unauthorized logopedist!' });
+    }
+};
+
 exports.adminRequired = function(req, res, next) {
     if (req.user && req.user.data.role === "admin") {
         next();

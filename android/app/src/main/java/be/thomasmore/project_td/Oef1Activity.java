@@ -105,6 +105,9 @@ public class Oef1Activity extends AppCompatActivity {
         popup = (RelativeLayout) findViewById(R.id.popupviewgroup);
         findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
         findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging())?View.VISIBLE:View.INVISIBLE);
+        if (!User.hasToken()){
+            findViewById(R.id.logoutTextView).setVisibility(View.INVISIBLE);
+        }
     }
 
     private void laadAfbeeldingen() {
@@ -318,7 +321,6 @@ public class Oef1Activity extends AppCompatActivity {
     }
 
     public void infoTextViewClick(View v) {
-        MyMediaPlayer.onderbreekIntro();
         popupTextView.setText((MyMediaPlayer.doeSpeelIntro()) ? "Wil je de introductie af zetten?" : "Wil je de introductie op zetten?");
         popup.setVisibility(View.VISIBLE);
         jaKnop.setOnClickListener(new InfoClickListener());
@@ -334,6 +336,7 @@ public class Oef1Activity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(Oef1Activity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -342,6 +345,7 @@ public class Oef1Activity extends AppCompatActivity {
         public void onClick(View view) {
             User.logOut(Oef1Activity.this);
             Intent intent = new Intent(Oef1Activity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 

@@ -89,6 +89,9 @@ public class Oef4Activity extends AppCompatActivity {
 
         findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
         findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging())?View.VISIBLE:View.INVISIBLE);
+        if (!User.hasToken()){
+            findViewById(R.id.logoutTextView).setVisibility(View.INVISIBLE);
+        }
     }
 
     private void laadAfbeeldingen() {
@@ -223,6 +226,7 @@ public class Oef4Activity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(Oef4Activity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -231,6 +235,7 @@ public class Oef4Activity extends AppCompatActivity {
         public void onClick(View view) {
             User.logOut(Oef4Activity.this);
             Intent intent = new Intent(Oef4Activity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 

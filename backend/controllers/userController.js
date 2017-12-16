@@ -90,12 +90,15 @@ exports.authenticateUser = function (req, res) {
 };
 
 exports.getProfile = function (req, res) {
-    /*console.log('profile: ' + JSON.stringify(req.user.data));
-    var user = new User();
-    user._id = req.user.data._id;
-    user.email = req.user.data.email;
-    user.role = req.user.data.role;
-    console.log('filtered: ' + JSON.stringify(user));*/
 
     res.json({user: req.user.data})
 };
+
+exports.getUsersByLogo = function(req, res) {
+    var promise = UserRepository.getUsersByLogo(req);
+    promise.then(function (result) {
+        res.json(result);
+    }, function (err) {
+        res.status(500).json({success: false, msg: 'Failed to get users', error: err});
+    });
+}

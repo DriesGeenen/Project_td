@@ -29,3 +29,7 @@ exports.deleteUser = function (req) {
     return User.remove({_id: req.params.id});
 };
 
+exports.getUsersByLogo = function (req) {
+    return User.find({logopedist:req.params.logopedist})
+}
+

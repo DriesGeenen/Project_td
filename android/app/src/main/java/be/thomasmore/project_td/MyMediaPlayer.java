@@ -43,11 +43,6 @@ public class MyMediaPlayer {
         }
     }
 
-    static void onderbreekIntro() {
-        if (speelIntro)
-            mediaPlayer.stop();
-    }
-
     private static void releaseAndNullify() {
         if (mediaPlayer != null) mediaPlayer.release();
         mediaPlayer = null;

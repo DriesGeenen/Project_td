@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         String token = settings.getString("token", null);
         if (token != null) {
             User.setToken(token);
-            //volgendeActivity();
+            volgendeActivity();
         }
     }
 

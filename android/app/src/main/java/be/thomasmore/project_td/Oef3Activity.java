@@ -104,6 +104,9 @@ public class Oef3Activity extends AppCompatActivity {
 
         findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
         findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging())?View.VISIBLE:View.INVISIBLE);
+        if (!User.hasToken()){
+            findViewById(R.id.logoutTextView).setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -340,6 +343,7 @@ public class Oef3Activity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(Oef3Activity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -348,6 +352,7 @@ public class Oef3Activity extends AppCompatActivity {
         public void onClick(View view) {
             User.logOut(Oef3Activity.this);
             Intent intent = new Intent(Oef3Activity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 

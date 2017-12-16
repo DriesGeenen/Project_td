@@ -5,15 +5,15 @@ module.exports = function (app) {
     var AuthHelper = require('../helpers/authHelper');
 
     app.route('/results')
-        .get(/*AuthHelper.adminRequired, */ResultController.getAllResults)
+        .get(AuthHelper.adminRequired, ResultController.getAllResults)
         .post(AuthHelper.loginRequired, ResultController.addResult);
 
     app.route('/results/:id')
-        .get(AuthHelper.adminRequired, ResultController.getResultById)
-        .delete(AuthHelper.adminRequired, ResultController.deleteResult)
-        .put(AuthHelper.adminRequired, ResultController.updateResult);
+        .get(AuthHelper.logoRequired, ResultController.getResultById)
+        .delete(AuthHelper.logoRequired, ResultController.deleteResult)
+        .put(AuthHelper.logoRequired, ResultController.updateResult);
 
     app.route('/user/:user/results')
-        .get(AuthHelper.adminRequired, ResultController.getResultsByUserId);
+        .get(AuthHelper.logoRequired, ResultController.getResultsByUserId);
 
 };

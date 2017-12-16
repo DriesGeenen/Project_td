@@ -106,6 +106,9 @@ public class Oef5Activity extends AppCompatActivity {
 
         findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
         findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging())?View.VISIBLE:View.INVISIBLE);
+        if (!User.hasToken()){
+            findViewById(R.id.logoutTextView).setVisibility(View.INVISIBLE);
+        }
     }
 
     private void haalImageViews() {
@@ -273,6 +276,7 @@ public class Oef5Activity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(Oef5Activity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -281,6 +285,7 @@ public class Oef5Activity extends AppCompatActivity {
         public void onClick(View view) {
             User.logOut(Oef5Activity.this);
             Intent intent = new Intent(Oef5Activity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
