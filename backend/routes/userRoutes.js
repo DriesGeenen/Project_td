@@ -8,14 +8,14 @@ module.exports = function (app) {
         .get(AuthHelper.loginRequired, UserController.getProfile);
 
     app.route('/users')
-        .get(AuthHelper.adminRequired, UserController.getAllUsers);
+        .get(AuthHelper.logoRequired, UserController.getAllUsers);
 
     app.route('/users/:id')
-        .get(AuthHelper.adminRequired, UserController.getUserById)
-        .delete(AuthHelper.adminRequired, UserController.deleteUser);
+        .get(AuthHelper.logoRequired, UserController.getUserById)
+        .delete(AuthHelper.logoRequired, UserController.deleteUser);
 
     app.route('/users/register')
-        .post(AuthHelper.adminRequired, UserController.registerUser);
+        .post(AuthHelper.logoRequired, UserController.registerUser);
 
     app.route('/users/authenticate')
         .post(UserController.authenticateUser);

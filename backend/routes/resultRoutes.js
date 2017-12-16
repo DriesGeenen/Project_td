@@ -5,7 +5,7 @@ module.exports = function (app) {
     var AuthHelper = require('../helpers/authHelper');
 
     app.route('/results')
-        .get(AuthHelper.adminRequired, ResultController.getAllResults)
+        .get(AuthHelper.logoRequired, ResultController.getAllResults)
         .post(AuthHelper.loginRequired, ResultController.addResult);
 
     app.route('/results/:id')
