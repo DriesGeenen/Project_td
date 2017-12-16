@@ -84,7 +84,9 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         Paren.maakLijst(nodigeParen, ouderDan5);
-        Intent intent = new Intent(this, Oef1Activity.class);
+        Intent intent = new Intent(this, LadenActivity.class);
+        intent.putStringArrayListExtra("nodigeParen", nodigeParen);
+        intent.putExtra("ouderDan5", ouderDan5);
         startActivity(intent);
     }
 

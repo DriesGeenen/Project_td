@@ -12,11 +12,13 @@ exports.getUserById = function (req) {
 };
 
 exports.getUserByEmail = function (email) {
-    return User.findOne({email:email});
+    return User.findOne({email: email});
 };
 
 exports.addUser = function (req) {
     const newUser = new User(req.body);
+    if (req.user)
+        newUser.logopedist = req.user.data._id;
     return newUser.save();
 };
 
@@ -30,6 +32,6 @@ exports.deleteUser = function (req) {
 };
 
 exports.getUsersByLogo = function (req) {
-    return User.find({logopedist:req.params.logopedist})
+    return User.find({logopedist: req.params.logopedist})
 }
 
