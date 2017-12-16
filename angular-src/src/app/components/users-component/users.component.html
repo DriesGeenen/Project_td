@@ -1,4 +1,5 @@
-<div class="container wide" *ngIf="authService.isLoggedIn() && authService.getUser()?.role == 'admin'">
+<div class="container" *ngIf="authService.isLoggedIn()">
+  <div *ngIf="authService.getUser()?.role == 'admin' || authService.getUser()?.role == 'logopedist'">
   <a class="btn btn-success" [routerLink]="['/new-user']">Nieuwe gebruiker</a>
   <br/>
   <br/>
@@ -20,4 +21,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

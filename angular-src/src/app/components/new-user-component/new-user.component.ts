@@ -14,6 +14,7 @@ export class NewUserComponent implements OnInit {
   name:string = "";
   email:string = "";
   password:string = "";
+  role:string = "";
 
   constructor(private authService : AuthService, private userService : UserService, private router : Router) {
     autoBind(this);
@@ -27,7 +28,7 @@ export class NewUserComponent implements OnInit {
       name: this.name,
       email: this.email,
       password: this.password,
-      role: "user"
+      role: this.role
     }
     try {
       await this.userService.createUser(user);

@@ -12,14 +12,6 @@ export class ResultService {
 
   constructor(private http:HttpClient) {
     autoBind(this);
-    async function init(){
-      try{
-        await this.getResults();
-      }catch(err){
-        console.log(err);
-      }
-    }
-    init();
   }
 
   async getResultsForUser(userId:string) {
@@ -28,6 +20,7 @@ export class ResultService {
     for(let i in result) {
       this.results.push(new Result(result[i]));
     }
+    this.results.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     return this.results;
   }
 

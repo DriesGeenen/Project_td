@@ -1,3 +1,31 @@
-<p>
-  results works!
-</p>
+<div class="container" *ngIf="authService.isLoggedIn()">
+  <div *ngIf="authService.getUser()?.role == 'admin' || authService.getUser()?.role == 'logopedist'">
+  <div class="jumbotron">
+    <h1>{{ userService.user.name }}</h1>
+    <p><b>Email: </b>{{ userService.user.email }}</p>
+  </div>
+
+  <div  class="col-md-9">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Oefening</th>
+          <th>Woord</th>
+          <th>Aantal Juist</th>
+          <th>Aantal Fout</th>
+          <th>Datum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of resultService.results">
+          <th>{{ result.exerciseNr }}</th>
+          <th>{{ result.word }}</th>
+          <th>{{ result.amountCorrect }}</th>
+          <th>{{ result.amountWrong }}</th>
+          <th>{{ result.date }}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import autoBind from 'auto-bind';
 import { UserService } from "../../services/user.service";
+import { ResultService } from "../../services/result.service";
 import { Router } from '@angular/router';
 import {AuthService} from "../../services/auth.service";
 
@@ -13,7 +14,7 @@ export class UsersComponent implements OnInit {
 
 
 
-  constructor(private authService : AuthService, private userService : UserService, private router : Router) {
+  constructor(private authService : AuthService, private userService : UserService, private resultService : ResultService, private router : Router) {
     autoBind(this);
   }
 
@@ -21,6 +22,17 @@ export class UsersComponent implements OnInit {
     console.log("init users");
     try {
       await this.userService.getUsers();
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
+  async getResults(userId){
+    try{
+      await this.userService.getUserById(userId);
+      await this.resultService.getResultsForUser(userId);
+      this.router.navigate(["/results"]);
     }
     catch(err){
       console.log(err);

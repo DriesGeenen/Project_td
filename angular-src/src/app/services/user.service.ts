@@ -8,6 +8,7 @@ import HttpConfig from '../config/http';
 export class UserService {
 
   users:Array<User> = [];
+  user:User;
 
   constructor(private http:HttpClient) {
     autoBind(this);
@@ -21,6 +22,13 @@ export class UserService {
       this.users.push(new User(result[i]));
     }
     return this.users;
+  }
+
+  async getUserById(userId){
+    console.log("getting user");
+    let result:any = await this.http.get(HttpConfig.host + "/users/" + userId, {headers:HttpConfig.headers}).toPromise();
+    console.log(result);
+    this.user = result;
   }
 
   async updateUser(user:User){
