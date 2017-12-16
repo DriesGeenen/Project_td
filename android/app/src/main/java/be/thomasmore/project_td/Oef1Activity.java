@@ -318,6 +318,7 @@ public class Oef1Activity extends AppCompatActivity {
     }
 
     public void infoTextViewClick(View v) {
+        MyMediaPlayer.onderbreekIntro();
         popupTextView.setText((MyMediaPlayer.doeSpeelIntro()) ? "Wil je de introductie af zetten?" : "Wil je de introductie op zetten?");
         popup.setVisibility(View.VISIBLE);
         jaKnop.setOnClickListener(new InfoClickListener());

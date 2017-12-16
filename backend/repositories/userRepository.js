@@ -7,8 +7,8 @@ exports.getAllUsers = function (req) {
     return User.find({});
 };
 
-exports.getUserById = function (id) {
-    return User.findById(id);
+exports.getUserById = function (req) {
+    return User.findById(req.params.id);
 };
 
 exports.getUserByEmail = function (email) {

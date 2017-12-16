@@ -41,7 +41,11 @@ public class MyMediaPlayer {
                 bevestigCorrectMediaPlayer.start();
             }
         }
+    }
 
+    static void onderbreekIntro() {
+        if (speelIntro)
+            mediaPlayer.stop();
     }
 
     private static void releaseAndNullify() {
