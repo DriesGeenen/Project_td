@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -31,6 +33,9 @@ public class Oef5Activity extends AppCompatActivity {
     private TouchableButton juistKnop;
     private TouchableButton foutKnop;
     private Result resultaat;
+    private RelativeLayout popup;
+    private TextView popupTextView;
+    private Button jaKnop;
 
     private MediaPlayer.OnCompletionListener myCompletionListener;
 
@@ -52,10 +57,11 @@ public class Oef5Activity extends AppCompatActivity {
         } else {
             setEnabledJuistFout(false);
             laadAntwoorden();
-            disableVraagtekens(null);
-            MyMediaPlayer.speelIntroductie(this, 5, myCompletionListener);
+            if (MyMediaPlayer.doeSpeelIntro()){
+                disableVraagtekens(null);
+                MyMediaPlayer.speelIntroductie(this, 5, myCompletionListener);
+            }
         }
-
     }
 
     private void initialiseerVariabelen() {
@@ -90,6 +96,16 @@ public class Oef5Activity extends AppCompatActivity {
 
         myCompletionListener = new MyCompletionListener();
         aanDeBeurt = true;
+
+        popup = (RelativeLayout) findViewById(R.id.popupviewgroup);
+        popupTextView = (TextView)findViewById(R.id.popuptextview);
+        jaKnop = (Button) findViewById(R.id.popupconfirmbutton);
+        jaKnop.setOnTouchListener(new MyButtonTouchListener());
+        (findViewById(R.id.popupconfirmbutton)).setOnTouchListener(new MyButtonTouchListener());
+        (findViewById(R.id.popupcancelbutton)).setOnTouchListener(new MyButtonLightTouchListener());
+
+        findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
+        findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging())?View.VISIBLE:View.INVISIBLE);
     }
 
     private void haalImageViews() {
@@ -164,14 +180,15 @@ public class Oef5Activity extends AppCompatActivity {
                 view.setBackgroundResource(R.drawable.buttonshapegreen);
             } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
                 if (aanDeBeurt) {
-                    score1 += 4;
+                    score1 += 5000;
                     score1TextView.setText(String.valueOf(score1));
                 } else {
-                    score2 += 4;
+                    score2 += 5000;
                     score2TextView.setText(String.valueOf(score2));
                 }
                 aanDeBeurt = !aanDeBeurt;
                 resultaat.verhoogAmountCorrect();
+                MyMediaPlayer.bevestigCorrectAntwoord(Oef5Activity.this);
                 gaVerder();
                 view.performClick();
             }
@@ -222,5 +239,71 @@ public class Oef5Activity extends AppCompatActivity {
         public void onCompletion(MediaPlayer mediaPlayer) {
             enableVraagtekens();
         }
+    }
+
+    public void sluitButtonClick(View v) {
+        popup.setVisibility(View.INVISIBLE);
+    }
+
+    public void homeTextViewClick(View v) {
+        popupTextView.setText("Wil je naar de beginpagina?");
+        popup.setVisibility(View.VISIBLE);
+        jaKnop.setOnClickListener(new HomeClickListener());
+    }
+
+    public void logoutTextViewClick(View v) {
+        popupTextView.setText("Ben je zeker dat je wil afmelden?");
+        popup.setVisibility(View.VISIBLE);
+        jaKnop.setOnClickListener(new LogoutClickListener());
+    }
+
+    public void infoTextViewClick(View v) {
+        popupTextView.setText((MyMediaPlayer.doeSpeelIntro()) ? "Wil je de introductie af zetten?" : "Wil je de introductie op zetten?");
+        popup.setVisibility(View.VISIBLE);
+        jaKnop.setOnClickListener(new InfoClickListener());
+    }
+
+    public void bevestigTextViewClick(View v) {
+        popupTextView.setText((MyMediaPlayer.doeSpeelBevestiging()) ? "Wil je het geluidje af zetten?" : "Wil je het geluidje op zetten?");
+        popup.setVisibility(View.VISIBLE);
+        jaKnop.setOnClickListener(new BevestigClickListener());
+    }
+
+    class HomeClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Oef5Activity.this, LoginActivity.class);
+        }
+    }
+
+    class LogoutClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            User.logOut(Oef5Activity.this);
+            Intent intent = new Intent(Oef5Activity.this, LoginActivity.class);
+        }
+    }
+
+    class InfoClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            MyMediaPlayer.toggleSpeelIntro();
+            findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro()) ? View.VISIBLE : View.INVISIBLE);
+            popup.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    class BevestigClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            MyMediaPlayer.toggleSpeelBevestiging();
+            findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging()) ? View.VISIBLE : View.INVISIBLE);
+            popup.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // doe niks
     }
 }

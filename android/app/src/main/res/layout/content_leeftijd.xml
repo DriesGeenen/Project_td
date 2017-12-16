@@ -15,8 +15,9 @@
         android:layout_margin="10dp"
         android:text="Hoe oud ben je?"
         android:textAlignment="center"
-        android:textSize="27sp"
-        android:textColor="@color/colorPrimary"/>
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/mainfont"/>
 
 
     <LinearLayout
@@ -33,10 +34,11 @@
             android:onClick="leeftijdButtonClick"
             android:tag="0"
             android:text="3-4 jaar"
-            android:textSize="24sp"
+            android:textSize="36sp"
             android:layout_margin="5dp"
             android:background="@drawable/buttonshape"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/mainfont"/>
 
         <Button
             android:id="@+id/button56"
@@ -46,10 +48,11 @@
             android:onClick="leeftijdButtonClick"
             android:tag="1"
             android:text="5-6 jaar"
-            android:textSize="24sp"
+            android:textSize="36sp"
             android:layout_margin="5dp"
             android:background="@drawable/buttonshape"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/mainfont"/>
 
     </LinearLayout>
 

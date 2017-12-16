@@ -31,6 +31,7 @@ public class LeeftijdActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // doe niks
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }

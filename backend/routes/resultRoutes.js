@@ -13,7 +13,7 @@ module.exports = function (app) {
         .delete(AuthHelper.adminRequired, ResultController.deleteResult)
         .put(AuthHelper.adminRequired, ResultController.updateResult);
 
-    app.route('/user/:userId/results')
+    app.route('/user/:user/results')
         .get(AuthHelper.adminRequired, ResultController.getResultsByUserId);
 
 };

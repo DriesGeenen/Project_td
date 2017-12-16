@@ -7,7 +7,6 @@ public class MyCheckbox extends android.support.v7.widget.AppCompatCheckBox {
 
     public MyCheckbox(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //setButtonDrawable(new StateListDrawable());
     }
     @Override
     public void setChecked(boolean t){

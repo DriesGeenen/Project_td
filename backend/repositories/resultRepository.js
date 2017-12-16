@@ -8,7 +8,7 @@ exports.getAllResults = function () {
 };
 
 exports.getResultsByUserId = function (req) {
-    return Result.find({userId: req.params.userId}).sort({date: 'desc'});
+    return Result.find({user: req.params.user}).sort({date: 'desc'});
 };
 
 exports.getResultById = function (req) {

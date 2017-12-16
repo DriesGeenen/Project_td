@@ -21,12 +21,14 @@
     <color name="colorPrimary">#447799</color>
     <color name="colorPrimaryDark">#225577</color>
     <color name="colorPrimaryLight">#5588AA</color>
-    <color name="colorButton">#AA88BBDD</color>
-    <color name="colorButtonBorder">#AA5588AA</color>
-    <color name="colorButtonLight">#AA99CCEE</color>
-    <color name="colorButtonBorderLight">#AA6699BB</color>
-    <color name="colorEditText">#AAAADDFF</color>
-    <color name="colorEditTextBorder">#AA88BBDD</color>
+    <color name="colorButton">#CC88BBDD</color>
+    <color name="colorButtonBorder">#CC5588AA</color>
+    <color name="colorButtonLight">#CC99CCEE</color>
+    <color name="colorButtonBorderLight">#CC6699BB</color>
+    <color name="colorEditText">#CCAADDFF</color>
+    <color name="colorEditTextBorder">#CC88BBDD</color>
+    <color name="colorPopUp">#BBEEFF</color>
+    <color name="colorPopUpBorder">#99CCEE</color>
 
     <color name="colorMyCheckBorder">#FF00CC00</color>
     <color name="colorMyCheckBackground">#7700FF00</color>

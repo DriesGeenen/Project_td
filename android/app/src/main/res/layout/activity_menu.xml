@@ -7,6 +7,7 @@
     tools:context="be.thomasmore.project_td.MenuActivity"
     android:background="@drawable/background">
 
+    <include layout="@layout/content_menu_header" />
     <include layout="@layout/content_menu" />
 
 </android.support.constraint.ConstraintLayout>

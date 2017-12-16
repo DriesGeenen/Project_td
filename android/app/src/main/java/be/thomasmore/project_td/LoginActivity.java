@@ -24,11 +24,12 @@ public class LoginActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         (findViewById(R.id.loginButton)).setOnTouchListener(new MyButtonTouchListener());
+        (findViewById(R.id.geenLoginButton)).setOnTouchListener(new MyButtonLightTouchListener());
         settings = getSharedPreferences("user", 0);
         String token = settings.getString("token", null);
         if (token != null) {
             User.setToken(token);
-            volgendeActivity();
+            //volgendeActivity();
         }
     }
 

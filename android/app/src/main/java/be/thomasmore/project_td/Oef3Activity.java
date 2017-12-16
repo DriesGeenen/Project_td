@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -43,6 +44,10 @@ public class Oef3Activity extends AppCompatActivity {
     private boolean dragComplete;
     private boolean playAudioComplete;
 
+    private RelativeLayout popup;
+    private TextView popupTextView;
+    private Button jaKnop;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +63,12 @@ public class Oef3Activity extends AppCompatActivity {
 
         laadAfbeeldingen();
 
-        setEnabledKaarten(false);
-        MyMediaPlayer.speelIntroductie(this, 3, myCompletionListener);
+        if (MyMediaPlayer.doeSpeelIntro()){
+            dragComplete = true;
+            setEnabledKaarten(false);
+            MyMediaPlayer.speelIntroductie(this, 3, myCompletionListener);
+        }
+
     }
 
     private void initialiseerVariabelen() {
@@ -85,7 +94,16 @@ public class Oef3Activity extends AppCompatActivity {
         achtergrond.setOnDragListener(new BackgroundDragListener());
 
         myCompletionListener = new MyCompletionListener();
-        dragComplete = true;
+
+        popup = (RelativeLayout) findViewById(R.id.popupviewgroup);
+        popupTextView = (TextView)findViewById(R.id.popuptextview);
+        jaKnop = (Button) findViewById(R.id.popupconfirmbutton);
+        jaKnop.setOnTouchListener(new MyButtonTouchListener());
+        (findViewById(R.id.popupconfirmbutton)).setOnTouchListener(new MyButtonTouchListener());
+        (findViewById(R.id.popupcancelbutton)).setOnTouchListener(new MyButtonLightTouchListener());
+
+        findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
+        findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging())?View.VISIBLE:View.INVISIBLE);
     }
 
 
@@ -197,23 +215,23 @@ public class Oef3Activity extends AppCompatActivity {
 
     private final class MyTouchListener implements OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                ClipData data = ClipData.newPlainText("", "");
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                view.startDrag(data, shadowBuilder, view, 0);
-                // Originele afbeelding verdwijnt
-                view.setVisibility(View.INVISIBLE);
+            switch (motionEvent.getAction() & MotionEvent.ACTION_MASK){
+                case MotionEvent.ACTION_MOVE:
+                    ClipData data = ClipData.newPlainText("", "");
+                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                    view.startDrag(data, shadowBuilder, view, 0);
+                    // Originele afbeelding verdwijnt
+                    view.setVisibility(View.INVISIBLE);
 
-                setEnabledKaarten(false);
-                dragComplete = false;
-                playAudioComplete = false;
-                MyMediaPlayer.spreek(Oef3Activity.this, view.getTag().toString(), myCompletionListener);
+                    setEnabledKaarten(false);
+                    dragComplete = false;
+                    playAudioComplete = false;
+                    MyMediaPlayer.spreek(Oef3Activity.this, view.getTag().toString(), myCompletionListener);
+                    break;
+                default:break;
 
-            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                view.performClick();
             }
-
-            return false;
+            return true;
         }
     }
 
@@ -244,11 +262,12 @@ public class Oef3Activity extends AppCompatActivity {
 
                 // Wanneer correct
                 if (dropped.getTag().toString().equals(dropTarget.getTag().toString())) {
-                    score += 4;
+                    score += 5000;
                     scoreTextView.setText(String.valueOf(score));
                     resultaat.verhoogAmountCorrect();
 
                     kleineImageViews.get(mainImageViews.indexOf(dropTarget)).setBackgroundResource(R.drawable.backgroundshapegreensemitransparent);
+                    MyMediaPlayer.bevestigCorrectAntwoord(Oef3Activity.this);
                 } else{
                     resultaat.verhoogAmountWrong();
 
@@ -287,5 +306,71 @@ public class Oef3Activity extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    public void sluitButtonClick(View v) {
+        popup.setVisibility(View.INVISIBLE);
+    }
+
+    public void homeTextViewClick(View v) {
+        popupTextView.setText("Wil je naar de beginpagina?");
+        popup.setVisibility(View.VISIBLE);
+        jaKnop.setOnClickListener(new HomeClickListener());
+    }
+
+    public void logoutTextViewClick(View v) {
+        popupTextView.setText("Ben je zeker dat je wil afmelden?");
+        popup.setVisibility(View.VISIBLE);
+        jaKnop.setOnClickListener(new LogoutClickListener());
+    }
+
+    public void infoTextViewClick(View v) {
+        popupTextView.setText((MyMediaPlayer.doeSpeelIntro()) ? "Wil je de introductie af zetten?" : "Wil je de introductie op zetten?");
+        popup.setVisibility(View.VISIBLE);
+        jaKnop.setOnClickListener(new InfoClickListener());
+    }
+
+    public void bevestigTextViewClick(View v) {
+        popupTextView.setText((MyMediaPlayer.doeSpeelBevestiging()) ? "Wil je het geluidje af zetten?" : "Wil je het geluidje op zetten?");
+        popup.setVisibility(View.VISIBLE);
+        jaKnop.setOnClickListener(new BevestigClickListener());
+    }
+
+    class HomeClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(Oef3Activity.this, LoginActivity.class);
+        }
+    }
+
+    class LogoutClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            User.logOut(Oef3Activity.this);
+            Intent intent = new Intent(Oef3Activity.this, LoginActivity.class);
+        }
+    }
+
+    class InfoClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            MyMediaPlayer.toggleSpeelIntro();
+            findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro()) ? View.VISIBLE : View.INVISIBLE);
+            popup.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    class BevestigClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            MyMediaPlayer.toggleSpeelBevestiging();
+            findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging()) ? View.VISIBLE : View.INVISIBLE);
+            popup.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // doe niks
     }
 }

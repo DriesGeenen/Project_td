@@ -1,42 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="600dp"
-    android:layout_height="300dp"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="600dp"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
 
-    <ImageView
-        android:id="@+id/afbeelding"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/afbeelding"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"/>
+
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="match_parent">
+            <be.thomasmore.project_td.TouchableButton
+                android:id="@+id/knop1"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:textSize="27sp"
+                android:background="@drawable/buttonshape"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/mainfont"/>
+            <be.thomasmore.project_td.TouchableButton
+                android:id="@+id/knop2"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="150dp"
+                android:layout_marginTop="160dp"
+                android:gravity="center"
+                android:textSize="27sp"
+                android:background="@drawable/buttonshape"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/mainfont"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
     <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="match_parent">
-        <be.thomasmore.project_td.TouchableButton
-            android:id="@+id/knop1"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:background="@drawable/buttonshape"
-            android:textColor="@color/colorPrimary"/>
-        <be.thomasmore.project_td.TouchableButton
-            android:id="@+id/knop2"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="160dp"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:background="@drawable/buttonshape"
-            android:textColor="@color/colorPrimary"/>
-    </RelativeLayout>
+        android:id="@+id/popupviewgroup"
+        android:layout_width="480dp"
+        android:layout_height="270dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/popupmenushape"
+        android:visibility="invisible">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/popupcanceltextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✗"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:textSize="48sp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginRight="20dp"
+            android:onClick="sluitButtonClick"/>
+
+        <TextView
+            android:id="@+id/popuptextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_centerInParent="true"
+            android:textSize="36sp"
+            android:fontFamily="@font/mainfont"
+            android:paddingBottom="40dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/popupcancelbutton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/buttonshapelight"
+                android:text="Nee"
+                android:textSize="27sp"
+                android:fontFamily="@font/mainfont"
+                android:textColor="@color/colorPrimaryLight"
+                android:textAlignment="center"
+                android:onClick="sluitButtonClick"/>
+            <Button
+                android:id="@+id/popupconfirmbutton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/buttonshape"
+                android:text="Ja"
+                android:textSize="27sp"
+                android:fontFamily="@font/mainfont"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

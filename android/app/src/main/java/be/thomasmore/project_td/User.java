@@ -1,5 +1,8 @@
 package be.thomasmore.project_td;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class User {
     private static String token;
 
@@ -13,5 +16,11 @@ public class User {
 
     public static boolean hasToken(){
         return (token != null && !token.isEmpty());
+    }
+
+    public static void logOut(Context context){
+        User.token = null;
+        SharedPreferences settings = context.getSharedPreferences("user", 0);
+        settings.edit().putString("token", null).apply();
     }
 }
