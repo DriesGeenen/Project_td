@@ -21,7 +21,13 @@ export class UsersComponent implements OnInit {
   async ngOnInit() {
     console.log("init users");
     try {
-      await this.userService.getUsers();
+      await this.authService.fetchUser();
+      if(this.authService.getUser().role == 'admin'){
+        await this.userService.getUsers();
+      }
+      if(this.authService.getUser().role == 'logopedist'){
+        await this.userService.getUsersByLogopedist(this.authService.getUser().getId());
+      }
     }
     catch(err){
       console.log(err);
@@ -30,6 +36,7 @@ export class UsersComponent implements OnInit {
 
   async getResults(userId){
     try{
+
       await this.userService.getUserById(userId);
       await this.resultService.getResultsForUser(userId);
       this.router.navigate(["/results"]);
