@@ -14,6 +14,6 @@ module.exports = function (app) {
         .put(AuthHelper.logoRequired, ResultController.updateResult);
 
     app.route('/user/:user/results')
-        .get(AuthHelper.logoRequired, ResultController.getResultsByUserId);
+        .get(AuthHelper.loginRequired, ResultController.getResultsByUserId);
 
 };
