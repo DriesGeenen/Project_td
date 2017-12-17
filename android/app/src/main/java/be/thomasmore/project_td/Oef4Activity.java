@@ -106,6 +106,14 @@ public class Oef4Activity extends AppCompatActivity {
         // todo replace with getContextResource()
         uitspraak = juistWoord.getResource();
 
+        // Als de geen aanvulzin beschikbaar is, worden de woorden omgewisselt
+        if (getResources().getIdentifier(uitspraak, "raw", getPackageName()) == 0){
+            Woord wisselWoord = juistWoord;
+            juistWoord = foutWoord;
+            foutWoord = wisselWoord;
+            uitspraak = juistWoord.getResource();
+        }
+
         for (TouchableButton touchableButton : knoppen) {
             touchableButton.setBackgroundResource(R.drawable.buttonshape);
         }

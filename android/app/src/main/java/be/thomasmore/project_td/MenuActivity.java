@@ -84,38 +84,26 @@ public class MenuActivity extends AppCompatActivity {
             if (checkBox.isChecked()) {
                 nodigeParen.add(checkBox.getTag().toString());
             }
+            checkBox.setEnabled(false);
         }
+        view.setEnabled(false);
 
-        Thread thread1 = new Thread() {
+        final View v = view;
+        AsynchParenLader asynchParenLader = new AsynchParenLader(nodigeParen, ouderDan5, new AsynchParenLader.OnResultReadyListener() {
             @Override
-            public void run() {
-                Paren.maakLijst(nodigeParen, ouderDan5);
-            }
-        };
-
-        Thread thread2 = new Thread() {
-            @Override
-            public void run() {
+            public void resultReady(String result) {
+                for (MyCheckbox checkBox : parenCheckBoxLijst) {
+                    if (checkBox.isChecked()) {
+                        nodigeParen.add(checkBox.getTag().toString());
+                    }
+                    checkBox.setEnabled(true);
+                }
+                v.setEnabled(true);
                 startOefeningen();
             }
-        };
+        });
 
-        thread1.start();
-        try {
-            thread1.join();
-        } catch (InterruptedException e) {
-            for (MyCheckbox checkBox : parenCheckBoxLijst) {
-                checkBox.setEnabled(true);
-            }
-            view.setEnabled(true);
-            e.printStackTrace();
-        }
-        thread2.start();
-        try {
-            thread2.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        asynchParenLader.execute();
     }
 
     private void startOefeningen() {
