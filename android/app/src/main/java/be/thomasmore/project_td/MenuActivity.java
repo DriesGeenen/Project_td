@@ -88,17 +88,15 @@ public class MenuActivity extends AppCompatActivity {
         }
         view.setEnabled(false);
 
-        final View v = view;
+        popup.setVisibility(View.VISIBLE);
+        sluitTextView.setVisibility(View.INVISIBLE);
+        jaKnop.setVisibility(View.INVISIBLE);
+        neeKnop.setVisibility(View.INVISIBLE);
+        popupTextView.setText("Even geduld...");
+
         AsynchParenLader asynchParenLader = new AsynchParenLader(nodigeParen, ouderDan5, new AsynchParenLader.OnResultReadyListener() {
             @Override
             public void resultReady(String result) {
-                for (MyCheckbox checkBox : parenCheckBoxLijst) {
-                    if (checkBox.isChecked()) {
-                        nodigeParen.add(checkBox.getTag().toString());
-                    }
-                    checkBox.setEnabled(true);
-                }
-                v.setEnabled(true);
                 startOefeningen();
             }
         });

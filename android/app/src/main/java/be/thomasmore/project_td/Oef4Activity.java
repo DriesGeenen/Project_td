@@ -104,14 +104,14 @@ public class Oef4Activity extends AppCompatActivity {
         afbeelding.setImageResource(getResources().getIdentifier(juistWoord.getResource(), "drawable", getPackageName()));
 
         // todo replace with getContextResource()
-        uitspraak = juistWoord.getResource();
+        uitspraak = juistWoord.getContextResource();
 
         // Als de geen aanvulzin beschikbaar is, worden de woorden omgewisselt
         if (getResources().getIdentifier(uitspraak, "raw", getPackageName()) == 0){
             Woord wisselWoord = juistWoord;
             juistWoord = foutWoord;
             foutWoord = wisselWoord;
-            uitspraak = juistWoord.getResource();
+            uitspraak = juistWoord.getContextResource();
         }
 
         for (TouchableButton touchableButton : knoppen) {
@@ -129,7 +129,7 @@ public class Oef4Activity extends AppCompatActivity {
 
     private void laadResultaat(Woord juistWoord, Woord foutWoord) {
         resultaat = new Result(4);
-        resultaat.setWord(juistWoord.getTekst() + "/(" + foutWoord + ")");
+        resultaat.setWord(juistWoord.getTekst() + "/(" + foutWoord.getTekst() + ")");
     }
 
     private void volgendeActivity() {
