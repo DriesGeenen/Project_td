@@ -19,7 +19,9 @@ export class UserService {
     console.log("getting users");
     let result:any = await this.http.get(HttpConfig.host + "/users", {headers:HttpConfig.headers}).toPromise();
     for(let i in result) {
-      this.users.push(new User(result[i]));
+      if(result[i].role != "admin"){
+        this.users.push(new User(result[i]));
+      }
     }
     return this.users;
   }
@@ -29,7 +31,9 @@ export class UserService {
     console.log("getting users by logopedist");
     let result:any = await this.http.get(HttpConfig.host + "/logopedist/" + logopedistId + "/users", {headers:HttpConfig.headers}).toPromise();
     for(let i in result) {
-      this.users.push(new User(result[i]));
+      if(result[i].role != "admin"){
+        this.users.push(new User(result[i]));
+      }
     }
     return this.users;
   }

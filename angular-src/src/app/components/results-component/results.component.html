@@ -6,27 +6,132 @@
     <div class="col-md-6"><b>Rol: </b>{{ userService.user.role }}</div>
   </div>
 
-  <div  class="col-md-9">
+    <div style="text-align: center">
+      <label class="checkbox-inline"><input type="checkbox" value="1" [(ngModel)]="oefening1">Oefening 1</label>
+      <label class="checkbox-inline"><input type="checkbox" value="2" [(ngModel)]="oefening2">Oefening 2</label>
+      <label class="checkbox-inline"><input type="checkbox" value="3" [(ngModel)]="oefening3">Oefening 3</label>
+      <label class="checkbox-inline"><input type="checkbox" value="4" [(ngModel)]="oefening4">Oefening 4</label>
+      <label class="checkbox-inline"><input type="checkbox" value="5" [(ngModel)]="oefening5">Oefening 5</label>
+    </div>
+
+  <div class="col-md-offset-1 col-md-10" *ngIf="oefening1">
+    <h1>Oefening 1</h1>
     <table class="table">
       <thead>
         <tr>
-          <th>Oefening</th>
-          <th>Woord</th>
+          <th>Woord(en)</th>
           <th>Aantal Juist</th>
           <th>Aantal Fout</th>
           <th>Datum</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let result of resultService.results">
-          <th>{{ result.exerciseNr }}</th>
-          <th>{{ result.word }}</th>
-          <th>{{ result.amountCorrect }}</th>
-          <th>{{ result.amountWrong }}</th>
-          <th>{{ result.date }}</th>
+      <ng-container *ngFor="let result of resultService.results">
+        <tr *ngIf="result.exerciseNr == 1">
+          <td>{{ result.word }}</td>
+          <td>{{ result.amountCorrect }}</td>
+          <td>{{ result.amountWrong }}</td>
+          <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
         </tr>
+      </ng-container>
       </tbody>
     </table>
   </div>
+
+    <div class="col-md-offset-1 col-md-10" *ngIf="oefening2">
+      <h1>Oefening 2</h1>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Woord(en)</th>
+          <th>Aantal Juist</th>
+          <th>Aantal Fout</th>
+          <th>Datum</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let result of resultService.results">
+          <tr *ngIf="result.exerciseNr == 2">
+            <td>{{ result.word }}</td>
+            <td>{{ result.amountCorrect }}</td>
+            <td>{{ result.amountWrong }}</td>
+            <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-offset-1 col-md-10" *ngIf="oefening3">
+      <h1>Oefening 3</h1>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Woord(en)</th>
+          <th>Aantal Juist</th>
+          <th>Aantal Fout</th>
+          <th>Datum</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let result of resultService.results">
+          <tr *ngIf="result.exerciseNr == 3">
+            <td>{{ result.word }}</td>
+            <td>{{ result.amountCorrect }}</td>
+            <td>{{ result.amountWrong }}</td>
+            <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-offset-1 col-md-10" *ngIf="oefening4">
+      <h1>Oefening 4</h1>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Woord(en)</th>
+          <th>Aantal Juist</th>
+          <th>Aantal Fout</th>
+          <th>Datum</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let result of resultService.results">
+          <tr *ngIf="result.exerciseNr == 4">
+            <td>{{ result.word }}</td>
+            <td>{{ result.amountCorrect }}</td>
+            <td>{{ result.amountWrong }}</td>
+            <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-offset-1 col-md-10" *ngIf="oefening5">
+      <h1>Oefening 5</h1>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Woord(en)</th>
+          <th>Aantal Juist</th>
+          <th>Aantal Fout</th>
+          <th>Datum</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let result of resultService.results">
+          <tr *ngIf="result.exerciseNr == 5">
+            <td>{{ result.word }}</td>
+            <td>{{ result.amountCorrect }}</td>
+            <td>{{ result.amountWrong }}</td>
+            <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
 </div>
 </div>
