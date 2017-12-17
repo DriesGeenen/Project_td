@@ -17,10 +17,15 @@ require('./config/passport')(passport);
 //Port number
 const port = 6600;
 
-mongoose.connect(config.database);
+    console.log(process.env.OPENSHIFT_MONGODB_DB_USERNAME);
+console.log(process.env.OPENSHIFT_MONGODB_DB_PASSWORD);
+console.log(process.env.OPENSHIFT_MONGODB_DB_USERNAME);
+console.log(process.env.OPENSHIFT_MONGODB_DB_PORT);
+console.log(process.env.OPENSHIFT_APP_NAME);
+
 
 mongoose.connection.on('connected', function () {
-    console.log('Connected to database' + config.database);
+    console.log('Connected to database' + config.databaseString);
 });
 
 mongoose.connection.on('error', function (err) {

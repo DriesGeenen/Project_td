@@ -36,8 +36,7 @@ public class AsynchParenLader extends AsyncTask<String, Void, String> {
     }
 
     private String maakLijst() {
-        Paren.maakLijst(nodigeParen, ouderDan5);
-        return null;
+        return Paren.maakLijst(nodigeParen, ouderDan5);
     }
 
 }

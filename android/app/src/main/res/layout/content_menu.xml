@@ -58,12 +58,16 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_centerInParent="true"
-                        android:layout_alignParentLeft="true"/>
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/lacht_"
+                        android:tag="lacht"/>
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_centerInParent="true"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/jacht_"
+                        android:tag="jacht"/>
                 </RelativeLayout>
 
 
@@ -88,15 +92,15 @@
                         android:layout_height="36dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentLeft="true"
-                        android:src="@drawable/wacht_"
-                        android:tag="wacht"/>
+                        android:src="@drawable/wijst_"
+                        android:tag="wijst"/>
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/lacht_"
-                        android:tag="lacht"/>
+                        android:src="@drawable/lijst_"
+                        android:tag="lijst"/>
                 </RelativeLayout>
 
 
@@ -120,12 +124,16 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_centerInParent="true"
-                        android:layout_alignParentLeft="true"/>
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/roker_"
+                        android:tag="roker"/>
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_centerInParent="true"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/joker_"
+                        android:tag="joker"/>
                 </RelativeLayout>
 
 
@@ -233,13 +241,17 @@
                         android:layout_height="36dp"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="10dp"
-                        android:layout_alignParentLeft="true"/>
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/vier_"
+                        android:tag="vier"/>
                     <ImageView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="10dp"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/fier_"
+                        android:tag="fier"/>
                 </RelativeLayout>
 
 

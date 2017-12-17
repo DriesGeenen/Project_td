@@ -7,15 +7,13 @@ import java.util.List;
 public class Paren{
     private static List<Paar> lijst;
 
-    public static void maakLijst(List<String> nodigeParen, boolean ouderDan5){
+    public static String maakLijst(List<String> nodigeParen, boolean ouderDan5){
 
         if (lijst == null){
             lijst = new ArrayList<>();
         }else{
             lijst.clear();
         }
-
-        Collections.shuffle(nodigeParen);
 
         Woord woord1;
         Woord woord2;
@@ -50,14 +48,6 @@ public class Paren{
                     if (coin.getTopDrieVierde() == 1){
                         woord1 = new Woord("Lacht");
                         woord2 = new Woord("Wacht");
-                        paar = new Paar(woord1, woord2, p);
-                        lijst.add(paar);
-                    }
-
-                    coin.toss();
-                    if (coin.getTopDrieVierde() == 1) {
-                        woord1 = new Woord("Leeg");
-                        woord2 = new Woord("Weeg");
                         paar = new Paar(woord1, woord2, p);
                         lijst.add(paar);
                     }
@@ -305,6 +295,8 @@ public class Paren{
                     break;
             }
         }
+        Collections.shuffle(lijst);
+        return "";
     }
 
     public static List<Paar> getLijst() {
