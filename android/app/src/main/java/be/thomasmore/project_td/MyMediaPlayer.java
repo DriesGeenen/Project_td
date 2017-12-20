@@ -34,7 +34,7 @@ public class MyMediaPlayer {
         if (MyMediaPlayer.speelBevestiging) {
             if (bevestigCorrectMediaPlayer == null) {
                 bevestigCorrectMediaPlayer = MediaPlayer.create(context, context.getResources().getIdentifier(
-                        "instantrapairhorn", "raw", context.getPackageName()));
+                        "ting", "raw", context.getPackageName()));
                 bevestigCorrectMediaPlayer.start();
             } else {
                 bevestigCorrectMediaPlayer.seekTo(0);

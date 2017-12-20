@@ -45,6 +45,7 @@ public class Oef1Activity extends AppCompatActivity {
     private RelativeLayout popup;
     private TextView popupTextView;
     private Button jaKnop;
+    private boolean slepenToegestaan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +104,12 @@ public class Oef1Activity extends AppCompatActivity {
         jaKnop.setOnTouchListener(new MyButtonTouchListener());
         (findViewById(R.id.popupcancelbutton)).setOnTouchListener(new MyButtonLightTouchListener());
         popup = (RelativeLayout) findViewById(R.id.popupviewgroup);
-        findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
-        findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging())?View.VISIBLE:View.INVISIBLE);
-        if (!User.hasToken()){
+        findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro()) ? View.VISIBLE : View.INVISIBLE);
+        findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging()) ? View.VISIBLE : View.INVISIBLE);
+        if (!User.hasToken()) {
             findViewById(R.id.logoutTextView).setVisibility(View.INVISIBLE);
         }
+        slepenToegestaan = true;
     }
 
     private void laadAfbeeldingen() {
@@ -184,7 +186,8 @@ public class Oef1Activity extends AppCompatActivity {
         int count = middenveld.getChildCount();
         for (int i = 0; i < count; i++) {
             View v = middenveld.getChildAt(i);
-            v.setEnabled(value);
+            //v.setEnabled(value);
+            slepenToegestaan = value;
             v.setAlpha((value) ? 1f : .5f);
         }
     }
@@ -195,36 +198,66 @@ public class Oef1Activity extends AppCompatActivity {
         }
     }
 
+    private void beeindigSlepen(View view) {
+        dragComplete = true;
+        if (playAudioComplete)
+            setEnabledAfbeeldingen(true);
+        if (view != null) {
+            view.setVisibility(View.VISIBLE);
+        }
+
+    }
+
     private int dpToPx(int dp) {
         float scale = getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        if (slepenToegestaan){
+            return super.dispatchTouchEvent(ev);
+        }
+        return true;
+    }
+
     private final class MyCompletionListener implements MediaPlayer.OnCompletionListener {
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {
+            playAudioComplete = true;
             if (dragComplete)
                 setEnabledAfbeeldingen(true);
-            playAudioComplete = true;
         }
     }
 
     private final class MyTouchListener implements OnTouchListener {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                case MotionEvent.ACTION_MOVE:
+                //case MotionEvent.ACTION_MOVE:
+                    //Log.i("ACTION_", "MOVE");
+                    //break;
+
+                //case MotionEvent.ACTION_UP:
+                    //Log.i("ACTION_", "UP");
+                    //break;
+
+                case MotionEvent.ACTION_DOWN:
+                    //Log.i("ACTION_", "DOWN");
                     ClipData data = ClipData.newPlainText("", "");
                     View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                     view.startDrag(data, shadowBuilder, view, 0);
-                    // Originele afbeelding verdwijnt
-                    view.setVisibility(View.INVISIBLE);
-                    setEnabledAfbeeldingen(false);
                     dragComplete = false;
                     playAudioComplete = false;
                     MyMediaPlayer.spreek(Oef1Activity.this, view.getTag().toString(), myCompletionListener);
                     setTransparentAchtergrondAfbeeldingen();
                     break;
+
+                //case MotionEvent.ACTION_CANCEL:
+                    //Log.i("ACTION_", "CANCEL");
+                    //break;
+
                 default:
+                    //Log.i("ACTION_", String.valueOf(motionEvent.getAction()));
                     break;
 
             }
@@ -253,7 +286,7 @@ public class Oef1Activity extends AppCompatActivity {
                 if (dropped.getTag().toString().equals(dropTarget.getTag().toString())) {
                     // Correct gedropt
                     resultaat.verhoogAmountCorrect();
-                    score += 1250;
+                    score += 100;
                     scoreTextView.setText(String.valueOf(score));
                     dropTarget.setBackgroundResource(R.drawable.backgroundshapegreensemitransparent);
                     MyMediaPlayer.bevestigCorrectAntwoord(Oef1Activity.this);
@@ -288,16 +321,15 @@ public class Oef1Activity extends AppCompatActivity {
     class BackgroundDragListener implements OnDragListener {
         @Override
         public boolean onDrag(View v, DragEvent event) {
-            if (event.getAction() == DragEvent.ACTION_DROP) {
-
-                if (playAudioComplete)
-                    setEnabledAfbeeldingen(true);
-                dragComplete = true;
-
-                // Afbeelding wordt terug zichtbaar
-                View view = (View) event.getLocalState();
-                view.setVisibility(View.VISIBLE);
-
+            View view = (View) event.getLocalState();
+            switch (event.getAction()){
+                case DragEvent.ACTION_DRAG_STARTED:
+                    setEnabledAfbeeldingen(false);
+                    view.setVisibility(View.INVISIBLE);
+                    break;
+                case DragEvent.ACTION_DROP:
+                    beeindigSlepen(view);
+                    break;
             }
             return true;
         }
@@ -353,7 +385,7 @@ public class Oef1Activity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             MyMediaPlayer.toggleSpeelIntro();
-            findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro())?View.VISIBLE:View.INVISIBLE);
+            findViewById(R.id.infoTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelIntro()) ? View.VISIBLE : View.INVISIBLE);
             popup.setVisibility(View.INVISIBLE);
         }
     }
@@ -362,7 +394,7 @@ public class Oef1Activity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             MyMediaPlayer.toggleSpeelBevestiging();
-            findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging())?View.VISIBLE:View.INVISIBLE);
+            findViewById(R.id.bevestigingTextViewKruis).setVisibility((MyMediaPlayer.doeSpeelBevestiging()) ? View.VISIBLE : View.INVISIBLE);
             popup.setVisibility(View.INVISIBLE);
         }
     }

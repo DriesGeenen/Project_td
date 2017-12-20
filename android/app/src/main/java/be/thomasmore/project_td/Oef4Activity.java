@@ -165,7 +165,7 @@ public class Oef4Activity extends AppCompatActivity {
             if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
                 view.setBackgroundResource(R.drawable.buttonshapegreen);
             } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
-                score += 10000;
+                score += 100;
                 scoreTextView.setText(String.valueOf(score));
                 resultaat.verhoogAmountCorrect();
                 MyMediaPlayer.bevestigCorrectAntwoord(Oef4Activity.this);

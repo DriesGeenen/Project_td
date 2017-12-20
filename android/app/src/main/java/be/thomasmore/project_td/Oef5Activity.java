@@ -182,10 +182,10 @@ public class Oef5Activity extends AppCompatActivity {
                 view.setBackgroundResource(R.drawable.buttonshapegreen);
             } else if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
                 if (aanDeBeurt) {
-                    score1 += 5000;
+                    score1 += 100;
                     score1TextView.setText(String.valueOf(score1));
                 } else {
-                    score2 += 5000;
+                    score2 += 100;
                     score2TextView.setText(String.valueOf(score2));
                 }
                 aanDeBeurt = !aanDeBeurt;
