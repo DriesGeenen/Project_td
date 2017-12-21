@@ -125,7 +125,7 @@ public class Oef2Activity extends AppCompatActivity {
 
     public void afbeeldingClick(View view) {
         if (view.getTag().toString().equals("correct")) {
-            score += 10000;
+            score += 100;
             scoreTextView.setText(String.valueOf(score));
             resultaat.verhoogAmountCorrect();
             view.setBackgroundResource(R.drawable.backgroundshapegreen);

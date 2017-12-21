@@ -25,7 +25,7 @@ public class Paren{
             switch (p) {
                 case "LJ":
                     coin.toss();
-                    if (coin.getTopDrieVierde() == 1) {
+                    if (coin.getTopDrieVierde() == 1 || nodigeParen.size() <= 2) {
                         woord1 = new Woord("Lacht");
                         woord2 = new Woord("Jacht");
                         paar = new Paar(woord1, woord2, p);
@@ -34,7 +34,7 @@ public class Paren{
 
                     if (ouderDan5) {
                         coin.toss();
-                        if (coin.getTopDrieVierde() == 1) {
+                        if (coin.getTopDrieVierde() == 1 || nodigeParen.size() <= 2) {
                             woord1 = new Woord("Lager");
                             woord2 = new Woord("Jager");
                             paar = new Paar(woord1, woord2, p);
@@ -111,14 +111,6 @@ public class Paren{
                     if (coin.getTopDrieVierde() == 1) {
                         woord1 = new Woord("Rij");
                         woord2 = new Woord("Wei");
-                        paar = new Paar(woord1, woord2, p);
-                        lijst.add(paar);
-                    }
-
-                    coin.toss();
-                    if (coin.getTop() == 1) {
-                        woord1 = new Woord("Rand");
-                        woord2 = new Woord("Wand");
                         paar = new Paar(woord1, woord2, p);
                         lijst.add(paar);
                     }
@@ -209,14 +201,6 @@ public class Paren{
 
                         coin.toss();
                         if (coin.getTop() == 1) {
-                            woord1 = new Woord("Bil");
-                            woord2 = new Woord("Pil");
-                            paar = new Paar(woord1, woord2, p);
-                            lijst.add(paar);
-                        }
-
-                        coin.toss();
-                        if (coin.getTop() == 1) {
                             woord1 = new Woord("Bot");
                             woord2 = new Woord("Pot");
                             paar = new Paar(woord1, woord2, p);
@@ -226,7 +210,7 @@ public class Paren{
                     break;
                 case "VF":
                     coin.toss();
-                    if (coin.getTopDrieVierde() == 1) {
+                    if (coin.getTopDrieVierde() == 1 || nodigeParen.size() <= 2) {
                         woord1 = new Woord("Vier");
                         woord2 = new Woord("Fier");
                         paar = new Paar(woord1, woord2, p);

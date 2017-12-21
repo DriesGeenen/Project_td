@@ -224,9 +224,9 @@ public class Oef3Activity extends AppCompatActivity {
                     View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                     view.startDrag(data, shadowBuilder, view, 0);
                     // Originele afbeelding verdwijnt
-                    view.setVisibility(View.INVISIBLE);
+                    //view.setVisibility(View.INVISIBLE);
 
-                    setEnabledKaarten(false);
+                    //setEnabledKaarten(false);
                     dragComplete = false;
                     playAudioComplete = false;
                     MyMediaPlayer.spreek(Oef3Activity.this, view.getTag().toString(), myCompletionListener);
@@ -265,7 +265,7 @@ public class Oef3Activity extends AppCompatActivity {
 
                 // Wanneer correct
                 if (dropped.getTag().toString().equals(dropTarget.getTag().toString())) {
-                    score += 5000;
+                    score += 100;
                     scoreTextView.setText(String.valueOf(score));
                     resultaat.verhoogAmountCorrect();
 
@@ -296,16 +296,21 @@ public class Oef3Activity extends AppCompatActivity {
     class BackgroundDragListener implements OnDragListener {
         @Override
         public boolean onDrag(View v, DragEvent event) {
-            if (event.getAction() == DragEvent.ACTION_DROP) {
+            View view = (View) event.getLocalState();
+            switch (event.getAction()){
+                case DragEvent.ACTION_DRAG_STARTED:
+                    setEnabledKaarten(false);
+                    view.setVisibility(View.INVISIBLE);
+                    break;
+                case DragEvent.ACTION_DROP:
+                    if (playAudioComplete)
+                        setEnabledKaarten(true);
+                    dragComplete = true;
 
-                if (playAudioComplete)
-                    setEnabledKaarten(true);
-                dragComplete = true;
+                    // Afbeelding wordt terug zichtbaar
 
-                // Afbeelding wordt terug zichtbaar
-                View view = (View) event.getLocalState();
-                view.setVisibility(View.VISIBLE);
-
+                    view.setVisibility(View.VISIBLE);
+                    break;
             }
             return true;
         }

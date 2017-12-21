@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:text="Wat wil je oefenen?"
         android:textAlignment="center"
         android:textSize="33sp"
@@ -20,15 +20,15 @@
 
         <LinearLayout
             android:id="@+id/rootLinearLayout"
-            android:layout_width="500dp"
-            android:layout_height="240dp"
+            android:layout_width="600dp"
+            android:layout_height="300dp"
             android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="Gliding"
                 android:textAlignment="center"
                 android:textSize="30sp"
@@ -40,30 +40,30 @@
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:layout_width="100dp"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content">
                     <be.thomasmore.project_td.MyCheckbox
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="62dp"
                         android:layout_gravity="center"
                         android:button="@null"
                         android:tag="LJ"
                         android:text="➾"
                         android:textAlignment="center"
-                        android:textSize="30sp"
+                        android:textSize="15sp"
                         android:textColor="@color/colorMyCheckText"
                         android:fontFamily="@font/mainfont"
                         android:onClick="checkBoxClick"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/lacht_"
                         android:tag="lacht"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/jacht_"
@@ -72,31 +72,31 @@
 
 
                 <RelativeLayout
-                    android:layout_width="100dp"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="33dp">
                     <be.thomasmore.project_td.MyCheckbox
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="62dp"
                         android:layout_gravity="center"
                         android:button="@null"
                         android:tag="LW"
                         android:text="➾"
                         android:textAlignment="center"
-                        android:textSize="30sp"
+                        android:textSize="15sp"
                         android:textColor="@color/colorMyCheckText"
                         android:fontFamily="@font/mainfont"
                         android:onClick="checkBoxClick"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/wijst_"
                         android:tag="wijst"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/lijst_"
@@ -105,31 +105,31 @@
 
 
                 <RelativeLayout
-                    android:layout_width="100dp"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="33dp">
                     <be.thomasmore.project_td.MyCheckbox
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="62dp"
                         android:layout_gravity="center"
                         android:button="@null"
                         android:tag="RJ"
                         android:textAlignment="center"
                         android:text="➾"
-                        android:textSize="30sp"
+                        android:textSize="15sp"
                         android:textColor="@color/colorMyCheckText"
                         android:fontFamily="@font/mainfont"
                         android:onClick="checkBoxClick"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/roker_"
                         android:tag="roker"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/joker_"
@@ -138,31 +138,31 @@
 
 
                 <RelativeLayout
-                    android:layout_width="100dp"
+                    android:layout_width="125dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="33dp">
                     <be.thomasmore.project_td.MyCheckbox
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="62dp"
                         android:layout_gravity="center"
                         android:button="@null"
                         android:tag="RW"
                         android:textAlignment="center"
                         android:text="➾"
-                        android:textSize="30sp"
+                        android:textSize="15sp"
                         android:textColor="@color/colorMyCheckText"
                         android:fontFamily="@font/mainfont"
                         android:onClick="checkBoxClick"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/wol_"
                         android:tag="wol"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/rol_"
@@ -187,31 +187,31 @@
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
-                    android:layout_width="133dp"
+                    android:layout_width="166dp"
                     android:layout_height="wrap_content">
                     <be.thomasmore.project_td.MyCheckbox
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="62dp"
                         android:layout_gravity="center"
                         android:button="@null"
                         android:tag="BP"
                         android:textAlignment="center"
                         android:text="➾"
-                        android:textSize="30sp"
+                        android:textSize="15sp"
                         android:textColor="@color/colorMyCheckText"
                         android:fontFamily="@font/mainfont"
                         android:onClick="checkBoxClick"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="10dp"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/peer_"
                         android:tag="peer"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="10dp"
                         android:layout_alignParentRight="true"
@@ -221,32 +221,32 @@
 
 
                 <RelativeLayout
-                    android:layout_width="134dp"
+                    android:layout_width="167dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp">
                     <be.thomasmore.project_td.MyCheckbox
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="62dp"
                         android:layout_gravity="center"
                         android:button="@null"
                         android:tag="VF"
                         android:textAlignment="center"
                         android:text="➾"
-                        android:textSize="30sp"
+                        android:textSize="15sp"
                         android:textColor="@color/colorMyCheckText"
                         android:fontFamily="@font/mainfont"
                         android:onClick="checkBoxClick"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="10dp"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/vier_"
                         android:tag="vier"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="10dp"
                         android:layout_alignParentRight="true"
@@ -256,32 +256,32 @@
 
 
                 <RelativeLayout
-                    android:layout_width="133dp"
+                    android:layout_width="166dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp">
                     <be.thomasmore.project_td.MyCheckbox
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="62dp"
                         android:layout_gravity="center"
                         android:button="@null"
                         android:tag="DT"
                         android:textAlignment="center"
                         android:text="➾"
-                        android:textSize="30sp"
+                        android:textSize="15sp"
                         android:textColor="@color/colorMyCheckText"
                         android:fontFamily="@font/mainfont"
                         android:onClick="checkBoxClick"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="10dp"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/tak_"
                         android:tag="tak"/>
                     <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="10dp"
                         android:layout_alignParentRight="true"
@@ -300,8 +300,8 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="25dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
             android:background="@drawable/popupmenushape"
             android:visibility="invisible">
 

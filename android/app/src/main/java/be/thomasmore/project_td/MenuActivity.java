@@ -46,6 +46,7 @@ public class MenuActivity extends AppCompatActivity {
         rootLinearLayout = (LinearLayout) findViewById(R.id.rootLinearLayout);
 
         (findViewById(R.id.startButton)).setOnTouchListener(new MyButtonSharpTouchListener());
+        (findViewById(R.id.startButton)).setEnabled(false);
         popup = (RelativeLayout) findViewById(R.id.popupviewgroup);
         popupTextView = (TextView) findViewById(R.id.popuptextview);
         jaKnop = (Button) findViewById(R.id.popupconfirmbutton);
@@ -57,20 +58,26 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void haalOpCheckBoxen() {
-        parenCheckBoxLijst = new ArrayList<>();
-        int count = rootLinearLayout.getChildCount();
-        for (int i = 0; i < count; i++) {
-            View v = rootLinearLayout.getChildAt(i);
-            if (v instanceof LinearLayout) {
-                int count2 = ((LinearLayout) v).getChildCount();
-                for (int j = 0; j < count2; j++) {
-                    View v2 = ((LinearLayout) v).getChildAt(j);
-                    if (v2 instanceof RelativeLayout && ((RelativeLayout) v2).getChildAt(0) instanceof CheckBox) {
-                        parenCheckBoxLijst.add((MyCheckbox) ((RelativeLayout) v2).getChildAt(0));
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                parenCheckBoxLijst = new ArrayList<>();
+                int count = rootLinearLayout.getChildCount();
+                for (int i = 0; i < count; i++) {
+                    View v = rootLinearLayout.getChildAt(i);
+                    if (v instanceof LinearLayout) {
+                        int count2 = ((LinearLayout) v).getChildCount();
+                        for (int j = 0; j < count2; j++) {
+                            View v2 = ((LinearLayout) v).getChildAt(j);
+                            if (v2 instanceof RelativeLayout && ((RelativeLayout) v2).getChildAt(0) instanceof CheckBox) {
+                                parenCheckBoxLijst.add((MyCheckbox) ((RelativeLayout) v2).getChildAt(0));
+                            }
+                        }
                     }
                 }
             }
-        }
+        };
+        new Thread(runnable).start();
     }
 
     public void startButtonClick(View view) {
