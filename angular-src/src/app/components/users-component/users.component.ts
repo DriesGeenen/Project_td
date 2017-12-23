@@ -36,9 +36,9 @@ export class UsersComponent implements OnInit {
 
   async getResults(userId){
     try{
-
-      await this.userService.getUserById(userId);
-      await this.resultService.getResultsForUser(userId);
+      localStorage.setItem("userId", userId);
+      //await this.userService.getUserById(userId);
+      //await this.resultService.getResultsForUser(userId);
       this.router.navigate(["/results"]);
     }
     catch(err){

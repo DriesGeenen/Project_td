@@ -1,9 +1,9 @@
 <div class="container" *ngIf="authService.isLoggedIn()">
   <div *ngIf="authService.getUser()?.role == 'admin' || authService.getUser()?.role == 'logopedist'">
   <div class="jumbotron">
-    <h1>{{ userService.user.name }}</h1>
-    <div class="col-md-6"><b>Email: </b>{{ userService.user.email }}</div>
-    <div class="col-md-6"><b>Rol: </b>{{ userService.user.role }}</div>
+    <h1>{{ user?.name }}</h1>
+    <div class="col-md-6"><b>Email: </b>{{ user?.email }}</div>
+    <div class="col-md-6"><b>Rol: </b>{{ user?.role }}</div>
   </div>
 
     <div style="text-align: center">
@@ -19,21 +19,43 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Woord(en)</th>
-          <th>Aantal Juist</th>
-          <th>Aantal Fout</th>
-          <th>Datum</th>
+          <th width="40%">Woord(en)</th>
+          <th width="30%">Aantal Juist</th>
+          <th width="30%">Aantal Fout</th>
         </tr>
       </thead>
       <tbody>
-      <ng-container *ngFor="let result of resultService.results">
+      <ng-container *ngFor="let result of results; let i = index">
+        <ng-container *ngIf="i == 0">
+          <tr>
+            <td colspan="3"><b>{{ result.date | date: 'dd/MM/yyyy'}}</b></td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="result.exerciseNr == 1 && results[i+1] != undefined && results[i].getDayNumber() != results[i+1].getDayNumber()">
+          <tr>
+            <td><b>Totaal</b></td>
+            <td><b>{{ getTotalCorrect() }}</b></td>
+            <td><b>{{ getTotalWrong() }}</b></td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>{{ results[i+1].date | date: 'dd/MM/yyyy'}}</b></td>
+          </tr>
+        </ng-container>
         <tr *ngIf="result.exerciseNr == 1">
           <td>{{ result.word }}</td>
           <td>{{ result.amountCorrect }}</td>
           <td>{{ result.amountWrong }}</td>
-          <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+          <ng-container>{{ addToTotal(result.amountCorrect, result.amountWrong) }}</ng-container>
         </tr>
       </ng-container>
+      <tr>
+        <td><b>Totaal</b></td>
+        <td><b>{{ getTotalCorrect() }}</b></td>
+        <td><b>{{ getTotalWrong() }}</b></td>
+      </tr>
       </tbody>
     </table>
   </div>
@@ -43,21 +65,43 @@
       <table class="table">
         <thead>
         <tr>
-          <th>Woord(en)</th>
-          <th>Aantal Juist</th>
-          <th>Aantal Fout</th>
-          <th>Datum</th>
+          <th width="40%">Woord(en)</th>
+          <th width="30%">Aantal Juist</th>
+          <th width="30%">Aantal Fout</th>
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let result of resultService.results">
+        <ng-container *ngFor="let result of results; let i = index">
+          <ng-container *ngIf="i == 0">
+            <tr>
+              <td colspan="3"><b>{{ result.date | date: 'dd/MM/yyyy'}}</b></td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="result.exerciseNr == 2 && results[i+1] != undefined && results[i].getDayNumber() != results[i+1].getDayNumber()">
+            <tr>
+              <td><b>Totaal</b></td>
+              <td><b>{{ getTotalCorrect() }}</b></td>
+              <td><b>{{ getTotalWrong() }}</b></td>
+            </tr>
+            <tr>
+              <td colspan="3"></td>
+            </tr>
+            <tr>
+              <td colspan="3"><b>{{ results[i+1].date | date: 'dd/MM/yyyy'}}</b></td>
+            </tr>
+          </ng-container>
           <tr *ngIf="result.exerciseNr == 2">
             <td>{{ result.word }}</td>
             <td>{{ result.amountCorrect }}</td>
             <td>{{ result.amountWrong }}</td>
-            <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+            <ng-container>{{ addToTotal(result.amountCorrect, result.amountWrong) }}</ng-container>
           </tr>
         </ng-container>
+        <tr>
+          <td><b>Totaal</b></td>
+          <td><b>{{ getTotalCorrect() }}</b></td>
+          <td><b>{{ getTotalWrong() }}</b></td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -67,21 +111,43 @@
       <table class="table">
         <thead>
         <tr>
-          <th>Woord(en)</th>
-          <th>Aantal Juist</th>
-          <th>Aantal Fout</th>
-          <th>Datum</th>
+          <th width="40%">Woord(en)</th>
+          <th width="30%">Aantal Juist</th>
+          <th width="30%">Aantal Fout</th>
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let result of resultService.results">
+        <ng-container *ngFor="let result of results; let i = index">
+          <ng-container *ngIf="i == 0">
+            <tr>
+              <td colspan="3"><b>{{ result.date | date: 'dd/MM/yyyy'}}</b></td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="result.exerciseNr == 3 && results[i+1] != undefined && results[i].getDayNumber() != results[i+1].getDayNumber()">
+            <tr>
+              <td><b>Totaal</b></td>
+              <td><b>{{ getTotalCorrect() }}</b></td>
+              <td><b>{{ getTotalWrong() }}</b></td>
+            </tr>
+            <tr>
+              <td colspan="3"></td>
+            </tr>
+            <tr>
+              <td colspan="3"><b>{{ results[i+1].date | date: 'dd/MM/yyyy'}}</b></td>
+            </tr>
+          </ng-container>
           <tr *ngIf="result.exerciseNr == 3">
             <td>{{ result.word }}</td>
             <td>{{ result.amountCorrect }}</td>
             <td>{{ result.amountWrong }}</td>
-            <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+            <ng-container>{{ addToTotal(result.amountCorrect, result.amountWrong) }}</ng-container>
           </tr>
         </ng-container>
+        <tr>
+          <td><b>Totaal</b></td>
+          <td><b>{{ getTotalCorrect() }}</b></td>
+          <td><b>{{ getTotalWrong() }}</b></td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -91,21 +157,43 @@
       <table class="table">
         <thead>
         <tr>
-          <th>Woord(en)</th>
-          <th>Aantal Juist</th>
-          <th>Aantal Fout</th>
-          <th>Datum</th>
+          <th width="40%">Woord(en)</th>
+          <th width="30%">Aantal Juist</th>
+          <th width="30%">Aantal Fout</th>
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let result of resultService.results">
+        <ng-container *ngFor="let result of results; let i = index">
+          <ng-container *ngIf="i == 0">
+            <tr>
+              <td colspan="3"><b>{{ result.date | date: 'dd/MM/yyyy'}}</b></td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="result.exerciseNr == 4 && results[i+1] != undefined && results[i].getDayNumber() != results[i+1].getDayNumber()">
+            <tr>
+              <td><b>Totaal</b></td>
+              <td><b>{{ getTotalCorrect() }}</b></td>
+              <td><b>{{ getTotalWrong() }}</b></td>
+            </tr>
+            <tr>
+              <td colspan="3"></td>
+            </tr>
+            <tr>
+              <td colspan="3"><b>{{ results[i+1].date | date: 'dd/MM/yyyy'}}</b></td>
+            </tr>
+          </ng-container>
           <tr *ngIf="result.exerciseNr == 4">
             <td>{{ result.word }}</td>
             <td>{{ result.amountCorrect }}</td>
             <td>{{ result.amountWrong }}</td>
-            <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+            <ng-container>{{ addToTotal(result.amountCorrect, result.amountWrong) }}</ng-container>
           </tr>
         </ng-container>
+        <tr>
+          <td><b>Totaal</b></td>
+          <td><b>{{ getTotalCorrect() }}</b></td>
+          <td><b>{{ getTotalWrong() }}</b></td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -115,21 +203,43 @@
       <table class="table">
         <thead>
         <tr>
-          <th>Woord(en)</th>
-          <th>Aantal Juist</th>
-          <th>Aantal Fout</th>
-          <th>Datum</th>
+          <th width="40%">Woord(en)</th>
+          <th width="30%">Aantal Juist</th>
+          <th width="30%">Aantal Fout</th>
         </tr>
         </thead>
         <tbody>
-        <ng-container *ngFor="let result of resultService.results">
+        <ng-container *ngFor="let result of results; let i = index">
+          <ng-container *ngIf="i == 0">
+            <tr>
+              <td colspan="3"><b>{{ result.date | date: 'dd/MM/yyyy'}}</b></td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="result.exerciseNr == 5 && results[i+1] != undefined && results[i].getDayNumber() != results[i+1].getDayNumber()">
+            <tr>
+              <td><b>Totaal</b></td>
+              <td><b>{{ getTotalCorrect() }}</b></td>
+              <td><b>{{ getTotalWrong() }}</b></td>
+            </tr>
+            <tr>
+              <td colspan="3"></td>
+            </tr>
+            <tr>
+              <td colspan="3"><b>{{ results[i+1].date | date: 'dd/MM/yyyy'}}</b></td>
+            </tr>
+          </ng-container>
           <tr *ngIf="result.exerciseNr == 5">
             <td>{{ result.word }}</td>
             <td>{{ result.amountCorrect }}</td>
             <td>{{ result.amountWrong }}</td>
-            <td>{{ result.date | date: 'dd/MM/yyyy'}}</td>
+            <ng-container>{{ addToTotal(result.amountCorrect, result.amountWrong) }}</ng-container>
           </tr>
         </ng-container>
+        <tr>
+          <td><b>Totaal</b></td>
+          <td><b>{{ getTotalCorrect() }}</b></td>
+          <td><b>{{ getTotalWrong() }}</b></td>
+        </tr>
         </tbody>
       </table>
     </div>

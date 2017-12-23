@@ -16,6 +16,11 @@ export default class Result extends DbBase{
     }
   }
 
+getDayNumber():number{
+    var day = Math.trunc(this.date.getTime()/1000/60/60/24);
+    return day;
+}
+
   userId:number;
   exerciseNr:number;
   word:string;

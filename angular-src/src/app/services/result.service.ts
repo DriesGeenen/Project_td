@@ -7,8 +7,7 @@ import HttpConfig from '../config/http';
 @Injectable()
 export class ResultService {
 
-  private result:Result;
-  private results:Array<Result> = [];
+  results:Array<Result> = [];
 
   constructor(private http:HttpClient) {
     autoBind(this);
