@@ -45,7 +45,6 @@ public class Oef1Activity extends AppCompatActivity {
     private RelativeLayout popup;
     private TextView popupTextView;
     private Button jaKnop;
-    private boolean slepenToegestaan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +108,6 @@ public class Oef1Activity extends AppCompatActivity {
         if (!User.hasToken()) {
             findViewById(R.id.logoutTextView).setVisibility(View.INVISIBLE);
         }
-        slepenToegestaan = true;
     }
 
     private void laadAfbeeldingen() {
@@ -186,8 +184,7 @@ public class Oef1Activity extends AppCompatActivity {
         int count = middenveld.getChildCount();
         for (int i = 0; i < count; i++) {
             View v = middenveld.getChildAt(i);
-            //v.setEnabled(value);
-            slepenToegestaan = value;
+            v.setEnabled(value);
             v.setAlpha((value) ? 1f : .5f);
         }
     }
@@ -211,14 +208,6 @@ public class Oef1Activity extends AppCompatActivity {
     private int dpToPx(int dp) {
         float scale = getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev){
-        if (slepenToegestaan){
-            return super.dispatchTouchEvent(ev);
-        }
-        return true;
     }
 
     private final class MyCompletionListener implements MediaPlayer.OnCompletionListener {
